@@ -56,4 +56,4 @@
 
 1. fork本项目到个人的仓库  
 2. 所有修改均在个人仓库上进行。修改完成后，使用pull request请求合并到本项目的**master分支**  
-3. 文本型的文件尽量使用markdown格式编写，并后缀改为.mk。github默认对markdown提供良好的支持
+3. 文本型的文件尽量使用markdown格式编写，并后缀改为.md。github默认对markdown提供良好的支持
