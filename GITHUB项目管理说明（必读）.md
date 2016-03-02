@@ -5,8 +5,11 @@
 先在实验楼注册账号，进入Git教程。
 自学完前三节即可。
 
-课程：Git 实战教程
-地址：https://www.shiyanlou.com/courses/4
+ * 课程：Git 实战教程
+
+ * 地址：https://www.shiyanlou.com/courses/4
+
+git使用简易教程 http://www.bootcss.com/p/git-guide/#rd
 
 另外，在openthos主页有更多学习资源
 地址：https://github.com/openthos/openthos/wiki/Home-zh_CN
