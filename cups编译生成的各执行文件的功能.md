@@ -1,4 +1,3 @@
-[TOC]
 1. bin目录
 ========
 ###1.1 cancel
@@ -47,7 +46,7 @@
 	　　　　　　　　　　　　　　　　　　　testfile.ps
 	　　　　　　　　　　　　　　　　　　　testfile.txt
 	　　　　　　　　　　　　　　　　　　　validate-job.test
-	```
+```
 ###1.6 lp
 	　　提交需打印的文件或者改变一个未决工作，使用文件名来通过标准输入指明要打印的文件。
 	　　CUPS提供了多种方式设置默认目标，首先会查询```LPDEST```和```PRINTER```环境变量，如果两者都没有设置但是有使用lpoptions命令进行设置就采用此设置，最后采用lpadmin命令的设置作为默认设置。
