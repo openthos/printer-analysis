@@ -15,16 +15,47 @@
 
 ###1.5 ipptool
 　　接收描述一个或多个IPP请求的自由形式的纯文本文件，发送IPP请求至特定的URI（统一资源标识符，Web上可用的每种资源由一个URI进行定位）并且测试或展示结果。每一个已命名文件定义了一个或多个请求，包括预期的相应状态、属性和值。输出在标准输出中，形式为纯文本、格式化文本、CSV格式文件、XML格式文件中的一种，当退出状态不是0时表示一个或多个测试出错。IPP请求文件的格式的具体描述在ipptoolfile中 。
-
+```
+    可接受的标准文件（IPP请求文件）： color.jpg
+　　　　　　　　　　　　　　　　　　　create-printer-subscription.test
+　　　　　　　　　　　　　　　　　　　document-a4.pdf
+　　　　　　　　　　　　　　　　　　　document-a4.ps
+　　　　　　　　　　　　　　　　　　　document-letter.pdf
+　　　　　　　　　　　　　　　　　　　document-letter.ps
+　　　　　　　　　　　　　　　　　　　get-completed-jobs.test
+　　　　　　　　　　　　　　　　　　　get-jobs.test
+　　　　　　　　　　　　　　　　　　　get-notifications.test
+　　　　　　　　　　　　　　　　　　　get-printer-attributes.test
+　　　　　　　　　　　　　　　　　　　get-subscriptions.test
+　　　　　　　　　　　　　　　　　　　gray.jpg
+　　　　　　　　　　　　　　　　　　　ipp-1.1.test
+　　　　　　　　　　　　　　　　　　　ipp-2.0.test
+　　　　　　　　　　　　　　　　　　　ipp-2.1.test
+　　　　　　　　　　　　　　　　　　　ipp-2.2.test
+　　　　　　　　　　　　　　　　　　　ipp-everywhere.test
+　　　　　　　　　　　　　　　　　　　onepage-a4.pdf
+　　　　　　　　　　　　　　　　　　　onepage-a4.ps
+　　　　　　　　　　　　　　　　　　　onepage-letter.pdf
+　　　　　　　　　　　　　　　　　　　onepage-letter.ps
+　　　　　　　　　　　　　　　　　　　print-job.test
+　　　　　　　　　　　　　　　　　　　print-job-deflate.test
+　　　　　　　　　　　　　　　　　　　print-job-gzip.test
+　　　　　　　　　　　　　　　　　　　testfile.jpg
+　　　　　　　　　　　　　　　　　　　testfile.pcl
+　　　　　　　　　　　　　　　　　　　testfile.pdf
+　　　　　　　　　　　　　　　　　　　testfile.ps
+　　　　　　　　　　　　　　　　　　　testfile.txt
+　　　　　　　　　　　　　　　　　　　validate-job.test
+```
 ###1.6 lp
-    需打印的文件或者改变一个未决工作，使用文件名来通过标准输入指明要打印的文件。
-    提供了多种方式设置默认目标，首先会查询LPDEST和PRINTER环境变量，如果两者都没有设置但是有使用lpoptions命令进行设置就采用此设置，最后采用lpadmin命令的设置作为默认设置。
+　　提交需打印的文件或者改变一个未决工作，使用文件名来通过标准输入指明要打印的文件。
+　　CUPS提供了多种方式设置默认目标，首先会查询```LPDEST```和```PRINTER```环境变量，如果两者都没有设置但是有使用lpoptions命令进行设置就采用此设置，最后采用lpadmin命令的设置作为默认设置。
 
 ###1.7lpoptions
 　　显示或设置打印机选项以及默认值，当没有任何变量时lpoptions就显示打印机默认值。lpoptions命令通过lp和lpr命令提交工作时来调用，用于设置选项。
 　　当以root用户运行其时，其为所有用户在/etc/cups/lpoptions文件中获取、设置选项或实例。
 　　配置文件：~/.cups/lpoptions：由除root以外的用户创建的用户默认选项文件
-　　　　　　　/etc/cups/lpoptions：由root用户创建的系统默认选项文件
+　　　　　　　 /etc/cups/lpoptions：由root用户创建的系统默认选项文件
 
 ###1.8 lpq
 　　显示打印队列中与用户相关的特定或全部工作的状态，命令不带由任何参数则报告当前队列中的任何工作。
@@ -43,12 +74,12 @@
 ```
         
 ###1.10 lprm
-    打印机的打印队列中删除一个或多个工作。假脱机目录对于用户们来说是被保护的，所以一般来说使用lprm是一个用户能够删除一个打印工作的唯一方法。打印工作的所有者是由执行lpr命令的主机名以及登录名决定的。
+　　从一个打印机的打印队列中删除一个或多个工作。假脱机目录对于用户们来说是被保护的，所以一般来说使用lprm是一个用户能够删除一个打印工作的唯一方法。打印工作的所有者是由执行lpr命令的主机名以及登录名决定的。
 ```
-	相关文件：/etc/printcap     打印机特性文件
-		  /var/spool/output/*    假脱机目录
-        　　　　　/var/spool/output/*/lock        用于获取当前守护进程的PID以及当前活动的工作的总数的锁文件
-		```
+相关文件：/etc/printcap     打印机特性文件
+　　　　　/var/spool/output/*        假脱机目录
+　　　　　/var/spool/output/*/lock        用于获取当前守护进程的PID以及当前活动的工作的总数的锁文件
+```
 
 ###1.11 lpstat
 　　显示当前工作、打印机的状态信息。当lpstat命令没有参数时，会根据当前用户列举工作队列。
@@ -111,12 +142,12 @@ ___
 ###2.9 lpinfo
 　　列举出CUPS服务器已知的可用的设备或驱动，选项-m列举可用的驱动、-v列举所有可用的设备。
         
-		___
-		___
-		___
+___
+___
+___
 #3. 部分相关文件
 ###3.1 classes.conf
-		　　cups的类配置文件，定义了本地可用的打印机类。一般位于/etc/cups目录下，由cupsd程序添加或删除类时自动生成。
+　　cups的类配置文件，定义了本地可用的打印机类。一般位于/etc/cups目录下，由cupsd程序添加或删除类时自动生成。
 
 ###3.2 printers.conf
 　　记录所有本地可用的打印机信息，由cups程序添加或删除打印机时自动生成。
@@ -171,16 +202,3 @@ ___
 　　　　　　　```cups-drivered    list    request_id    limit    options```
 　　根据ppd-make以及被请求的属性查找PPD文件并对输出进行相应裁剪，其运行是为了响应CUPS-Add-Modify-Printer或者CUPS-Get-Devices请求。驱动文件可以是/usr/share/cups/model目录下的PPD文件或者在/usr/lib/cups/driver目录下的程序。
 　　第一种使用形式输出指定名称的PPD文件至标准输出，输出的形式是一个未压缩的PPD文件；第二种形式根据```options```列举指定可用的PPD文件或者制造商至标准输出，输出形式是一个IPP响应信息。参数解释与```cups-drivered```一致
-
-
-
-
-
-
-
-
-
-
-
-
-
