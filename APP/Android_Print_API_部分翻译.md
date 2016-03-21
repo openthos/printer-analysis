@@ -72,7 +72,7 @@ java.lang.Object
 原链接： https://developer.android.com/reference/android/printservice/PrinterDiscoverySession.html
 
 extends Object
-***
+
 ```
 java.lang.Object
    ↳	android.printservice.PrinterDiscoverySession
@@ -92,3 +92,102 @@ java.lang.Object
 
 **提示：**这个类里的所有回调函数都在程序的主线程执行。你自己用的时候也要在主线程调用这些函数。
 
+***
+
+public final class
+# PrinterInfo
+
+extends Object
+implements Parcelable
+
+```
+
+java.lang.Object
+   ↳	android.print.PrinterInfo
+```
+
+## 类综述 Class Overview
+
+这个类是一个打印机的描述。这个类的实例由打印服务创建，把它们管理的打印机报告给系统。这个类里面的信息有两大部分。第一部分，打印机属性，列如name（名称）,id（编号）,status（状态），description（描述）。第二部分，printer capabilities（打印机能力）。printer capabilities描述了打印机支持的各种打印模式，例如media sizes（大概是纸张尺寸），margins（留白大小）等等。
+
+***
+public final class
+# PrinterId
+
+extends Object
+implements Parcelable
+
+```
+java.lang.Object
+   ↳	android.print.PrinterId
+```
+
+## 类综述 Class Overview
+
+这个类代表一个打印机独一无二的编号
+
+***
+public final class
+# PrintJob
+
+extends Object
+
+```
+
+java.lang.Object
+   ↳	android.printservice.PrintJob
+```
+
+## 类综述 Class Overview
+
+从一个打印服务的角度来看，这个类代表一个打印任务（print job）。它提供了一些API来观察打印任务的状态和在打印任务上执行操作。
+
+**提示：**类里面的所有方法都必须在应用主线程里执行。
+
+***
+public final class
+# PrintJobInfo
+
+extends Object
+implements Parcelable
+
+```
+
+java.lang.Object
+   ↳	android.print.PrintJobInfo
+```
+
+## 类综述 Class Overview
+
+这个类代表了一个打印任务的详细描述。打印机任务的状态包括一些配置，例如：它的id（编号）、打印属性，这用来生成一些内容等等。注意，打印任务状态可能会随着时间改变。这个类只代表了状态的一个时刻（snapshot）。
+
+***
+public final class
+# PrinterCapabilitiesInfo
+
+extends Object
+implements Parcelable
+
+```
+java.lang.Object
+   ↳	android.print.PrinterCapabilitiesInfo
+```
+## 类综述 Class Overview
+
+这个类代表了一个打印机的能力（capabilities）。这个类的实例由一个打印服务创建，用来报告它所管理的打印机的能力。一个打印机的能力指出了它如何打印内容。例如：打印机支持什么纸张大小（media sizes），打印机设计的最小留白（the minimal margins），等等。
+
+***
+
+public final class
+# PrintDocument
+
+extends Object
+```
+java.lang.Object
+   ↳	android.printservice.PrintDocument
+```
+## 类综述 Class Overview
+
+对一个打印服务来说，这个类代表一个待打印的文件。它提供一些API来查询文件和其包含的数据。
+
+**提示：**所有的方法必须在程序的主线程里执行。
