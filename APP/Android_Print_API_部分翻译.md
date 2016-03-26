@@ -1,6 +1,61 @@
-# PrintService
+目录
+* package [android.printservice](#android.printservice) 
+* public abstract class [PrintService](#PrintService) 
+* public abstract class [PrinterDiscoverySession](#PrinterDiscoverySession) 
+* public final class [PrinterInfo](#PrinterInfo)
+* public final class [PrinterId](#PrinterId)
+* public final class [PrintJob](#PrintJob)
+* public final class [PrintJobInfo](#PrintJobInfo)
+* public final class [PrinterCapabilitiesInfo](#PrinterCapabilitiesInfo)
+* public final class [PrintDocument](#PrintDocument)
+* public final class [PrintDocumentInfo](#PrintDocumentInfo)
 
-原链接：https://developer.android.com/reference/android/printservice/PrintService.html#
+
+<!--more-->
+
+
+***
+<p id="android.printservice"></p>
+
+原链接：https://developer.android.com/reference/android/printservice/package-summary.html
+
+package
+
+# android.printservice
+
+提供打印服务实现的类。打印服务是一种插件（ plug-in components），它能够通过一些标准协议和打印机通讯。这些服务像一座桥，处于系统和打印机之间。因此，打印机和打印协议的具体实现从系统中分离的，能够独立开发和更新。
+
+一个打印服务实现应该基于``PrintService``类，并且实现它的抽象方法（abstract methods）。另外，打印服务必须要按约定来管理``PrintJob``（打印任务）类。
+
+系统负责启动和停止一个打印服务，这个操作取决于该打印服务管理的打印机是否有激活的打印任务（active print jobs）。打印服务还要及时执行打印机发现操作，来保证好的用户体验。在打印机发现过程中系统和该打印服务的交互封装在``PrinterDiscoverySession``类的实例中，由打印服务在系统需要的时候创建。
+
+## 类 （Classes）
+
+### PrintDocument
+
+从一个打印服务的角度来说，这个类代表一个待打印的文件（document）。
+
+### PrinterDiscoverySession
+
+这个类封装了打印机发现过程中一个打印服务和系统的交互操作。
+
+### PrintJob
+
+对一个打印服务来说，这个类代表一个打印任务（print job）。
+
+### PrintService
+
+这个基础类用来实现打印服务。
+
+
+***
+<p id="PrintService"></p>
+
+原链接：https://developer.android.com/reference/android/printservice/PrintService.html
+
+public abstract class
+
+# PrintService
 
 extends Service
 
@@ -66,13 +121,16 @@ java.lang.Object
 **提示：**这个类里的所有回调函数（callbacks）都在程序的主线程里执行。你也应该在程序的主线程里调用（invoke）这个类里的方法。
 
 ***
-
-# PrinterDiscoverySession
+<p id="PrinterDiscoverySession"></p>
 
 原链接： https://developer.android.com/reference/android/printservice/PrinterDiscoverySession.html
 
+public abstract class
+# PrinterDiscoverySession
+
+
 extends Object
-***
+
 ```
 java.lang.Object
    ↳	android.printservice.PrinterDiscoverySession
@@ -91,4 +149,159 @@ java.lang.Object
 如果系统要持续监测打印机的最新状态，你会收到一个``onStartPrinterStateTracking(PrinterId)``调用。收到之后，你必须尽可能地保持系统得到打印机最新的状态和功能特性。当你之前添加打印机的时候没有提供它的功能特性，你在这时**必须**更新这些内容。要不然打印机就会被忽略。当系统不再需要获取打印机的最新状态时，你会收到一个``onStopPrinterStateTracking(PrinterId)``调用。
 
 **提示：**这个类里的所有回调函数都在程序的主线程执行。你自己用的时候也要在主线程调用这些函数。
+
+***
+<p id="PrinterInfo"></p>
+
+public final class
+# PrinterInfo
+
+extends Object
+implements Parcelable
+
+```
+
+java.lang.Object
+   ↳	android.print.PrinterInfo
+```
+
+## 类综述 Class Overview
+
+这个类是一个打印机的描述。这个类的实例由打印服务创建，把它们管理的打印机报告给系统。这个类里面的信息有两大部分。第一部分，打印机属性，列如name（名称）,id（编号）,status（状态），description（描述）。第二部分，printer capabilities（打印机能力）。printer capabilities描述了打印机支持的各种打印模式，例如media sizes（大概是纸张尺寸），margins（留白大小）等等。
+
+***
+<p id="PrinterId"></p>
+
+public final class
+# PrinterId
+
+extends Object
+implements Parcelable
+
+```
+java.lang.Object
+   ↳	android.print.PrinterId
+```
+
+## 类综述 Class Overview
+
+这个类代表一个打印机独一无二的编号
+
+***
+<p id="PrintJob"></p>
+
+public final class
+# PrintJob
+
+extends Object
+
+```
+
+java.lang.Object
+   ↳	android.printservice.PrintJob
+```
+
+## 类综述 Class Overview
+
+从一个打印服务的角度来看，这个类代表一个打印任务（print job）。它提供了一些API来观察打印任务的状态和在打印任务上执行操作。
+
+**提示：**类里面的所有方法都必须在应用主线程里执行。
+
+***
+<p id="PrintJobInfo"></p>
+
+public final class
+# PrintJobInfo
+
+extends Object
+implements Parcelable
+
+```
+
+java.lang.Object
+   ↳	android.print.PrintJobInfo
+```
+
+## 类综述 Class Overview
+
+这个类代表了一个打印任务的详细描述。打印机任务的状态包括一些配置，例如：它的id（编号）、打印属性，这用来生成一些内容等等。注意，打印任务状态可能会随着时间改变。这个类只代表了状态的一个时刻（snapshot）。
+
+***
+<p id="PrinterCapabilitiesInfo"></p>
+
+public final class
+# PrinterCapabilitiesInfo
+
+extends Object
+implements Parcelable
+
+```
+java.lang.Object
+   ↳	android.print.PrinterCapabilitiesInfo
+```
+## 类综述 Class Overview
+
+这个类代表了一个打印机的能力（capabilities）。这个类的实例由一个打印服务创建，用来报告它所管理的打印机的能力。一个打印机的能力指出了它如何打印内容。例如：打印机支持什么纸张大小（media sizes），打印机设计的最小留白（the minimal margins），等等。
+
+***
+<p id="PrintDocument"></p>
+
+public final class
+# PrintDocument
+
+extends Object
+```
+java.lang.Object
+   ↳	android.printservice.PrintDocument
+```
+## 类综述 Class Overview
+
+对一个打印服务来说，这个类代表一个待打印的文件。它提供一些API来查询文件和其包含的数据。
+
+**提示：**所有的方法必须在程序的主线程里执行。
+
+
+***
+<p id="PrintDocumentInfo"></p>
+
+public final class
+
+# PrintDocumentInfo
+
+extends Object
+implements Parcelable
+
+```
+java.lang.Object
+   ↳	android.print.PrintDocumentInfo
+```
+## 类综述 Class Overview
+
+这个类封装了关于一个文档跟打印有关的信息。这个``meta-data``（元数据）被平台（platform）和打印服务使用，构成和打印机的交互。例如，这个类包含文档的页数，文档页数展示给使用者是为了使他们能够选择打印的范围。一个打印服务可能会针对内容类型对打印进行优化，例如文档（document）或者照片。
+
+这个类的实例由需要打印的应用创建，在成功排版内容（laying out the content）之后调用``PrintDocumentAdapter.LayoutResultCallback.onLayoutFinished( PrintDocumentInfo, boolean)``回调函数。这个过程执行在``PrintDocumentAdapter.onLayout(PrintAttributes, PrintAttributes, android.os.CancellationSignal, PrintDocumentAdapter.LayoutResultCallback, android.os.Bundle)``里。
+
+一个使用例子如下：
+```java
+ . . .
+
+ public void onLayout(PrintAttributes oldAttributes, PrintAttributes newAttributes,
+         CancellationSignal cancellationSignal, LayoutResultCallback callback,
+         Bundle metadata) {
+
+        // Assume the app defined a LayoutResult class which contains
+        // the layout result data and that the content is a document.
+        LayoutResult result = doSomeLayoutWork();
+
+        PrintDocumentInfo info = new PrintDocumentInfo
+                .Builder("printed_file.pdf")
+                .setContentType(PrintDocumentInfo.CONTENT_TYPE_DOCUMENT)
+                .setPageCount(result.getPageCount())
+                .build();
+
+       callback.onLayoutFinished(info, result.getContentChanged());
+   }
+
+   . . .
+```
 
