@@ -127,5 +127,12 @@ ghostscript及foo2zjs的移植工作暂时完成，目前只针对HP P1108打印
 
 #六、 附录
 
-#####附录1：android x86上通过ghostscript及foo2zjs打印的图片
+#####附录1：
+![android x86中通过ghostscript+foo2zjs打印的图片][1]
+
+
+
+
+  [1]: https://github.com/openthos/printer-analysis/raw/P60326-142446.jpg
+
 
