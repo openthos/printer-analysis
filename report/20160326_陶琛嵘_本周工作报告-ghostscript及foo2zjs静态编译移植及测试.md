@@ -58,7 +58,10 @@
 
 查看/dev目录后发现确实无lp0文件（打印机设备节点）也无usb目录，于是查找原因。使用lsusb命令查看系统中的USB设备,发现有打印机的USB设备信息，于是推断android x86下无法自动创建设备节点，因此USB连接打印机后/dev目录下无lp0这个打印机的设备节点，那么需要手动创建设备节点。
 
-Busybox是一个集成了大量常用linux命令及工具的软件，在android x86的测试环境中也带有此软件，于是使用其中的mdev命令创建设备节点（mdev通过扫描系统/sys/class/目录获取设备信息，进而在/dev/下创建节点），执行时发现因测试环境中所带的busybox因版本较低而没有mdev命令，于是放入新版本的busybox程序执行```busybox mdev -s```命令，再次查看/dev目录，发现其中出现了usb目录且其中有了lp0这个打印机设备节点。
+Busybox是一个集成了大量常用linux命令及工具的软件，在android x86的测试环境中也带有此软件，于是使用其中的mdev命令创建设备节点（mdev通过扫描系统/sys/class/目录获取设备信息，进而在/dev/下创建节点），执行时发现因测试环境中所带的busybox因版本较低而没有mdev命令，于是放入新版本的busybox程序执行
+>busybox mdev -s
+
+再次查看/dev目录，发现其中出现了usb目录且其中有了lp0这个打印机设备节点。
 
 回到foo2zjs目录下再次执行```./foo2zjs -z3 -p9 -r600x600 ../gs-install/bin/test_1.pbm > /dev/usb/lp0```,打印机成功驱动并打印出了测试文件，将打印出的文件与在linux下测试打印机所打印出的文件对比，没有不同。
 

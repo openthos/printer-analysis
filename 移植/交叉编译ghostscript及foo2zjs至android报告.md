@@ -44,9 +44,9 @@ Busybox
 
 进入ghostscript源码目录，分别执行一下几步创建Makefile文件、编译及安装：
 
->./configure CFLAGS=-static –enable-static LDFLAGS=-static –disable-shared –prx=指定路径
->make
->make install
+>./configure CFLAGS=-static –enable-static LDFLAGS=-static –disable-sharedprefix=指路径
+make
+make install
 
 其中指定路径自己设定，用于安装时将所有的可执行文件放于此路径下，方便移植
 
@@ -70,26 +70,26 @@ Busybox
 
 #####3、移植ghostscript及foo2zjs
 
-打开VMware中的android x86虚拟机，配置其连接主机网络，首先设置虚拟机网络连接处于NAT模式，并查看虚拟网络编辑器中VMnet8的子网IP。进入虚拟机，使用 Alt+Ctrl+F1 快捷键进入console模式（即命令行模式），通过 ip a 命令查询ip地址，将其设置为与VMnet8的子网IP处于同一网段后即可完成连接。
+打开VMware中的android x86虚拟机，配置其连接主机网络，首先设置虚拟机网络连接处于NAT模式，并查看虚拟网络编辑器中VMnet8的子网IP。进入虚拟机，使用 Alt+Ctrl+F1 快捷键进入console模式（即命令行模式），通过 ```ip a``` 命令查询ip地址，将其设置为与VMnet8的子网IP处于同一网段后即可完成连接。
 
 更改ip的命令：
 
->ifconfig eth0 xxx.xxx.xxx.xxx netmask 255.255.255.0 up //改变ip与子网掩码
+>ifconfig eth0 xxx.xxx.xxx.xxx netmask 255.255.255.0 up //改变ip与子网掩码  
 route add default gw xxx.xxx.xxx.xxx dev eth0 //两条命令其中的ip地址都需要与子网ip位于同一网段
 
 当android x86成功连接网络后就可以使用adb工具从主机的Windows中对android x86进行调试。
 
 下载好adb后配置环境变量，然后打开cmd进行输入
 
->adb devices //查看连接的设备，首次输入显示为空
-adb connect xxx.xxx.xxx.xxx  //此处ip即为android x86虚拟机中的ip地址，连接成功后可以通过前一个命令查看
-adb push 原路径 目标路径 //此命令用于将指定Windows中路径的文件放入android x86指定路径中，用其将编译好的ghostscript与foo2zjs放入虚拟机中
+>adb devices //查看连接的设备，首次输入显示为空  
+adb connect xxx.xxx.xxx.xxx  //此处ip即为android x86虚拟机中的ip地址，连接成功后可以通过前一个命令查看  
+adb push 原路径 目标路径 //此命令用于将指定Windows中路径的文件放入android x86指定路径中，用其将编译好的ghostscript与foo2zjs放入虚拟机中  
 adb shell //进入android x86的命令行中，进行调试
 
 放入编译好的ghostscript与foo2zjs后进入android x86命令行，给两者的执行文件执行权限，ghostscript是在bin目录下，foo2zjs就在其根目录下,执行下面命令
 
->chmod 755 * //位于ghostscript的bin目录下执行
-chmod  775 arm2hpdl foo2hbpl2 foo2hbpl2-wrapper.in foo2hiperc foo2hiperc-wrapper.in foo2hp foo2hp2600-wrapper.in foo2lava foo2lava-wrapper.in foo2oak foo2oak-wrapper.in foo2qpdl foo2qpdl-wrapper.in foo2slx foo2slx-wrapper.in foo2xqx foo2xqx-wrapper.in foo2zjs foo2zjs-pstops foo2zjs-pstops.sh foo2zjs-wrapper.in foomatic-test freebsd-install getweb.in gipddecode hbpldecode hipercdecode hplj1000 hplj10xx_gui.tcl includer-man lavadecode modify-ppd msexpand oakdecode opldecode ppd-adjust printer-profile printer-profile.sh qpdldecode slxdecode usb_printerid xqxdecode zjsdecode //位于foo2zjs根目录下执行
+>chmod 755 * //位于ghostscript的bin目录下执行  
+chmod  775 arm2hpdl foo2hbpl2 foo2hbpl2-wrapper.in foo2hiperc foo2hiperc-wrapper.in foo2hp foo2hp2600-wrapper.in foo2lava foo2lava-wrapper.in foo2oak foo2oak-wrapper.in foo2qpdl foo2qpdl-wrapper.in foo2slx foo2slx-wrapper.in foo2xqx foo2xqx-wrapper.in foo2zjs foo2zjs-pstops foo2zjs-pstops.sh foo2zjs-wrapper.in foomatic-test freebsd-install getweb.in gipddecode hbpldecode hipercdecode hplj1000 hplj10xx_gui.tcl includer-man lavadecode modify-ppd msexpand oakdecode opldecode ppd-adjust printer-profile printer-profile.sh qpdldecode slxdecode usb_printerid xqxdecode zjsdecode   //位于foo2zjs根目录下执行
 
 
 #四、 测试
@@ -110,11 +110,13 @@ chmod  775 arm2hpdl foo2hbpl2 foo2hbpl2-wrapper.in foo2hiperc foo2hiperc-wrapper
 进入ghostscript的bin目录，执行
 
 >./gs -q -dBATCH -dSAFER -dQUIET -dNOPAUSE -sbinPAPERSIZE=a4 -r600x600 -sDEVICE=pbmraw -sOutputFile=test_1.pbm chess.ps
+
 表示将chess.ps文件进行格式转换，在当前目录中输出名为test_1.phm的转换后文件
 
 进入foo2zjs的根目录下，执行
 
 >./foo2zjs -z3 -p9 -r600x600 ../gs-install/bin/test_1.pbm > /dev/usb/lp0
+
 表示将test_.phm文件利用输出重定位至/dev/usb/lp0这个打印机设备节点进行打印
 
 
