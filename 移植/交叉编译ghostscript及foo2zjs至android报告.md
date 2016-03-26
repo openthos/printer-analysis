@@ -112,11 +112,11 @@ chmod  775 arm2hpdl foo2hbpl2 foo2hbpl2-wrapper.in foo2hiperc foo2hiperc-wrapper
 >./gs -q -dBATCH -dSAFER -dQUIET -dNOPAUSE -sbinPAPERSIZE=a4 -r600x600 -sDEVICE=pbmraw -sOutputFile=test_1.pbm chess.ps  
 //参数说明： 
 "-dBATCH",    执行到最后一页后退出；  
-"-dQUIET",    安静的意思，指代执行过程中尽可能少的输出日志等信息。
+"-dQUIET",    安静的意思，指代执行过程中尽可能少的输出日志等信息。  
 "-dNOPAUSE",    每一页转换之间没有停顿；  
-"-sPAPERSIZE=a4"，    纸张大小；
-"-r600x600",    图片分辨度；
-"-sDEVICE=pbmraw",    转换输出的文件类型装置，默认值为x11alpha；
+"-sPAPERSIZE=a4"，    纸张大小；  
+"-r600x600",    图片分辨度；  
+"-sDEVICE=pbmraw",    转换输出的文件类型装置，默认值为x11alpha；  
 "-sOutputFile=test_1.pbm",    图片输出路径，使用%d或%ld输出页数。
 
 表示将chess.ps文件进行格式转换，在当前目录中输出名为test_1.phm的转换后文件
