@@ -1,4 +1,4 @@
-###目录
+#目录
 
 一、前言
 
@@ -136,6 +136,7 @@ ghostscript及foo2zjs的移植工作暂时完成，目前只针对HP P1108打印
 #六、 附录
 
 #####附录1：
+android x86中通过ghostscript+foo2zjs打印的图片
 ![android x86中通过ghostscript+foo2zjs打印的图片][1]
 
 

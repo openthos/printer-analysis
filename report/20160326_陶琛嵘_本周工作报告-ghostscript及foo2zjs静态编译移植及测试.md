@@ -74,9 +74,8 @@ Busybox是一个集成了大量常用linux命令及工具的软件，在android 
 回到foo2zjs目录下再次执行```./foo2zjs -z3 -p9 -r600x600 ../gs-install/bin/test_1.pbm > /dev/usb/lp0```,打印机成功驱动并打印出了测试文件，将打印出的文件与在linux下测试打印机所打印出的文件对比，没有不同。
 
 
-关于整个的移植过程已经提交了相关文档：![交叉编译ghostscript及foo2zjs至android报告][1]
+关于整个的移植过程已经提交了相关文档：[交叉编译ghostscript及foo2zjs至android报告](https://github.com/taocr/printer-analysis/blob/master/%E7%A7%BB%E6%A4%8D/%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91ghostscript%E5%8F%8Afoo2z    js%E8%87%B3android%E6%8A%A5%E5%91%8A.md)
+
 ###下周计划
 由于issue #9的任务目前还没有完成，所以下周先进行这方面关于要求实现的打印机在Linux上的支持情况的调研。
 
-
- [1]:https://github.com/taocr/printer-analysis/blob/master/%E7%A7%BB%E6%A4%8D/%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91ghostscript%E5%8F%8Afoo2zjs%E8%87%B3android%E6%8A%A5%E5%91%8A.md
