@@ -46,7 +46,15 @@
 
 首先在虚拟机中添加usb控制器用于连接打印机，并连接PC与打印机。在/data/user/ghostscript/bin目录下执行
 
->gs -q -dBATCH -dSAFER -dQUIET -dNOPAUSE -sPAPERSIZE=a4 -r600x600 -sDEVICE=pbmraw -sOutputFile=test_1.pbm chess.ps
+>gs -q -dBATCH -dSAFER -dQUIET -dNOPAUSE -sPAPERSIZE=a4 -r600x600 -sDEVICE=pbmraw -sOutputFile=test_1.pbm chess.ps  
+//参数说明： 
+"-dBATCH",    执行到最后一页后退出；  
+"-dQUIET",    安静的意思，指代执行过程中尽可能少的输出日志等信息。（也可以简写为"-q"）；  
+"-dNOPAUSE",    每一页转换之间没有停顿；  
+"-sPAPERSIZE=a4"，    纸张大小；
+"-r600x600",    图片分辨度；
+"-sDEVICE=pbmraw",    转换输出的文件类型装置，默认值为x11alpha；
+"-sOutputFile=test_1.pbm",    图片输出路径，使用%d或%ld输出页数。
 
 将测试文件chess.pdf进行格式转换并命令为test_1.pbm，输出在当前目录中，执行完毕后在当前目录下确实出现了test__1.phm文件，ghostscript运行成功。
 
