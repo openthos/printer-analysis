@@ -36,7 +36,7 @@ Busybox
 
 #####1、ghostscript编译
 
-下载ghostscript源码，地址：http://downloads.ghostscript.com/public/,实验中所使用为9.14版本。
+下载ghostscript源码，地址：http://downloads.ghostscript.com/public/ ，实验中所使用为9.14版本。
 
 完成后解压
 
@@ -45,8 +45,8 @@ Busybox
 进入ghostscript源码目录，分别执行一下几步创建Makefile文件、编译及安装：
 
 >./configure CFLAGS=-static –enable-static LDFLAGS=-static –disable-shared –prx=指定路径
-make
-make install
+>make
+>make install
 
 其中指定路径自己设定，用于安装时将所有的可执行文件放于此路径下，方便移植
 
