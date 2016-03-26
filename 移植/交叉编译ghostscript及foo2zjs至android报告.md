@@ -133,6 +133,6 @@ ghostscript及foo2zjs的移植工作暂时完成，目前只针对HP P1108打印
 
 
 
-  [1]: https://github.com/openthos/printer-analysis/raw/P60326-142446.jpg
+  [1]:https://github.com/taocr/printer-analysis/blob/master/%E7%A7%BB%E6%A4%8D/raw/P60326-142446.jpg
 
 
