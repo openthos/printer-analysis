@@ -438,5 +438,5 @@ make错误Makefile:5027: recipe for target 'cups-notifier.c' failed ，还提示
   [2]: https://github.com/openthos/printer-analysis/raw/master/%E7%A7%BB%E6%A4%8D%2Fraw%2F201638003837.png
   [3]: https://refspecs.linuxfoundation.org/LSB_3.2.0/LSB-Printing/LSB-Printing/ppdext.html
   [4]: http://www.linuxfoundation.org/collaborate/workgroups/openprinting/cups-filters
-  [5]: https://github.com/openthos/printer-analysis/raw/master/%E7%A7%BB%E6%A4%8D%2Fraw%2F20163800121131.gif
-  [6]: https://github.com/openthos/printer-analysis/raw/master/%E7%A7%BB%E6%A4%8D%2Fraw%2F201638141402.gif
+  [5]: https://github.com/openthos/printer-analysis/raw/master/%E7%A7%BB%E6%A4%8D%2Fraw%2F20163800121131.jpg
+  [6]: https://github.com/openthos/printer-analysis/raw/master/%E7%A7%BB%E6%A4%8D%2Fraw%2F201638141402.jpg

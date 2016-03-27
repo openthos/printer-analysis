@@ -142,6 +142,6 @@ android x86中通过ghostscript+foo2zjs打印的图片
 
 
 
-  [1]:https://github.com/taocr/printer-analysis/blob/master/%E7%A7%BB%E6%A4%8D/raw/P60326-142446.jpg
+  [1]:https://github.com/openthos/printer-analysis/blob/master/%E7%A7%BB%E6%A4%8D%2Fraw%2FP60326-142446.jpg
 
 
