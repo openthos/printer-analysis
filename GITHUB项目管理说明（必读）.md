@@ -14,23 +14,23 @@ git使用简易教程 http://www.bootcss.com/p/git-guide/#rd
 另外，在openthos主页有更多学习资源
 地址：https://github.com/openthos/openthos/wiki/Home-zh_CN
 
-## （二） 集中学习GITHUB使用
+## ~~（二） 集中学习GITHUB使用~~
 
-时间：3月2日下午3:00
+~~时间：3月2日下午3:00~~
 
-地点：图书馆4楼实验室
+~~地点：图书馆4楼实验室~~
 
-要求：提前自学git基础教程，并注册github账号。在电脑上下载好git工具。
+~~要求：提前自学git基础教程，并注册github账号。在电脑上下载好git工具。~~
 
-内容：
+~~内容：~~
 
-* github简介
-* issues系统使用（任务领取，交流等）
-* fork && pull request
+~~* github简介~~
+~~* issues系统使用（任务领取，交流等）~~
+~~* fork && pull request~~
 
-测试主页 https://github.com/HsingPeng/STUDY_GIT
+~~测试主页 https://github.com/HsingPeng/STUDY_GIT~~
 
-以后项目的工作全都在GITHUB上展开。
+~~以后项目的工作全都在GITHUB上展开。~~
 
 ---
 
@@ -60,3 +60,7 @@ git使用简易教程 http://www.bootcss.com/p/git-guide/#rd
 1. fork本项目到个人的仓库  
 2. 所有修改均在个人仓库上进行。修改完成后，使用pull request请求合并到本项目的**master分支**  
 3. 文本型的文件尽量使用markdown格式编写，并后缀改为.md。github默认对markdown提供良好的支持
+
+## （三） 规范
+1. 每周工作报告格式为 ``时间_姓名_内容``
+2. 报告及文档提交后，谨慎修改文件名称，会破坏已有链接。
