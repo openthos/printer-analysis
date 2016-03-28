@@ -1,6 +1,9 @@
 # 安卓USB打印实现路径
 
 ## 参考
+
+>  [20160128_何兴鹏_android_x86打印机开发调研.md][3]
+
 >  [20160224_何兴鹏_android打印机开发进展.md][1]
 
 ## 实现路径图：
@@ -26,7 +29,7 @@
 | Android printing plugin   |
 |                           |
 +------------+--------------+
-             |                         +----------> 分析安卓打印子系统 ■ issue #11
+             |                         +----------> 分析安卓打印子系统 ✔ issue #11
              |                         |
              |                         |
              |                         |
@@ -44,7 +47,7 @@
              |
              |                         +----------> 分析CUPS API
              |                         |
-             |                         |
+             |                         +----------> APP连接最简驱动 ■ issue #13
              |                         +
              +------->  连接CUPS打印系统
 
@@ -67,7 +70,9 @@
               |                     |
               |                     +
               +------> 移植CUPS系统
-                                    +                    +---> 针对HP P1108进行最简移植实验 ■ issue #4
+                                    +                    +---> 针对HP P1108进行最简移植实验 ✔ issue #4
+                                    |                    |
+									|                    +---> 移植CUPS包
                                     |                    |
                                     |                    +
                                     +------> 移植方案一：静态编译
@@ -84,9 +89,13 @@
                                     |
                                     +------> 封装
 
+                                    
+Chart Power By ASCIIflow.com
+
 ```
 
 
 
 [1]: https://github.com/openthos/printer-analysis/blob/master/report%2F20160224_%E4%BD%95%E5%85%B4%E9%B9%8F_android%E6%89%93%E5%8D%B0%E6%9C%BA%E5%BC%80%E5%8F%91%E8%BF%9B%E5%B1%95.md
 [2]: https://github.com/openthos/printer-analysis/raw/master/report/raw/3987526971.png
+[3]: https://github.com/openthos/printer-analysis/blob/master/report%2F20160128_%E4%BD%95%E5%85%B4%E9%B9%8F_android_x86%E6%89%93%E5%8D%B0%E6%9C%BA%E5%BC%80%E5%8F%91%E8%B0%83%E7%A0%94.md
