@@ -358,4 +358,4 @@ public class MyPrintDiscoverySession extends PrinterDiscoverySession {
   [5]: https://developer.android.com/reference/android/printservice/PrintJob.html
   [6]: https://developer.android.com/reference/android/printservice/PrintService.html
   [7]: https://github.com/openthos/printer-analysis/blob/master/APP%2FAndroid_Print_API_%E9%83%A8%E5%88%86%E7%BF%BB%E8%AF%91.md
-  [8]: http://file:///C:/Users/bboxh/Documents/Android/sdk/docs/reference/android/print/PrinterCapabilitiesInfo.html
+  [8]: https://developer.android.com/reference/android/print/PrinterCapabilitiesInfo.html
