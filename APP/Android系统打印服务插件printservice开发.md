@@ -1,4 +1,4 @@
-# 简介
+# 一 简介
 
 从Android4.4开始，系统加入了打印相关的API，可以通过系统打印服务实现打印。对于需要使用打印功能的APP可参考官方教程接入打印服务。
 > Printing Content https://developer.android.com/training/printing/index.html
@@ -15,7 +15,7 @@
 
 通过实验，初步实现了系统打印服务的接入（添加打印机）和模拟打印（将要打印的文件输出）。
 
-# 主要类介绍
+# 二 主要类介绍
 
 从[``android.printservice``][2]中，我们可以知道主要有四个类：
 
@@ -33,9 +33,9 @@ PrintDocument 存放在 PrintJob 里面，被一同发过来。
 
 和打印相关的类的更多详细参考见：[Android_Print_API_部分翻译.md][7] 。
 
-# 打印服务插件的工作流程
+# 三 打印服务插件的工作流程
 
-## 打印机发现过程
+## 1 打印机发现过程
 
 当用户在设置里开启你的打印服务插件和进入系统打印服务界面时，系统会调用 PrinterDiscoverySession 里的 onStartPrinterDiscovery(List<PrinterId> priorityList) 函数，通知你的插件查找打印机。具体查找方式需要自己实现，可能是查找USB接口，可能是搜索网络。系统只管结果，你通过调用其父类的 addPrinters() 方法将打印机添加进去。打印机是放在List<PrinterId>数组里传入。
 
@@ -43,7 +43,7 @@ PrintDocument 存放在 PrintJob 里面，被一同发过来。
 
 另外，在自定义的 addPrintersActivity 中，系统不会自动触发打印机寻找过程，需要自行处理。
 
-## 打印机选择过程
+## 2 打印机选择过程
 
 当用户通过一些有打印功能的APP调用系统打印服务时，如果选择了你的插件的打印机，那么系统会调用 PrinterDiscoverySession 里的 onStartPrinterStateTracking(PrinterId printerId) 方法。这里系统主要希望得到打印机的 [``PrinterCapabilitiesInfo``][8] 和状态，里面包括打印机支持的纸张大小，以及色彩等详细功能参数。
 
@@ -55,21 +55,21 @@ PrintDocument 存放在 PrintJob 里面，被一同发过来。
 
 同样，当用户离开该界面或者选择其他打印机时，系统会调用 onStopPrinterStateTracking(PrinterId printerId) 函数，来告诉插件不用再提供打印机的信息了。
 
-## 打印过程
+## 3 打印过程
 
 当用户在刚刚的系统打印服务界面点击右上角的打印按钮时，系统会调用打印机所属的 PrintService 里的 onPrintJobQueued(PrintJob printJob) 方法，插件需要处理该 PrintJob 。首先需要通过 PrintJob.isQueued() 判断，该PrintJob是否准备好打印，返回true代表可以打印。然后可以通过 PrintJob.getDocument() 获得要打印的文档，这里面的数据可以通过 PrintDocument.getData() 读取。开始打印的时候，调用PrintJob.start()标记开始状态。当打印成功时，调用 PrintJob.complete() 标记打印成功。或者打印失败时，调用 PrintJob.fail( String) 标记失败。
 
 **注意**：一定要对PrintJob进行状态标记，包括开始或者成功失败。如果什么都不标记，系统会一直在任务栏提示该任务打印中，并且该打印机不可打印其他任务，处于准备中。如果任务结束不标记成功或者失败，一段时间之后，系统会自动将该任务标记为失败，并且打印机状态自动变为不可用。
 
 
-# 系统打印服务输出的数据
+# 四 系统打印服务输出的数据
 
 通过编写DEMO测试，发现android系统打印服务输出的数据是pdf 1.4的格式，无论文件内容是照片还是文档，都会统一转换为pdf 1.4。
 
-# 打印服务插件初步编写
+# 五 打印服务插件初步编写
 
 
-## 打印服务插件的声明
+## 1 打印服务插件的声明
 
 一个打印服务和其他任何服务一样，需要在AndroidManifest.xml里声明。但是它还必须处理action为android.printservice.PrintService的Intent。这个intent声明失败会导致系统忽略该打印服务。另外，一个打印服务必须请求android.permission.BIND_PRINT_SERVICE权限，来保证只有系统能绑定（bind）它。声明这个失败会导致系统忽略这个打印服务。
 
@@ -150,7 +150,7 @@ printservice.xml文件内容如下所示：
 </print-service>
 ```
 
-## PrintService实现类编写
+## 2 PrintService实现类编写
 
 在这里的 onPrintJobQueued 方法中，直接将需要打印的数据输出为文件。存放在APP根目录里的files文件夹。
 
@@ -235,7 +235,7 @@ public class MyPrintService extends PrintService {
 
 ```
 
-## PrinterDiscoverySession实现类编写
+## 3 PrinterDiscoverySession实现类编写
 
 ```java
 package com.github.openthos.printer.testprintservice;
@@ -346,7 +346,7 @@ public class MyPrintDiscoverySession extends PrinterDiscoverySession {
 }
 ```
 
-# 总结
+# 六 总结
 
 学习了该部分知识之后，已经可以初步从系统打印服务接入打印机，并取得要打印的文件。之后根据使用情况，适时地跟进细节即可。
 
