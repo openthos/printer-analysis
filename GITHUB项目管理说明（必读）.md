@@ -64,3 +64,12 @@ git使用简易教程 http://www.bootcss.com/p/git-guide/#rd
 ## （三） 规范
 1. 每周工作报告格式为 ``时间_姓名_内容``
 2. 报告及文档提交后，谨慎修改文件名称，会破坏已有链接。
+
+# 三 工具
+
+## （一） github浏览
+
+推荐在chrome浏览器(chromium内核皆可)中使用Octotree插件，能够以树状图的方式查看代码目录
+
+> https://chrome.google.com/webstore/detail/octotree/bkhaagjahfmjljalopjnoealnfndnagc
+
