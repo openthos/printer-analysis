@@ -1,0 +1,168 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=us-ascii">
+<title>Recent changes in Ghostscript</title>
+<!-- Originally: NEWS -->
+<!--
+	WARNING: do not use Pete Kaiser's emacs function "gs-toc" alone to
+	re-create the table of contents here, because it will replace the
+	hand-edited TOC subheads with a separate subhead for each H2 in
+	the body of the file.  Or if you do, first look at the original
+	TOC to see how to edit it for visual conciseness.
+-->
+<link rel="stylesheet" type="text/css" href="gs.css">
+</head>
+
+<body>
+<!-- [1.0 begin visible header] ============================================ -->
+
+<!-- [1.1 begin headline] ================================================== -->
+
+<h1>Changes in the most recent release of Ghostscript</h1>
+
+<!-- [1.1 end headline] ==================================================== -->
+
+<!-- [1.2 begin table of contents] ========================================= -->
+
+<!-- [1.2 end table of contents] =========================================== -->
+
+<!-- [1.3 begin hint] ====================================================== -->
+
+<p>
+This document is news about the most recent Ghostscript release.  For
+earlier versions, see the history documents:
+
+<blockquote>
+<a href="History9.htm">History of Ghostscript versions 9.n</a><br>
+<a href="History8.htm">History of Ghostscript versions 8.n</a><br>
+<a href="History7.htm">History of Ghostscript versions 7.n</a><br>
+<a href="History6.htm">History of Ghostscript versions 6.n</a><br>
+<a href="History5.htm">History of Ghostscript versions 5.n</a><br>
+<a href="History4.htm">History of Ghostscript versions 4.n</a><br>
+<a href="History3.htm">History of Ghostscript versions 3.n</a><br>
+<a href="History2.htm">History of Ghostscript versions 2.n</a><br>
+<a href="History1.htm">History of Ghostscript versions 1.n</a>
+</blockquote>
+
+<p>For other information, see the <a href="Readme.htm">Ghostscript
+overview</a>.
+
+<!-- [1.3 end hint] ======================================================== -->
+
+<hr>
+
+<!-- [1.0 end visible header] ============================================== -->
+
+<!-- [2.0 begin contents] ================================================== -->
+
+<h2><a name="Version9.14"></a>Version 9.14 (2014-03-26)</h2>
+
+<p>This is the tenth full release in the stable 9.x series, and is
+primarily a maintenance release.
+
+<p> Highlights in this release include:
+<ul>
+<li>
+<p>pdfwrite now uses the same color management engine as Ghostscript rendering
+devices (by default LCMS2). This provides much better control over color
+conversion and color management generally, but will result in some small color
+differences when compared to the old system.
+
+<p>It is no longer necessary to specify UseCIEColor (and we very much encourage
+you not to do this) or the ProcessColorModel if you want to convert a PDF file
+to a specific color space, simply set the ColorConversionStrategy appropriately.
+
+<p>We do not expect any major problems to arise with this new code, but for the
+duration of this release a new switch -dPDFUseOldCMS is available which will
+restore the old color management.
+See: <a href="Ps2pdf.htm#Color_Conversion_and_Management">Color Conversion and Management</a>
+
+<p>Please note that due to constraints of the PDF/A-1 specification, the new
+color management does not yet apply when producing PDF/A files.
+</li>
+<li>
+<p> A new device 'eps2write' has been added which allows for the creation of
+EPS files using the ps2write device instead of the old (deprecated and removed)
+pswrite device. This produces considerably better quality EPS files than
+the old epswrite device which is now also deprecated and will be removed in a
+future release.
+</li>
+<li>
+<p> ps2write now has a feature to allow customisation of the output for specific
+devices. Please see PSDocOptions and PSPageOptions described in ps2ps2.htm
+<a href="Ps2ps2.htm#AdditionalDistillerParams">Additional Distiller Params</a>
+</li>
+<li>
+<p> Ghostscript now reduces memory usage when processing PDF files that use
+transparency and output is to display devices such as Windows display or x11
+(i.e. devices that are strictly full framebuffer devices), and to high level
+vector devices that cannot reproduce the PDF transparency model, such as the
+ps2write device or pdfwrite when 'flattening' to PDF 1.3 or earlier
+(-dCompatibilityLevel=1.3). This uses banding (clist) files to render the
+transparent areas in bands to reduce memory use, and unlike the existing
+page level banding, this is hidden from the target device.
+</li>
+<li>
+<p> Ghostscript can now collect information for pages in temp files (in
+Ghostscript's clist format), then render and output pages for the job in arbitrary
+order, including normal, reverse, odd, even, or any order or subset of the pages.
+This is controlled with the --saved-page=___ option. (Note that this only applies
+to rendering devices, and not high level devices such as pdfwrite and ps2write.)
+See: <a href="Use.htm#Deferred_Page_Rendering">Deferred Page Rendering</a>
+</li>
+<li>
+<p> The Ghostscript device architecture has been extended so that, when
+rendering bands into multiple threads, it is now possible to perform
+post-processing in multiple threads, such as downscale, post-render halftoning,
+or compression. Previously, post processing was only possible in the single
+main thread. This can improve performance significantly. 
+</li>
+<li>
+<p> Ghostscript has a new "pwgraster" output device for PWG Raster output
+</li>
+<li>
+<p> The CUPS device now has improved support for PPD-less printing
+</li>
+<li>
+<p>Plus the usual round of bug fixes, compatibility changes, and incremental improvements.
+</li>
+</ul>
+<p>For a list of open issues, or to report problems,
+please visit <a href="http://bugs.ghostscript.com/">bugs.ghostscript.com</a>.
+
+<h3><a name="9.09_Incompatible_changes"></a>Incompatible changes</h3>
+<p>
+No recorded incompatible changes.
+
+<h3><a name="9.09_changelog"></a>Changelog</h3>
+
+<p>See the <a href="History9.htm">history file</a> for complete log 
+of changes.
+
+<!-- [2.0 end contents] ==================================================== -->
+
+<!-- [3.0 begin visible trailer] =========================================== -->
+<hr>
+
+<p>
+<small>Copyright &copy; 2005-2014 Artifex Software, Inc.
+All rights reserved.</small>
+
+<p>
+This software is provided AS-IS with no warranty, either express or
+implied.
+
+This software is distributed under license and may not be copied, modified
+or distributed except as expressly authorized under the terms of that
+license.  Refer to licensing information at http://www.artifex.com/
+or contact Artifex Software, Inc.,  7 Mt. Lassen Drive - Suite A-134,
+San Rafael, CA  94903, U.S.A., +1(415)492-9861, for further information.
+
+<p>
+<small>Ghostscript version 9.14, 26 March 2014
+
+<!-- [3.0 end visible trailer] ============================================= -->
+
+</body>
+</html>
