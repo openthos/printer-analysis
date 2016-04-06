@@ -47,9 +47,8 @@ tar -xvf ghostscript-9.14.tar.gz
 进入ghostscript源码目录，分别执行一下几步创建Makefile文件、编译及安装：
 
 ```
-64位平台：./configure CFLAGS=-static –enable-static LDFLAGS=-static –disable-shared prefix=指路径  
-32位平台： ./configure CFLAGS="-static -m32" --enable-static LDFLAGS="-static -m32" --disable-shared --prefix=指定路径    
-
+./configure CFLAGS=-static --enable-static LDFLAGS=-static --disable-shared --prefix=指定路径 (64位平台)    或    
+./configure CFLAGS="-static -m32" --enable-static LDFLAGS="-static -m32" --disable-shared --prefix=指定路径 (32位平台)     
 make  
 make install
 ```
@@ -70,7 +69,7 @@ $ wget -O foo2zjs.tar.gz http://foo2zjs.rkkda.com/foo2zjs.tar.gz
 tar zxf foo2zjs.tar.gz
 ```
 
-进入foo2zjs源码目录，在Makefile文件末尾添加```CC=gcc```、```CFLAGS+=-static(64位平台) / CFLAGS+=-static -m32(32位平台)```，执行命令：
+进入foo2zjs源码目录，在Makefile文件末尾添加```CC=gcc```、```CFLAGS+=-static(64位平台) 或 CFLAGS+=-static -m32(32位平台)```，执行命令：
 
 ```
 make
