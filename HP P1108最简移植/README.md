@@ -1,8 +1,8 @@
 ##ghostscript
 
-*ghostscript-9.14　ghostscript源码目录，经ghostscript-9.14.tar.gz解压得到
-*gs-install-32　编译后生成，32位android_x86所用ghostscript文件目录
-*gs-install-64　编译后生成，64位android_x86所用ghostscript文件目录
+*ghostscript-9.14　ghostscript源码目录，经ghostscript-9.14.tar.gz解压得到    
+*gs-install-32　编译后生成，32位android_x86所用ghostscript文件目录    
+*gs-install-64　编译后生成，64位android_x86所用ghostscript文件目录    
 
 ##foo2zjs
 
