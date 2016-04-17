@@ -31,7 +31,7 @@ public class MyPrintDiscoverySession extends PrinterDiscoverySession {
                 .Builder(myPrintService.generatePrinterId(name), name, PrinterInfo.STATUS_IDLE)
                 .build();
         printers.add(myprinter);
-        addPrinters(printers);
+        //addPrinters(printers);
     }
 
     @Override
@@ -49,7 +49,7 @@ public class MyPrintDiscoverySession extends PrinterDiscoverySession {
     }
 
     /**
-     * 选择打印机时调用该方法更新打印机的状态，能力
+     * 选择打印机时调用该方法更新打印机的状态，功能
      * @param printerId
      */
     @Override

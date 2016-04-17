@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">openthos打印服务</string>
+    <string name="openthos_print_service">openthos打印服务</string>
+    <string name="print_manager">打印管理</string>
+    <string name="action_settings">设置</string>
+    <string name="action_system_print_service">系统打印服务</string>
+</resources>

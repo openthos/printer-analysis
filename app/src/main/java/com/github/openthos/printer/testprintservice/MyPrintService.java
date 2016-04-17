@@ -40,7 +40,7 @@ public class MyPrintService extends PrintService {
         PrintJobInfo printjobinfo = printJob.getInfo();
         PrintDocument printdocument = printJob.getDocument();
 
-        if (printJob.isQueued()) {
+        if (!printJob.isQueued()) {
             return;
         }
         printJob.start();
@@ -63,7 +63,7 @@ public class MyPrintService extends PrintService {
             while ((hasRead = file.read(bbuf)) > 0) {
 
                 //将字节数组转换为字符串输出
-                //System.out.print(new String(bbuf, 0, hasRead));
+                System.out.print(new String(bbuf, 0, hasRead));
                 outStream.write(bbuf);
             }
 

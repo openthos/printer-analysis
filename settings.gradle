@@ -1,1 +1,1 @@
-include ':app', ':testusb'
+include ':app', ':testusb', ':testexec', ':openthosprintservice', ':testunit'
