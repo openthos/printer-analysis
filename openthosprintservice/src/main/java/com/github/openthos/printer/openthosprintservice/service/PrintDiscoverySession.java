@@ -43,22 +43,30 @@ public class PrintDiscoverySession extends PrinterDiscoverySession {
         List<PrinterItem> list = helper.queryAll();
         helper.close();
 
+        List<PrinterId> old_list = new ArrayList<>();
+        old_list.addAll(priorityList);
+
         if (list != null) {
             for (PrinterItem printerItem : list) {
 
+                PrinterId id = openthosPrintService.generatePrinterId(String.valueOf(printerItem.getPrinterId()));
+
+                if(priorityList.contains(id)){
+                    old_list.remove(id);
+                    continue;
+                }
+
                 PrinterInfo.Builder builder =
-                        new PrinterInfo.Builder(openthosPrintService.generatePrinterId(String.valueOf(printerItem.getPrinterId()))
-                                , printerItem.getNickName(), PrinterInfo.STATUS_UNAVAILABLE);
-
-
+                        new PrinterInfo.Builder(id, printerItem.getNickName(), PrinterInfo.STATUS_UNAVAILABLE);
                 getStatus(printerItem, builder);
                 PrinterInfo myprinter = builder.build();
                 printers.add(myprinter);
-                addPrinters(printers);
             }
-
-
+            addPrinters(printers);
         }
+
+        removePrinters(old_list);
+
     }
 
     /**
@@ -105,32 +113,32 @@ public class PrintDiscoverySession extends PrinterDiscoverySession {
     @Override
     public void onStartPrinterStateTracking(PrinterId printerId) {
         LogUtils.d(TAG, "onStartPrinterStateTracking()");
-        PrinterInfo printer = findPrinterInfo(printerId);
-        if (printer != null) {
-            PrinterCapabilitiesInfo capabilities =
-                    new PrinterCapabilitiesInfo.Builder(printerId)
-                            .setMinMargins(new PrintAttributes.Margins(200, 200, 200, 200))
-                            .addMediaSize(PrintAttributes.MediaSize.ISO_A4, true)
-                            .addResolution(new PrintAttributes.Resolution("R1", "600x600", 600, 600), true)
-                            .setColorModes(PrintAttributes.COLOR_MODE_MONOCHROME,
-                                    PrintAttributes.COLOR_MODE_MONOCHROME)
-                            .build();
 
 
-            PrinterItemHelper helper = new PrinterItemHelper();
-            PrinterItem item = helper.query(Integer.parseInt(printerId.getLocalId()));
+        PrinterCapabilitiesInfo capabilities =
+                new PrinterCapabilitiesInfo.Builder(printerId)
+                        .setMinMargins(new PrintAttributes.Margins(200, 200, 200, 200))
+                        .addMediaSize(PrintAttributes.MediaSize.ISO_A4, true)
+                        .addResolution(new PrintAttributes.Resolution("R1", "600x600", 600, 600), true)
+                        .setColorModes(PrintAttributes.COLOR_MODE_MONOCHROME,
+                                PrintAttributes.COLOR_MODE_MONOCHROME)
+                        .build();
 
-            PrinterInfo.Builder builder = new PrinterInfo.Builder(printer);
-            getStatus(item, builder);
 
-            printer = builder.setCapabilities(capabilities)
-                    //.setDescription(item.getManufacturerName())
-                    .build();
-            List<PrinterInfo> printers = new ArrayList<PrinterInfo>();
+        PrinterItemHelper helper = new PrinterItemHelper();
+        PrinterItem item = helper.query(Integer.parseInt(printerId.getLocalId()));
 
-            printers.add(printer);
-            addPrinters(printers);
-        }
+        PrinterInfo.Builder builder = new PrinterInfo.Builder(printerId, item.getNickName(), PrinterInfo.STATUS_UNAVAILABLE);
+        getStatus(item, builder);
+
+        PrinterInfo printer = builder.setCapabilities(capabilities)
+                //.setDescription(item.getManufacturerName())
+                .build();
+        List<PrinterInfo> printers = new ArrayList<PrinterInfo>();
+
+        printers.add(printer);
+        addPrinters(printers);
+
     }
 
     /**
@@ -147,17 +155,6 @@ public class PrintDiscoverySession extends PrinterDiscoverySession {
 
     }
 
-    private PrinterInfo findPrinterInfo(PrinterId printerId) {
-        List<PrinterInfo> printers = getPrinters();
-        final int printerCount = getPrinters().size();
-        for (int i = 0; i < printerCount; i++) {
-            PrinterInfo printer = printers.get(i);
-            if (printer.getId().equals(printerId)) {
-                return printer;
-            }
-        }
-        return null;
-    }
 
 
 }

@@ -98,6 +98,11 @@ public class DriveItemHelper {
         return flag;
     }
 
+    /**
+     * 比较 DriverId
+     * @param item
+     * @return
+     */
     public List<DriveItem> query(DriveItem item){
 
         Cursor cursor = db.query(DRIVE_TABLE_NAME, new String[]{DriverId, DriverName, VendorId, ProductId},
@@ -155,6 +160,10 @@ public class DriveItemHelper {
         return list;
     }
 
+    /**
+     *
+     * @return
+     */
     public List<DriveItem> queryAll(){
 
         Cursor cursor = db.query(DRIVE_TABLE_NAME, new String[]{DriverId, DriverName, VendorId, ProductId},
@@ -179,6 +188,11 @@ public class DriveItemHelper {
         return list;
     }
 
+    /**
+     *
+     * @param driverid
+     * @return
+     */
     public int delete(int driverid){
         int number = db.delete(DRIVE_TABLE_NAME, DriverId + " = ? ",
                 new String[]{String.valueOf(driverid)});

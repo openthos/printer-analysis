@@ -16,16 +16,15 @@
     <string name="no_need_for_initialization">No need for initialization</string>
     <string name="new_printer__notification">New device detected</string>
     <string name="whether_add_new_printer">Add a new printer now?</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="added_device">added devices</string>
     <string name="add_new_printers">add new printers</string>
     <string name="local_printers">local printers</string>
     <string name="network_printers">network printers</string>
-    <string name="add_a_local_printer">Add a new printer</string>
+    <string name="add_a_local_printer">Add a new local printer</string>
     <string name="the_printer_can_be_added_directly">the printer can be added directly</string>
     <string name="add_success">Add success</string>
     <string name="empty">empty</string>
-    <string name="test_page">Test Page</string>
     <string name="tuning">Tuning</string>
     <string name="delete">Delete</string>
+    <string name="the_printer_is_untested">the printer is untested</string>
 </resources>

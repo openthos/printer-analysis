@@ -22,6 +22,7 @@ import com.github.openthos.printer.openthosprintservice.APP;
 import com.github.openthos.printer.openthosprintservice.R;
 import com.github.openthos.printer.openthosprintservice.model.DriveGsFoo2zjsItem;
 import com.github.openthos.printer.openthosprintservice.model.DriveGsFoo2zjsItemHelper;
+import com.github.openthos.printer.openthosprintservice.model.DriveItemHelper;
 import com.github.openthos.printer.openthosprintservice.model.PrinterItem;
 import com.github.openthos.printer.openthosprintservice.model.PrinterItemHelper;
 import com.github.openthos.printer.openthosprintservice.ui.adapter.ManagementAdapter;
@@ -93,7 +94,17 @@ public class ManagementActivity extends BaseActivity {
         final EditText text = new EditText(this);
         text.setText(deviceItem.getDeviceItem().getProductName());
         TextView tips = new TextView(this);
-        tips.setText(R.string.the_printer_can_be_added_directly);
+
+        tips.setText(R.string.the_printer_is_untested);
+
+        for(int i=0; i < deviceItem.getDeviceItem().getInterfaceCount(); i++ ){
+            // InterfaceClass 7 代表打印机，目前是写死的，只能支持HP P1108打印机，其他打印机提示未测试
+            if(deviceItem.getDeviceItem().getInterface(i).getInterfaceClass() == 7
+                    && deviceItem.getDeviceItem().getVendorId() == 1008 && deviceItem.getDeviceItem().getProductId() == 42 ){
+                tips.setText(R.string.the_printer_can_be_added_directly);
+            }
+        }
+
         layout.addView(text);
         layout.addView(tips);
         AlertDialog.Builder builder = new AlertDialog.Builder(this).setTitle(R.string.add_a_local_printer)
