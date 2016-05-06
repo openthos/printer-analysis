@@ -154,7 +154,7 @@ make
 
 ```
 #此时在编译好的ghostscript根目录
-gs -q -dBATCH -dSAFER -dQUIET -dNOPAUSE -sPAPERSIZE=a4-r600x600 -sDEVICE=pbmraw -sOutputFile=test_1.pbm chess.ps
+gs -q -dBATCH -dSAFER -dQUIET -dNOPAUSE -sPAPERSIZE=a4 -r600x600 -sDEVICE=pbmraw -sOutputFile=test_1.pbm chess.ps
 ```
 将chess.ps转换为test_1.pbm文件。test_1.pbm文件待会就要作为foo2zjs的输入。
 

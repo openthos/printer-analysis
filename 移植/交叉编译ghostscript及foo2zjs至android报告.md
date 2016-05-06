@@ -125,7 +125,7 @@ chmod  775 arm2hpdl foo2hbpl2 foo2hbpl2-wrapper.in foo2hiperc foo2hiperc-wrapper
 进入ghostscript的bin目录，执行
 
 ```
-./gs -q -dBATCH -dSAFER -dQUIET -dNOPAUSE -sbinPAPERSIZE=a4 -r600x600 -sDEVICE=pbmraw -sOutputFile=test_1.pbm chess.ps  
+./gs -q -dBATCH -dSAFER -dQUIET -dNOPAUSE -sPAPERSIZE=a4 -r600x600 -sDEVICE=pbmraw -sOutputFile=test_1.pbm chess.ps  
 //参数说明： 
 "-dBATCH",    执行到最后一页后退出；  
 "-dQUIET",    安静的意思，指代执行过程中尽可能少的输出日志等信息。  
