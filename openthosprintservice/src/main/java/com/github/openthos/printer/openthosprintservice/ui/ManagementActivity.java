@@ -22,7 +22,6 @@ import com.github.openthos.printer.openthosprintservice.APP;
 import com.github.openthos.printer.openthosprintservice.R;
 import com.github.openthos.printer.openthosprintservice.model.DriveGsFoo2zjsItem;
 import com.github.openthos.printer.openthosprintservice.model.DriveGsFoo2zjsItemHelper;
-import com.github.openthos.printer.openthosprintservice.model.DriveItemHelper;
 import com.github.openthos.printer.openthosprintservice.model.PrinterItem;
 import com.github.openthos.printer.openthosprintservice.model.PrinterItemHelper;
 import com.github.openthos.printer.openthosprintservice.ui.adapter.ManagementAdapter;

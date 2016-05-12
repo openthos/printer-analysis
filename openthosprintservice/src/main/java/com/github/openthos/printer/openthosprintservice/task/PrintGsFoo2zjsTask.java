@@ -165,7 +165,7 @@ public class PrintGsFoo2zjsTask extends BaseTask {
                     try {
                         while((line = in.readLine()) != null){
                             LogUtils.d(TAG, "error -> " + line);
-                            flag[0] = false;
+                            //flag[0] = false;
                             message.append(" ErrorStream ");
                         }
                     } catch (IOException e) {
@@ -213,7 +213,7 @@ public class PrintGsFoo2zjsTask extends BaseTask {
         final boolean[] flag = {true};
 
         String command = "./foo2zjs -z3 -p9 -r600x600 " + docu_file_path+".pbm " + " >"+ docu_file_path + ".data";
-        LogUtils.d(TAG, "gs -> " + command);
+        LogUtils.d(TAG, "foo2zjs -> " + command);
         try {
             File file = new File(FileUtils.getComponentPath());
             final Process p = Runtime.getRuntime().exec(new String[]{"sh", "-c", command}, null, file);
@@ -252,7 +252,7 @@ public class PrintGsFoo2zjsTask extends BaseTask {
                     try {
                         while((line = in.readLine()) != null){
                             LogUtils.d(TAG, "error -> " + line);
-                            flag[0] = false;
+                            //flag[0] = false;          暂时屏蔽错误，因为会有系统WARNING，造成误判
                             message.append(" ErrorStream ");
                         }
                     } catch (IOException e) {
@@ -309,29 +309,29 @@ public class PrintGsFoo2zjsTask extends BaseTask {
         UsbManager manager = (UsbManager) APP.getApplicatioContext().getSystemService(Context.USB_SERVICE);
         HashMap<String, UsbDevice> deviceList = manager.getDeviceList();
 
-        UsbDevice deviceitem = null;
+        final UsbDevice[] deviceitem = {null};
 
         Iterator<UsbDevice> deviceIterator = deviceList.values().iterator();
         while (deviceIterator.hasNext()) {
             UsbDevice device = deviceIterator.next();
             if(device.getVendorId() == item.getVendorId() && device.getProductId() == item.getProductId()
                     && device.getSerialNumber().equals(item.getSerialNumber())){
-                deviceitem = device;
+                deviceitem[0] = device;
                 break;
             }
         }
 
-        if(deviceitem == null){
+        if(deviceitem[0] == null){
             message.append(" deviceitem == null ");
             return false;
         }
 
         UsbInterface usbInterface = null;
 
-        for(int i=0; i < deviceitem.getInterfaceCount(); i++ ){
+        for(int i = 0; i < deviceitem[0].getInterfaceCount(); i++ ){
             // InterfaceClass 7 代表打印机
-            if(deviceitem.getInterface(i).getInterfaceClass() == 7){
-                usbInterface = deviceitem.getInterface(i);
+            if(deviceitem[0].getInterface(i).getInterfaceClass() == 7){
+                usbInterface = deviceitem[0].getInterface(i);
                 break;
             }
         }
@@ -358,6 +358,7 @@ public class PrintGsFoo2zjsTask extends BaseTask {
                         if (intent.getBooleanExtra(UsbManager.EXTRA_PERMISSION_GRANTED, false)) {
                             if(device != null){
                                 flag[0] = true;
+                                deviceitem[0] = device;
                             }
                         }else {
                             flag[0] = false;
@@ -375,7 +376,7 @@ public class PrintGsFoo2zjsTask extends BaseTask {
         APP.getApplicatioContext().registerReceiver(mUsbReceiver, filter);
 
         PendingIntent mPermissionIntent = PendingIntent.getBroadcast(APP.getApplicatioContext(), 0, new Intent(ACTION_USB_PERMISSION), 0);
-        manager.requestPermission(deviceitem, mPermissionIntent);
+        manager.requestPermission(deviceitem[0], mPermissionIntent);
 
         synchronized (usb_lock){
             try {
@@ -392,7 +393,7 @@ public class PrintGsFoo2zjsTask extends BaseTask {
             return false;
         }
 
-        UsbDeviceConnection connection = manager.openDevice(deviceitem);
+        UsbDeviceConnection connection = manager.openDevice(deviceitem[0]);
 
         if(!connection.claimInterface(usbInterface, true)){
             message.append(" connection.claimInterface error ");

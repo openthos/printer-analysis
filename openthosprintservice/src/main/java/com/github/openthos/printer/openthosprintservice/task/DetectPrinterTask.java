@@ -44,7 +44,7 @@ public class DetectPrinterTask extends BaseTask {
     public void run() {
 
 
-         usbmanager = (UsbManager)context.getSystemService(Context.USB_SERVICE);
+        usbmanager = (UsbManager)context.getSystemService(Context.USB_SERVICE);
         HashMap<String, UsbDevice> deviceList = usbmanager.getDeviceList();
 
         Log.d(TAG, "get device list  = " + deviceList.size());
