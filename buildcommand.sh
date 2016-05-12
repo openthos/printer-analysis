@@ -4,11 +4,19 @@
 # Description:
 # This script used to rm the old command and build soft link to busybox.So that you can get a soft link command.
 
-MD5_busybox=$(/$1 md5sum $1 | awk '{print $1}')
+busyboxname=busybox-i686
+
+if [ ! -f $busyboxname ]
+then
+	echo "Busybox file is not exit"
+	exit 1
+fi
+
+MD5_busybox=$(/$busyboxname md5sum $busyboxname | awk '{print $1}')
 
 getMD5code()
 {
-	MD5=$(/$1 md5sum $2 | awk '{print $1}')
+	MD5=$(/$busyboxname md5sum $2 | awk '{print $1}')
 
 }
 
@@ -40,11 +48,11 @@ do
 	do
 #		echo $curr
 #		echo $dirpath	
-		getMD5code $1 /$dirpath/$curr
+		getMD5code $busyboxname /$dirpath/$curr
 		if [ $MD5 == $MD5_busybox ]
 		then
 			rm -rf /$dirpath/$curr
-			/$1 ln -s /$1 /$dirpath/$curr
+			/$busyboxname ln -s /$busyboxname /$dirpath/$curr
 		else
 			continue
 		fi
