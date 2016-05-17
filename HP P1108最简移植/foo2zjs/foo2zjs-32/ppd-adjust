@@ -1,3 +1,0 @@
-sed -e '/~*% For /i \
-*% (c) Copyright Rick Richardson 2008 \
-*%' -e '/~*NickName:/s/(/rkkda.com (/'

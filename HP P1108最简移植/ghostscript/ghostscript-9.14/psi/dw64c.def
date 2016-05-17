@@ -1,4 +1,0 @@
-;	'Ghostscript Interpreter'
-NAME		GSWIN64C
-HEAPSIZE	256
-STACKSIZE	131072
