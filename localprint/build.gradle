@@ -1,0 +1,45 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.2"
+
+    defaultConfig {
+        applicationId "com.github.openthos.printer.localprint"
+        minSdkVersion 19
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    signingConfigs {
+
+        release {
+            storeFile file("../demo_platform.keystore")
+            storePassword '123456'
+            keyAlias 'demo_platform'
+            keyPassword '123456'
+        }
+
+        debug {
+            storeFile file("../demo_platform.keystore")
+            storePassword '123456'
+            keyAlias 'demo_platform'
+            keyPassword '123456'
+        }
+
+    }
+
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:23.3.0'
+}

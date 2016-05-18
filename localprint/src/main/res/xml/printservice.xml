@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<print-service xmlns:android="http://schemas.android.com/apk/res/android"
+    android:vendor="openthos"
+    android:settingsActivity="com.github.openthos.printer.localprint.ui.SettingsActivity"
+    android:addPrintersActivity="com.github.openthos.printer.localprint.ui.ManagementActivity"
+    android:advancedPrintOptionsActivity="com.github.openthos.printer.localprint.ui.AdvancedPrintOptionsActivity"
+    >
+</print-service>
