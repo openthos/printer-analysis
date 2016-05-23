@@ -113,7 +113,7 @@ public class OpenthosPrintService extends PrintService {
             }
         };
 
-        task.start();
+        task.start(map);
 
     }
 

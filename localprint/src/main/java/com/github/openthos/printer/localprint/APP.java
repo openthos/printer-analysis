@@ -32,7 +32,7 @@ public class APP extends Application{
     public static final String MESSAGE = "message";
     public static final String RESULT = "result";
     public static final String JOBID = "jobid";
-    public static final String COMPONENT_PATH = "/component_5";        //文件所在文件夹
+    public static final String COMPONENT_PATH = "/component_14";        //文件所在文件夹
 
     public static boolean MANAGEMENT_ACTIVITY_ON_TOP = false;
 

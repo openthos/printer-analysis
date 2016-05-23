@@ -1,6 +1,5 @@
 package com.github.openthos.printer.localprint.task;
 
-import android.os.AsyncTask;
 import android.util.Log;
 
 import com.github.openthos.printer.localprint.util.FileUtils;
@@ -21,6 +20,8 @@ public abstract class CommandTask<Params, Progress, Result> extends BaseTask<Par
     private List<String> stdErr = new ArrayList<String>();
     protected  String ERROR = "";                   //可以填写错误信息，输出给用户
     private String[] cmd = null;
+    private Thread cupsdThread = null;
+    private Process cupsdProcess;
 
     @Override
     protected final Result doInBackground(Params... params) {
@@ -228,7 +229,15 @@ public abstract class CommandTask<Params, Progress, Result> extends BaseTask<Par
         }
 
         boolean flag = false;
-        runCommand(new String[]{"sh", "proot.sh", "cupsd"});
+        runCommand(new String[]{"sh", "proot.sh" ,"cupsd"});
+
+        /*File file = new File(getWorkPath());
+        try {
+            cupsdProcess = Runtime.getRuntime().exec(new String[]{"sh", "proot.sh" ,"cupsd","-f"}, null, file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
+
         // 2016/5/15 启动cups A2
         flag = cupsIsRunning();
         return flag;
@@ -239,7 +248,11 @@ public abstract class CommandTask<Params, Progress, Result> extends BaseTask<Par
      * @return
      */
     protected void killCups(){
-        // TODO: 2016/5/15 关闭CUPS A3
+        // 2016/5/15 关闭CUPS A3
+        if(cupsdProcess != null){
+            cupsdProcess.destroy();
+        }
+
     }
 
 }

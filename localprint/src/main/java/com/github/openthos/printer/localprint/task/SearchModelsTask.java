@@ -1,6 +1,7 @@
 package com.github.openthos.printer.localprint.task;
 
 import com.github.openthos.printer.localprint.model.ModelsItem;
+import com.github.openthos.printer.localprint.model.PPDItem;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,12 +30,12 @@ public class SearchModelsTask<Params, Progress> extends CommandTask<Params, Prog
         }
 
         List<String> brand = new ArrayList<>();
-        Map<String, List<String>> models = new HashMap<>();
+        Map<String, List<PPDItem>> models = new HashMap<>();
 
         brand.add("Epson");
-        List<String> epsonBrand = new ArrayList<>();
-        epsonBrand.add("AcuLaser CX17NF Foomatic/foo2hbpl2 (recommended)");
-        epsonBrand.add("AcuLaser M1400 Foomatic/foo2hbpl2 (recommended)");
+        List<PPDItem> epsonBrand = new ArrayList<>();
+        epsonBrand.add(new PPDItem("drv:///sample.drv/epson9.ppd", "Epson", "9-Pin Series"));
+        epsonBrand.add(new PPDItem("Epson-AcuLaser_CX17NF.ppd.gz" ,"Epson", "AcuLaser CX17NF Foomatic/foo2hbpl2 (recommended)"));
         models.put("Epson", epsonBrand);
 
         return new ModelsItem(brand, models);

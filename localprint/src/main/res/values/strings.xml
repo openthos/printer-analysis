@@ -39,4 +39,7 @@
     <string name="delete_failed">Delete failed</string>
     <string name="print_failed">Print failed</string>
     <string name="print_copy_file_failed">Copy the file failed</string>
+    <string name="printing">Printing</string>
+    <string name="start_printing">Start printing</string>
+    <string name="print_error">Printing error</string>
 </resources>

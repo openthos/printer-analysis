@@ -1,5 +1,7 @@
 package com.github.openthos.printer.localprint.task;
 
+import android.util.Log;
+
 import java.util.List;
 import java.util.Map;
 
@@ -20,8 +22,8 @@ public class PrintTask<Progress> extends CommandTask<Map<String, String>, Progre
     @Override
     protected String[] setCmd(Map<String, String>... params) {
         Map<String, String> map = params[0];
-        map.get(LP_PRINTER);
-        map.get(LP_FILE);
+        String printer = map.get(LP_PRINTER);
+        String file = map.get(LP_FILE);
         map.get(LP_MEDIA);
         map.get(LP_RESOLUTION);
         map.get(LP_LANDSCAPE);
@@ -29,12 +31,49 @@ public class PrintTask<Progress> extends CommandTask<Map<String, String>, Progre
 
         // TODO: 2016/5/16 打印 C1
 
-        return new String[]{};
+        return new String[]{"sh", "proot.sh", "lp", "-d", printer, "-o fit-to-page", file};
     }
 
     @Override
     protected final Integer handleCommand(List<String> stdOut, List<String> stdErr) {
-        return -1;
+
+        int flag = -1;
+
+        for(String line: stdErr){
+
+            if( line.startsWith("WARNING") )
+                continue;
+            else if (line.contains("Bad file descriptor")){
+                if( startCups() ){
+                    runCommandAgain();      //再次运行命令
+                }else{
+                    ERROR = "Cups start failed.";
+                    return -1;
+                }
+            }
+
+
+        }
+
+        for(String line: stdOut){
+            if(line.startsWith("request id is")){
+                //处理打印成功的数据，按空格分隔
+                String[] data = line.split("\\s+");
+                Log.d(TAG, "request id is -> " + data[3]);
+            }else if(line.contains("scheduler not responding")){
+                if( startCups() ){
+                    runCommandAgain();      //再次运行命令
+                }else{
+                    ERROR = "Cups start failed.";
+                    return -1;
+                }
+            }else if (line.contains("No such file or directory")){
+                //待打印文件不存在
+
+            }
+        }
+
+        return flag;
     }
 
     @Override

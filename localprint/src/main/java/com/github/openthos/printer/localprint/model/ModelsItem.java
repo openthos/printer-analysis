@@ -9,9 +9,9 @@ import java.util.Map;
 public class ModelsItem {
 
     private List<String> brand;
-    private Map<String, List<String>> models;
+    private Map<String, List<PPDItem>> models;
 
-    public ModelsItem(List<String> brand, Map<String, List<String>> models) {
+    public ModelsItem(List<String> brand, Map<String, List<PPDItem>> models) {
         this.brand = brand;
         this.models = models;
     }
@@ -27,11 +27,11 @@ public class ModelsItem {
         this.brand = brand;
     }
 
-    public Map<String, List<String>> getModels() {
+    public Map<String, List<PPDItem>> getModels() {
         return models;
     }
 
-    public void setModels(Map<String, List<String>> models) {
+    public void setModels(Map<String, List<PPDItem>> models) {
         this.models = models;
     }
 

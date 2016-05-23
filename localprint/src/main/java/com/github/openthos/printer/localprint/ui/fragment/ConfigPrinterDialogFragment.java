@@ -17,7 +17,11 @@ import com.github.openthos.printer.localprint.APP;
 import com.github.openthos.printer.localprint.R;
 import com.github.openthos.printer.localprint.model.PrinterItem;
 import com.github.openthos.printer.localprint.task.DeletePrinterTask;
+import com.github.openthos.printer.localprint.task.PrintTask;
 import com.github.openthos.printer.localprint.ui.ManagementActivity;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -81,8 +85,28 @@ public class ConfigPrinterDialogFragment extends DialogFragment {
 
     }
 
+    /**
+     * 打印测试页
+     */
     private void test_page() {
+        PrintTask<Void> task = new PrintTask<Void>() {
+            @Override
+            protected void onPostExecute(Integer jobId) {
+                if(jobId == -1){
+                    Toast.makeText(getActivity(), getResources().getString(R.string.print_error) + ERROR, Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(getActivity(), R.string.printing, Toast.LENGTH_SHORT).show();
+                }
 
+            }
+        };
+
+        Map<String, String> map = new HashMap<>();
+        map.put(PrintTask.LP_PRINTER, "HP_LaserJet_Professional_P1108");
+        map.put(PrintTask.LP_FILE, "/docu3.pdf");
+
+        task.start(map);
+        Toast.makeText(getActivity(), R.string.start_printing, Toast.LENGTH_SHORT).show();
     }
 
     /**

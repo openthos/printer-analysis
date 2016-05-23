@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.github.openthos.printer.localprint.APP;
 import com.github.openthos.printer.localprint.R;
 import com.github.openthos.printer.localprint.model.ModelsItem;
+import com.github.openthos.printer.localprint.model.PPDItem;
 import com.github.openthos.printer.localprint.task.AddPrinterTask;
 import com.github.openthos.printer.localprint.task.SearchModelsTask;
 import com.github.openthos.printer.localprint.ui.adapter.ManagementAdapter;
@@ -85,7 +86,8 @@ public class ManagementActivity extends BaseActivity {
 
         // Create and show the dialog.
         DialogFragment newFragment = ConfigPrinterDialogFragment.newInstance(item.getPrinteritem());
-        newFragment.show(ft, ConfigPrinterDialogFragment.ITEM);
+        ft.add(newFragment, ConfigPrinterDialogFragment.ITEM);
+        ft.commitAllowingStateLoss();
     }
 
     /**
@@ -94,7 +96,7 @@ public class ManagementActivity extends BaseActivity {
      */
     private void showAddLocalDialog(final ManagementListItem deviceItem) {
 
-        final Map<String, List<String>> models = new HashMap<>();
+        final Map<String, List<PPDItem>> models = new HashMap<>();
 
         LinearLayout layout = new LinearLayout(this);
         layout.setOrientation(LinearLayout.VERTICAL);
@@ -106,22 +108,22 @@ public class ManagementActivity extends BaseActivity {
         TextView tipBrand = new TextView(this);
         tipBrand.setText(R.string.select_brand);
         Spinner brand = new Spinner(this);
-        final List<String> brandList = new ArrayList<>();
+        final List<String> brandList = new ArrayList<String>();
         final ArrayAdapter<String> brandAdapter=new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, brandList);
         brand.setAdapter(brandAdapter);
 
         TextView tipModel = new TextView(this);
         tipModel.setText(R.string.select_model);
         final Spinner model = new Spinner(this);
-        final List<String> modelList = new ArrayList<>();
-        final ArrayAdapter<String> modelAdapter=new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, modelList);
+        final List<PPDItem> modelList = new ArrayList<PPDItem>();
+        final ArrayAdapter<PPDItem> modelAdapter=new ArrayAdapter<PPDItem>(this, android.R.layout.simple_spinner_dropdown_item, modelList);
         model.setAdapter(modelAdapter);
 
         brand.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 modelList.clear();
-                modelList.addAll(models.get(brandList.get(position)));
+                modelList.addAll(models.get(brandList.get(position)) );
                 modelAdapter.notifyDataSetChanged();
             }
 
@@ -174,25 +176,28 @@ public class ManagementActivity extends BaseActivity {
                 }
 
                 //传入参数
-                Map<String,String> p = new HashMap();
+                Map<String,String> p = new HashMap<>();
                 p.put("name", name.getText().toString());
-                p.put("model", modelList.get(model.getSelectedItemPosition()));
+                p.put("model", modelList.get(model.getSelectedItemPosition()).getModel());
                 p.put("url", deviceItem.getPrinteritem().getURL());
 
                 PRESSED = true;
 
-                new AddPrinterTask<Void>(){
+                AddPrinterTask<Void> task = new AddPrinterTask<Void>() {
                     @Override
                     protected void onPostExecute(Boolean aBoolean) {
-                        if(aBoolean){
+                        if (aBoolean) {
                             Toast.makeText(ManagementActivity.this, R.string.add_success, Toast.LENGTH_SHORT).show();
                             dialog.dismiss();
-                        }else{
+                        } else {
                             Toast.makeText(ManagementActivity.this, R.string.add_fail, Toast.LENGTH_SHORT).show();
                         }
                         PRESSED = false;
                     }
-                }.start(p);
+                };
+
+                task.start(p);
+
             }
 
         });
