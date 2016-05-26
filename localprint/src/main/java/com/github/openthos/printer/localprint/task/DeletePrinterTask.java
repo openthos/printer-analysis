@@ -11,18 +11,18 @@ public class DeletePrinterTask<Progress> extends CommandTask<String, Progress, B
     @Override
     protected String[] setCmd(String[] name) {
         String printerName = name[0];
-        return new String[]{};
+        return new String[]{"sh","proot.sh","lpadmin","-x",printerName};
     }
 
     @Override
     protected Boolean handleCommand(List<String> stdOut, List<String> stdErr) {
+        boolean flag = true;
         // TODO: 2016/5/16 删除打印机 B4
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        for(String line:stdErr){
+            if (line.contains("The printer or class does not exist."))
+                flag = false;
         }
-        return true;
+        return flag;
     }
 
     @Override

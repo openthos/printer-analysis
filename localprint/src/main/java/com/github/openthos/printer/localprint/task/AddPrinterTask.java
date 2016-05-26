@@ -10,19 +10,26 @@ import java.util.Map;
 public class AddPrinterTask<Progress> extends CommandTask<Map<String,String>, Progress, Boolean> {
     @Override
     protected String[] setCmd(Map<String, String>[] params) {
-        return new String[]{};
+        String name = params[0].get("name");
+        String url = params[0].get("url");
+        String model = params[0].get("model");
+        return new String[]{"sh", "proot.sh", "lpadmin", "-p", name,"-v",url,"-m",model,"-E"};
     }
 
     @Override
     protected Boolean handleCommand(List<String> stdOut, List<String> stdErr) {
-        boolean flag = false;
+        boolean flag = true;
+
+        for(String line:stdErr){
+            if (line.contains("Unable to connect to server"))
+                flag = false;
+
+            if(line.contains("Unable to copy PPD file"))
+                flag = false;
+        }
 
         // TODO: 2016/5/10 添加打印机 B2
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+
 
         return flag;
     }

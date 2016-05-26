@@ -2,6 +2,7 @@ package com.github.openthos.printer.localprint.task;
 
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -22,16 +23,52 @@ public class PrintTask<Progress> extends CommandTask<Map<String, String>, Progre
     @Override
     protected String[] setCmd(Map<String, String>... params) {
         Map<String, String> map = params[0];
-        String printer = map.get(LP_PRINTER);
-        String file = map.get(LP_FILE);
-        map.get(LP_MEDIA);
-        map.get(LP_RESOLUTION);
-        map.get(LP_LANDSCAPE);
-        map.get(LP_LABEL);
+        String printerName = map.get(LP_PRINTER);
+        String fileName = map.get(LP_FILE);
+        String media = map.get(LP_MEDIA);
+        String resolution = map.get(LP_RESOLUTION);
+        String landscape=map.get(LP_LANDSCAPE);
+        String label = map.get(LP_LABEL);
+        String copies = map.get(LP_COPIES);
 
         // TODO: 2016/5/16 打印 C1
 
-        return new String[]{"sh", "proot.sh", "lp", "-d", printer, "-o fit-to-page", file};
+        List<String> list = new ArrayList<String>();
+        list.add("sh");
+        list.add("proot.sh");
+        list.add("lp");
+
+        if ( !printerName.isEmpty()) {
+            list.add("-d");
+            list.add(printerName);
+        }
+        if ( !fileName.isEmpty()){
+            list.add(fileName);
+        }
+        if (!media.isEmpty()){
+            list.add("-o");
+            list.add("media="+media);
+        }
+        if ( !resolution.isEmpty()){
+            list.add("-o");
+            list.add("Resolution="+resolution);
+        }
+        if (!landscape.isEmpty()){
+            list.add("-o");
+            list.add(landscape);
+        }
+        if (!label.isEmpty()){
+            list.add("-t");
+            list.add(label);
+        }
+        if(!copies.isEmpty()){
+            list.add("-n");
+            list.add(copies);
+        }
+
+        String[] cmd = (String[]) list.toArray();
+
+        return cmd;
     }
 
     @Override
