@@ -83,6 +83,7 @@ public class PrintTask<Progress> extends CommandTask<Map<String, String>, Progre
             else if (line.contains("Bad file descriptor")){
                 if( startCups() ){
                     runCommandAgain();      //再次运行命令
+                    return -1;
                 }else{
                     ERROR = "Cups start failed.";
                     return -1;
@@ -100,6 +101,7 @@ public class PrintTask<Progress> extends CommandTask<Map<String, String>, Progre
             }else if(line.contains("scheduler not responding")){
                 if( startCups() ){
                     runCommandAgain();      //再次运行命令
+                    return -1;
                 }else{
                     ERROR = "Cups start failed.";
                     return -1;

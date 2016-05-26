@@ -17,6 +17,24 @@ public class ListAddedTask<Params, Progress> extends CommandTask<Params, Progres
 
     @Override
     protected List<PrinterItem> handleCommand(List<String> stdOut, List<String> stdErr) {
+
+        for(String line: stdErr){
+
+            if( line.startsWith("WARNING") )
+                continue;
+            else if (line.contains("Bad file descriptor")){
+                if( startCups() ){
+                    runCommandAgain();      //再次运行命令
+                    return null;
+                }else{
+                    ERROR = "Cups start failed.";
+                    return null;
+                }
+            }
+
+
+        }
+
         // TODO: 2016/5/10 获取已添加打印机 B3
         List<PrinterItem> list = new ArrayList<>();
         for(String line:stdOut){
@@ -27,7 +45,7 @@ public class ListAddedTask<Params, Progress> extends CommandTask<Params, Progres
         }
 
         //示例
-        list.add(new PrinterItem("HP LaserJet Professional P1108", "usb://HP/LaserJet%20Professional%20P1108?serial=000000000Q8D9XVKPR1a","direct"));
+        //list.add(new PrinterItem("HP LaserJet Professional P1108", "usb://HP/LaserJet%20Professional%20P1108?serial=000000000Q8D9XVKPR1a","direct"));
         return list;
     }
 

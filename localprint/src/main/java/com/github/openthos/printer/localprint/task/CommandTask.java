@@ -16,12 +16,13 @@ import java.util.List;
  */
 public abstract class CommandTask<Params, Progress, Result> extends BaseTask<Params, Progress, Result> {
 
+    private boolean RUN_AGAIN = true;
     private List<String> stdOut = new ArrayList<String>();
     private List<String> stdErr = new ArrayList<String>();
     protected  String ERROR = "";                   //可以填写错误信息，输出给用户
     private String[] cmd = null;
     private Thread cupsdThread = null;
-    private Process cupsdProcess;
+    private static Process cupsdProcess;
 
     @Override
     protected final Result doInBackground(Params... params) {
@@ -30,18 +31,25 @@ public abstract class CommandTask<Params, Progress, Result> extends BaseTask<Par
             return null;
 
         cmd = setCmd(params);
-        runCommand(cmd);
-        return handleCommand(stdOut, stdErr);
+
+        Result result = null;
+        //在CUPS没有启动的情况下会启动CUPS，并且重新运行命令
+        while(RUN_AGAIN){
+            RUN_AGAIN = false;
+            runCommand(cmd);
+            result = handleCommand(stdOut, stdErr);
+        }
+        return result;
     }
 
 
     /**
      * 再次运行命令
-     * 结果在stdOut, stdErr里，不需要重新获取,会覆盖之前的结果
+     * 调用该命令，需要立即return，运行后会自动调用handleCommand函数
      */
     protected final void runCommandAgain(){
         if(cmd != null)
-            runCommand(cmd);
+            RUN_AGAIN = true;
     }
 
     /**
@@ -67,7 +75,7 @@ public abstract class CommandTask<Params, Progress, Result> extends BaseTask<Par
      */
     private void runCommand(String[] cmd) {
 
-        if(cmd.length == 0){
+        if(cmd != null && cmd.length == 0){
             return;
         }
 
@@ -228,19 +236,23 @@ public abstract class CommandTask<Params, Progress, Result> extends BaseTask<Par
             return true;
         }
 
-        boolean flag = false;
-        runCommand(new String[]{"sh", "proot.sh" ,"cupsd"});
+        //runCommand(new String[]{"sh", "proot.sh" ,"cupsd"});
 
-        /*File file = new File(getWorkPath());
+        File file = new File(getWorkPath());
         try {
-            cupsdProcess = Runtime.getRuntime().exec(new String[]{"sh", "proot.sh" ,"cupsd","-f"}, null, file);
+            cupsdProcess = Runtime.getRuntime().exec(new String[]{"sh", "proot.sh" ,"cupsd"}, null, file);
         } catch (IOException e) {
             e.printStackTrace();
-        }*/
+        }
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         // 2016/5/15 启动cups A2
-        flag = cupsIsRunning();
-        return flag;
+        return cupsIsRunning();
     }
 
     /**
@@ -249,9 +261,9 @@ public abstract class CommandTask<Params, Progress, Result> extends BaseTask<Par
      */
     protected void killCups(){
         // 2016/5/15 关闭CUPS A3
-        if(cupsdProcess != null){
+        /*if(cupsdProcess != null){
             cupsdProcess.destroy();
-        }
+        }*/
 
     }
 

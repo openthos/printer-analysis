@@ -8,8 +8,10 @@ import android.print.PrinterCapabilitiesInfo;
 import android.print.PrinterId;
 import android.print.PrinterInfo;
 import android.printservice.PrinterDiscoverySession;
+import android.widget.Toast;
 
 
+import com.github.openthos.printer.localprint.R;
 import com.github.openthos.printer.localprint.model.PrinterItem;
 import com.github.openthos.printer.localprint.task.ListAddedTask;
 import com.github.openthos.printer.localprint.task.StateTask;
@@ -65,6 +67,8 @@ public class PrintDiscoverySession extends PrinterDiscoverySession {
                         printers.add(myprinter);
                     }
                     addPrinters(printers);
+                }else{
+                    Toast.makeText(openthosPrintService, openthosPrintService.getResources().getString(R.string.query_error) + " " + ERROR, Toast.LENGTH_SHORT).show();
                 }
 
                 removePrinters(old_list);

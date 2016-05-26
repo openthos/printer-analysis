@@ -93,7 +93,7 @@ public class ConfigPrinterDialogFragment extends DialogFragment {
             @Override
             protected void onPostExecute(Integer jobId) {
                 if(jobId == -1){
-                    Toast.makeText(getActivity(), getResources().getString(R.string.print_error) + ERROR, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), getResources().getString(R.string.print_error) + " " + ERROR, Toast.LENGTH_SHORT).show();
                 }else{
                     Toast.makeText(getActivity(), R.string.printing, Toast.LENGTH_SHORT).show();
                 }

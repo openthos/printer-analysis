@@ -36,7 +36,7 @@ public class SearchPrintersTask<Params, Progress> extends CommandTask<Params, Pr
                 String deviceName = splitLine[1].substring(splitLine[1].indexOf("//")+2,splitLine[1].indexOf("?"));
                 deviceName = deviceName.replace("/"," ");
                 deviceName = deviceName.replace("%20"," ");
-                list.add(new PrinterItem(deviceName,splitLine[1],splitLine[0]));
+                list.add(new PrinterItem(deviceName, splitLine[1],splitLine[0]));
             }
         }
 

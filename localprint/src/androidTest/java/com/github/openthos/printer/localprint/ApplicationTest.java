@@ -35,4 +35,9 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
         }.start();
     }
 
+    public void add_printer(){
+
+    }
+
+
 }
