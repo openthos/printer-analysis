@@ -17,6 +17,31 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    signingConfigs {
+        /*debug {
+            storeFile file("../demokey.jks")
+            storePassword "123abcABC"
+            keyAlias "demokey"
+            keyPassword "123abcABC"
+        }*/
+
+        release {
+            storeFile file("../demo_platform.keystore")
+            storePassword '123456'
+            keyAlias 'demo_platform'
+            keyPassword '123456'
+        }
+
+        debug {
+            storeFile file("../demo_platform.keystore")
+            storePassword '123456'
+            keyAlias 'demo_platform'
+            keyPassword '123456'
+        }
+
+    }
+
 }
 
 dependencies {

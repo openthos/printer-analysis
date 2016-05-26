@@ -36,12 +36,12 @@ public class SearchPrintersTask<Params, Progress> extends CommandTask<Params, Pr
                 String deviceName = splitLine[1].substring(splitLine[1].indexOf("//")+2,splitLine[1].indexOf("?"));
                 deviceName = deviceName.replace("/"," ");
                 deviceName = deviceName.replace("%20"," ");
-                list.add(new PrinterItem(deviceName，splitLine[1],splitLine[0]));
+                list.add(new PrinterItem(deviceName, splitLine[1],splitLine[0]));
             }
         }
 
         //示例
-        list.add(new PrinterItem("HP LaserJet Professional P1108", "usb://HP/LaserJet%20Professional%20P1108?serial=000000000Q8D9XVKPR1a","direct"));
+        //list.add(new PrinterItem("HP LaserJet Professional P1108", "usb://HP/LaserJet%20Professional%20P1108?serial=000000000Q8D9XVKPR1a","direct"));
         return list;
     }
 
