@@ -3,6 +3,7 @@ package com.github.openthos.printer.localprint.task;
 import android.util.Log;
 
 import com.github.openthos.printer.localprint.util.FileUtils;
+import com.github.openthos.printer.localprint.util.LogUtils;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -78,6 +79,7 @@ public abstract class CommandTask<Params, Progress, Result> extends BaseTask<Par
         if(cmd != null && cmd.length == 0){
             return;
         }
+        LogUtils.d(TAG, cmd.toString());
 
         stdOut.clear();
         stdErr.clear();
