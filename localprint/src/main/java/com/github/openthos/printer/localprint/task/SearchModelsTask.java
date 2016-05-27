@@ -15,11 +15,28 @@ import java.util.Map;
 public class SearchModelsTask<Params, Progress> extends CommandTask<Params, Progress, ModelsItem> {
     @Override
     protected String[] setCmd(Params[] params) {
-        return new String[]{"sh","proot.sh","lpinfo","-m"};
+        return new String[]{"sh", "proot.sh", "lpinfo", "-m"};
     }
 
     @Override
     protected ModelsItem handleCommand(List<String> stdOut, List<String> stdErr) {
+
+        for(String line: stdErr){
+
+            if( line.startsWith("WARNING") )
+                continue;
+            else if (line.contains("Bad file descriptor")){
+                if( startCups() ){
+                    runCommandAgain();      //再次运行命令
+                    return null;
+                }else{
+                    ERROR = "Cups start failed.";
+                    return null;
+                }
+            }
+
+
+        }
 
         List<String> brand = new ArrayList<>();
         Map<String, List<PPDItem>> models = new HashMap<>();
@@ -30,7 +47,7 @@ public class SearchModelsTask<Params, Progress> extends CommandTask<Params, Prog
             String currentBrand = splitLine[1];
             String currentDriver = "";
             for(int i = 2; i < splitLine.length;i++){
-                currentDriver = currentDriver+splitLine[i];
+                currentDriver = currentDriver+ " " + splitLine[i];
             }
 
             List<PPDItem> location;

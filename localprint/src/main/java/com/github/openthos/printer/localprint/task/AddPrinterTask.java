@@ -21,11 +21,21 @@ public class AddPrinterTask<Progress> extends CommandTask<Map<String,String>, Pr
         boolean flag = true;
 
         for(String line:stdErr){
-            if (line.contains("Unable to connect to server"))
+            if (line.contains("Unable to connect to server")){
+                if( startCups() ){
+                    runCommandAgain();      //再次运行命令
+                    flag = false;
+                    break;
+                }else{
+                    ERROR = "Cups start failed.";
+                    flag = false;
+                    break;
+                }
+            }else if(line.contains("Unable to copy PPD file")){
+                ERROR = "Unable to copy PPD file";
                 flag = false;
-
-            if(line.contains("Unable to copy PPD file"))
-                flag = false;
+                break;
+            }
         }
 
         // TODO: 2016/5/10 添加打印机 B2

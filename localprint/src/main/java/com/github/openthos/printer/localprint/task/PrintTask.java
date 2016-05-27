@@ -90,7 +90,6 @@ public class PrintTask<Progress> extends CommandTask<Map<String, String>, Progre
                 }
             }
 
-
         }
 
         for(String line: stdOut){

@@ -64,10 +64,6 @@ public class PPDItem {
 
     @Override
     public String toString() {
-        return "PPDItem{" +
-                "model='" + model + '\'' +
-                ", brand='" + brand + '\'' +
-                ", name='" + name + '\'' +
-                '}';
+        return name;
     }
 }

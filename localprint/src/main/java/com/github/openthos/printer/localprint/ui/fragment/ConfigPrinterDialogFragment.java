@@ -102,7 +102,7 @@ public class ConfigPrinterDialogFragment extends DialogFragment {
         };
 
         Map<String, String> map = new HashMap<>();
-        map.put(PrintTask.LP_PRINTER, "HP_LaserJet_Professional_P1108");
+        map.put(PrintTask.LP_PRINTER, item.getNickName());
         map.put(PrintTask.LP_FILE, "/docu3.pdf");
 
         task.start(map);

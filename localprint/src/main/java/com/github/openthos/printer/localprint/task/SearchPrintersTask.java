@@ -26,6 +26,24 @@ public class SearchPrintersTask<Params, Progress> extends CommandTask<Params, Pr
      */
     @Override
     protected List<PrinterItem> handleCommand(List<String> stdOut, List<String> stdErr) {
+
+        for(String line: stdErr){
+
+            if( line.startsWith("WARNING") )
+                continue;
+            else if (line.contains("Bad file descriptor")){
+                if( startCups() ){
+                    runCommandAgain();      //再次运行命令
+                    return null;
+                }else{
+                    ERROR = "Cups start failed.";
+                    return null;
+                }
+            }
+
+
+        }
+
         // TODO: 2016/5/10 扫描可添加打印机 B8
         List<PrinterItem> list = new ArrayList<>();
 

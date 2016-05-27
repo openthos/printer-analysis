@@ -206,6 +206,12 @@ public class ManagementActivity extends BaseActivity {
         new SearchModelsTask<Void, Void>(){
             @Override
             protected void onPostExecute(ModelsItem modelsItem) {
+
+                if(modelsItem == null){
+                    Toast.makeText(ManagementActivity.this, getResources().getString(R.string.query_error) + " " + ERROR, Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 brandList.addAll(modelsItem.getBrand());
                 models.putAll(modelsItem.getModels());
                 brandAdapter.notifyDataSetChanged();

@@ -79,7 +79,7 @@ public abstract class CommandTask<Params, Progress, Result> extends BaseTask<Par
         if(cmd != null && cmd.length == 0){
             return;
         }
-        LogUtils.d(TAG, cmd.toString());
+        LogUtils.d(TAG, "cmd => " + cmd.toString());
 
         stdOut.clear();
         stdErr.clear();
