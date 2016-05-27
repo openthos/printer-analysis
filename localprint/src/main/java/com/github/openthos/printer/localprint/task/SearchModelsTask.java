@@ -15,7 +15,7 @@ import java.util.Map;
 public class SearchModelsTask<Params, Progress> extends CommandTask<Params, Progress, ModelsItem> {
     @Override
     protected String[] setCmd(Params[] params) {
-        return new String[]{""};
+        return new String[]{"sh","proot.sh","lpinfo","-m"};
     }
 
     @Override

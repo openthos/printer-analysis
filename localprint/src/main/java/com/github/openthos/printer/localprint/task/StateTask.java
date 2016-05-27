@@ -79,7 +79,7 @@ public class StateTask<Progress> extends CommandTask<PrinterId , Progress, Print
                 }
                 //state.addResolution(new PrintAttributes.Resolution("R1", "600x600", 600, 600), true);
             }
-            
+
             if(line.startsWith("ColorMode") || line.startsWith("ColorModel") || line.startsWith("Color/Color")){
                 int setDefault = PrintAttributes.COLOR_MODE_MONOCHROME;
                 String[] splitLine = line.split(" ");
