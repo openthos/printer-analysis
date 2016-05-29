@@ -12,6 +12,7 @@ import com.github.openthos.printer.localprint.APP;
 import com.github.openthos.printer.localprint.R;
 import com.github.openthos.printer.localprint.task.CancelPrintTask;
 import com.github.openthos.printer.localprint.task.PrintTask;
+import com.github.openthos.printer.localprint.task.StateTask;
 import com.github.openthos.printer.localprint.ui.ManagementActivity;
 import com.github.openthos.printer.localprint.util.FileUtils;
 import com.github.openthos.printer.localprint.util.LogUtils;
@@ -69,18 +70,23 @@ public class OpenthosPrintService extends PrintService {
 
         final String docu_file_path = FileUtils.getDocuFilePath(printJob.getId().toString());
 
-        printJob.getInfo().getAttributes().getMediaSize().getId();
-
         Map<String, String> map = new HashMap<>();
         map.put(PrintTask.LP_PRINTER, printJob.getInfo().getPrinterId().getLocalId());
-        map.put(PrintTask.LP_FILE, docu_file_path);
-        map.put(PrintTask.LP_MEDIA, "A4");
-        map.put(PrintTask.LP_RESOLUTION,"");
-        map.put(PrintTask.LP_LANDSCAPE,"");
+        map.put(PrintTask.LP_FILE, FileUtils.getDocuFileName(printJob.getId().toString()));
+        map.put(PrintTask.LP_MEDIA, StateTask.Media2cups(printJob.getInfo().getAttributes().getMediaSize()));
+        //map.put(PrintTask.LP_RESOLUTION,StateTask.Resulution2cups(printJob.getInfo().getAttributes().getResolution()));
+        //map.put(PrintTask.LP_COLOR, "");
+        //map.put(PrintTask.LP_LANDSCAPE,"");     //横竖可能在android中以及已经处理过，暂时不处理
         map.put(PrintTask.LP_COPIES, String.valueOf(printJob.getInfo().getCopies()));
         map.put(PrintTask.LP_LABEL, printJob.getDocument().getInfo().getName());
 
         // 发出打印任务
+
+        boolean flag = FileUtils.copyFile(docu_file_path, printJob.getDocument().getData());
+        if(!flag){
+            printJob.fail(getResources().getString(R.string.print_copy_file_failed));
+            return;
+        }
 
         PrintTask<Void> task = new PrintTask<Void>() {
 
@@ -90,24 +96,14 @@ public class OpenthosPrintService extends PrintService {
             }
 
             @Override
-            protected boolean beforeCommand() {
-                boolean flag = FileUtils.copyFile(docu_file_path, printJob.getDocument().getData());
-                if(!flag){
-                    printJob.fail(getResources().getString(R.string.print_copy_file_failed));
-                    return false;
-                }
-                return true;
-            }
-
-            @Override
-            protected void onPostExecute(Integer jobId) {
+            protected void onPostExecute(String jobId) {
 
                 new File(docu_file_path).delete();
 
-                if(jobId == -1){
+                if(jobId == null){
                     printJob.fail(ERROR);
-                    printJob.setTag(String.valueOf(jobId));     //填充CUPS返回的任务编号
                 }else{
+                    printJob.setTag(String.valueOf(jobId));     //填充CUPS返回的任务编号
                     printJob.complete();
                 }
             }

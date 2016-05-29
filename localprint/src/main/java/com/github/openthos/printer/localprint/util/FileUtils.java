@@ -86,7 +86,11 @@ public class FileUtils {
      * @param s 根据s值自动生成文件名
      */
     public static String getDocuFilePath(String s){
-        return getComponentPath() + "/" + s + "_" + APP.DOCU_FILE ;
+        return getComponentPath() + getDocuFileName(s) ;
+    }
+
+    public static String getDocuFileName(String s){
+        return  "/" + s + "_" + APP.DOCU_FILE;
     }
 
     /**

@@ -83,7 +83,7 @@ public class WelcomeActivity extends Activity {
                 new InitTask<Void>(){
                     @Override
                     protected void onPostExecute(Boolean aBoolean) {
-                        start_init(aBoolean);
+                        start_init(aBoolean, ERROR);
                     }
                 }.start();
                 button_ok.setClickable(false);
@@ -98,7 +98,7 @@ public class WelcomeActivity extends Activity {
         finish();
     }
 
-    private void start_init(boolean flag) {
+    private void start_init(boolean flag, String ERROR) {
         if(flag){
 
             Intent intent = new Intent(APP.BROADCAST_ALL_ACTIVITY);
@@ -118,21 +118,10 @@ public class WelcomeActivity extends Activity {
 
         }else{
             progressbar.setVisibility(ProgressBar.INVISIBLE);
-            textView.setText(R.string.initialization_failure);
+            textView.setText(R.string.initialization_failure + "\n" + ERROR);
             button_ok.setClickable(true);
         }
 
-    }
-
-
-    /**
-     * 根据硬件平台，释放不同CUPS文件，null为不支持
-     * @return
-     */
-    private String getCompFileName() {
-        // TODO: 硬件版本判断，释出不同文件
-        //return APP.COMPONENT_FILE_NAME_x86;
-        return "component_5.zip";
     }
 
 

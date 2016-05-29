@@ -32,7 +32,7 @@ public class APP extends Application{
     public static final String MESSAGE = "message";
     public static final String RESULT = "result";
     public static final String JOBID = "jobid";
-    public static final String COMPONENT_PATH = "/component_14";        //文件所在文件夹
+    public static final String COMPONENT_PATH = "/component_17";        //文件所在文件夹
 
     public static boolean MANAGEMENT_ACTIVITY_ON_TOP = false;
 
@@ -40,6 +40,8 @@ public class APP extends Application{
     public static boolean IS_LOGD = true;
     public static boolean IS_FIRST_RUN = true;
     public static boolean IS_LOGI = true;
+
+    public static Process cupsdProcess;
 
     private static Context context;
 

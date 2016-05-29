@@ -32,7 +32,6 @@ public class ListAddedTask<Params, Progress> extends CommandTask<Params, Progres
                 }
             }
 
-
         }
 
         // TODO: 2016/5/10 获取已添加打印机 B3

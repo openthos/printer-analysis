@@ -2,6 +2,7 @@ package com.github.openthos.printer.localprint.task;
 
 import android.util.Log;
 
+import com.github.openthos.printer.localprint.APP;
 import com.github.openthos.printer.localprint.util.FileUtils;
 import com.github.openthos.printer.localprint.util.LogUtils;
 
@@ -10,6 +11,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -23,7 +25,6 @@ public abstract class CommandTask<Params, Progress, Result> extends BaseTask<Par
     protected  String ERROR = "";                   //可以填写错误信息，输出给用户
     private String[] cmd = null;
     private Thread cupsdThread = null;
-    private static Process cupsdProcess;
 
     @Override
     protected final Result doInBackground(Params... params) {
@@ -79,7 +80,7 @@ public abstract class CommandTask<Params, Progress, Result> extends BaseTask<Par
         if(cmd != null && cmd.length == 0){
             return;
         }
-        LogUtils.d(TAG, "cmd => " + cmd.toString());
+        LogUtils.d(TAG, "cmd => " + Arrays.toString(cmd));
 
         stdOut.clear();
         stdErr.clear();
@@ -242,7 +243,7 @@ public abstract class CommandTask<Params, Progress, Result> extends BaseTask<Par
 
         File file = new File(getWorkPath());
         try {
-            cupsdProcess = Runtime.getRuntime().exec(new String[]{"sh", "proot.sh" ,"cupsd"}, null, file);
+            APP.cupsdProcess = Runtime.getRuntime().exec(new String[]{"sh", "proot.sh" ,"cupsd"}, null, file);
         } catch (IOException e) {
             e.printStackTrace();
         }

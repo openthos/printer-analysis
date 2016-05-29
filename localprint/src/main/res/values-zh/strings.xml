@@ -34,4 +34,16 @@
     <string name="select_brand">请选择一个制造商</string>
     <string name="select_model">请选择一个驱动</string>
     <string name="set_name">请填写一个名字</string>
+    <string name="confirm_delete">确认删除</string>
+    <string name="delete_failed">删除失败</string>
+    <string name="deleted_successfully">删除成功</string>
+    <string name="deleting">删除中</string>
+    <string name="please_confirm_component">请确认数据包在 /sdcard 目录</string>
+    <string name="print_copy_file_failed">拷贝文件失败</string>
+    <string name="print_error">打印出错</string>
+    <string name="print_failed">打印失败</string>
+    <string name="printer_setting">打印机设置</string>
+    <string name="printing">打印中</string>
+    <string name="query_error">查询出错</string>
+    <string name="start_printing">开始打印</string>
 </resources>

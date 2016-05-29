@@ -43,4 +43,6 @@
     <string name="start_printing">Start printing</string>
     <string name="print_error">Printing error</string>
     <string name="query_error">Query Error</string>
+    <string name="confirm_delete">Confirm delete ?</string>
+    <string name="please_confirm_component">Please confirm the date file in /sdcard dictionary!</string>
 </resources>

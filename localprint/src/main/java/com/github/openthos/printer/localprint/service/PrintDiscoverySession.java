@@ -101,12 +101,20 @@ public class PrintDiscoverySession extends PrinterDiscoverySession {
      * @param printerId
      */
     @Override
-    public void onStartPrinterStateTracking(PrinterId printerId) {
+    public void onStartPrinterStateTracking(final PrinterId printerId) {
         LogUtils.d(TAG, "onStartPrinterStateTracking()");
 
         StateTask<Void> task = new StateTask<Void>() {
             @Override
             protected void onPostExecute(PrinterInfo printerInfo) {
+
+                if(printerInfo == null){
+                    Toast.makeText(openthosPrintService, openthosPrintService.getResources().getString(R.string.query_error) + " " + ERROR, Toast.LENGTH_LONG).show();
+                    PrinterInfo.Builder builder =
+                            new PrinterInfo.Builder(printerId, printerId.getLocalId(), PrinterInfo.STATUS_UNAVAILABLE);
+                    printerInfo = builder.build();
+                }
+
                 List<PrinterInfo> printers = new ArrayList<PrinterInfo>();
                 printers.add(printerInfo);
                 addPrinters(printers);

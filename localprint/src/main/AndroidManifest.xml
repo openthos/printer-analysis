@@ -31,6 +31,7 @@
         </activity>
         <activity
             android:name=".ui.AdvancedPrintOptionActivity"
+            android:theme="@style/AppTheme.NoActionBar"
             android:exported="true" />
         <activity
             android:name=".ui.SettingsActivity"
