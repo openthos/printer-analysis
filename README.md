@@ -5,6 +5,8 @@
 ## 模块介绍
 
 ```
+localprint				模块	打印APP
+
 openthosprintservice    模块	针对HP P1108打印机的DEMO
 
 app						模块	系统打印服务接入DEMO
