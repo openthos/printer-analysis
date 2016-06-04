@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout
+<RelativeLayout
     android:orientation="vertical" xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    >
+    android:weightSum="1">
 
 
 
@@ -23,13 +23,14 @@
         android:id="@+id/textView_printer_name"
         android:layout_marginLeft="32dp"
         android:layout_marginRight="32dp"
-        android:layout_marginTop="16dp" />
+        android:layout_below="@+id/toolbar" />
 
     <ScrollView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:id="@+id/scrollView" >
+        android:id="@+id/scrollView"
+        android:layout_below="@+id/textView_printer_name">
 
     <TableLayout
         android:layout_width="match_parent"
@@ -44,14 +45,13 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="纸张"
+                android:text="@string/paper_size"
                 android:id="@+id/textView5" />
 
             <Spinner
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:entries="@array/test"
-                android:id="@+id/spinner" />
+                android:id="@+id/spinner_media_size" />
         </TableRow>
 
         <TableRow
@@ -61,31 +61,13 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="方向"
-                android:id="@+id/textView6" />
-
-            <Spinner
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:entries="@array/test"
-                android:id="@+id/spinner2" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="色彩"
+                android:text="@string/color_mode"
                 android:id="@+id/textView7" />
 
             <Spinner
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:entries="@array/test"
-                android:id="@+id/spinner3" />
+                android:id="@+id/spinner_color_mode" />
         </TableRow>
 
         <TableRow
@@ -95,14 +77,13 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="双面打印"
+                android:text="@string/duplx_mode"
                 android:id="@+id/textView8" />
 
             <Spinner
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:entries="@array/test"
-                android:id="@+id/spinner4" />
+                android:id="@+id/spinner_duplex_mode" />
         </TableRow>
     </TableLayout>
 
@@ -111,8 +92,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" >
+        android:layout_centerHorizontal="true"
+        android:id="@+id/linearLayout2"
+        android:layout_below="@+id/scrollView">
 
         <Button
             style="?android:attr/buttonBarButtonStyle"
@@ -135,4 +117,4 @@
             android:layout_alignParentEnd="true" />
     </LinearLayout>
 
-</LinearLayout>
+</RelativeLayout>

@@ -1,8 +1,6 @@
 package com.github.openthos.printer.localprint.task;
 
-import android.print.PrinterInfo;
-
-import com.github.openthos.printer.localprint.model.PrinterOptionItem;
+import com.github.openthos.printer.localprint.model.PrinterCupsOptionItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +8,7 @@ import java.util.List;
 /**
  * Created by bboxh on 2016/5/27.
  */
-public class QueryPrinterOptonsTask<Progress> extends CommandTask<String, Progress, List<PrinterOptionItem>> {
+public class QueryPrinterCupsOptoinsTask<Progress> extends CommandTask<String, Progress, List<PrinterCupsOptionItem>> {
     @Override
     protected String[] setCmd(String... params) {
         if(params == null){
@@ -20,7 +18,7 @@ public class QueryPrinterOptonsTask<Progress> extends CommandTask<String, Progre
     }
 
     @Override
-    protected List<PrinterOptionItem> handleCommand(List<String> stdOut, List<String> stdErr) {
+    protected List<PrinterCupsOptionItem> handleCommand(List<String> stdOut, List<String> stdErr) {
 
         for(String line: stdErr){
 
@@ -41,16 +39,16 @@ public class QueryPrinterOptonsTask<Progress> extends CommandTask<String, Progre
 
         }
 
-        // TODO: 2016/5/27 查询打印机设置  B9
-        List<PrinterOptionItem> options = new ArrayList<>();
+        // TODO: 2016/5/27 查询打印机高级设置  B9
+        List<PrinterCupsOptionItem> options = new ArrayList<>();
         //模拟数据
-        PrinterOptionItem item1 = new PrinterOptionItem();
+        PrinterCupsOptionItem item1 = new PrinterCupsOptionItem();
         item1.setName("Printing Quality");
         item1.setOption_id("Quality");
         item1.add("draft", true);
         item1.add("normal", false);
         options.add(item1);
-        PrinterOptionItem item2 = new PrinterOptionItem();
+        PrinterCupsOptionItem item2 = new PrinterCupsOptionItem();
         item2.setOption_id("ColorMode");
         item2.setName("Color Mode");
         item2.add("ICM", false);
@@ -62,6 +60,6 @@ public class QueryPrinterOptonsTask<Progress> extends CommandTask<String, Progre
 
     @Override
     protected String bindTAG() {
-        return "QueryPrinterOptonsTask";
+        return "QueryPrinterCupsOptoinsTask";
     }
 }

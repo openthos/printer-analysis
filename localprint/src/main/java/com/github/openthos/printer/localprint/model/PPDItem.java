@@ -1,6 +1,7 @@
 package com.github.openthos.printer.localprint.model;
 
 /**
+ * 添加打印机时，描述PPD驱动
  * Created by bboxh on 2016/5/23.
  */
 public class PPDItem {

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 获取已添加打印
+ * 获取已添加打印机 B3
  * Created by bboxh on 2016/5/16.
  */
 public class ListAddedTask<Params, Progress> extends CommandTask<Params, Progress, List<PrinterItem>> {
@@ -34,7 +34,6 @@ public class ListAddedTask<Params, Progress> extends CommandTask<Params, Progres
 
         }
 
-        // TODO: 2016/5/10 获取已添加打印机 B3
         List<PrinterItem> list = new ArrayList<>();
         for(String line:stdOut){
             String[] splitLine = line.split(" ");

@@ -4,6 +4,7 @@ import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.print.PrintAttributes;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
@@ -11,19 +12,26 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.openthos.printer.localprint.APP;
 import com.github.openthos.printer.localprint.R;
 import com.github.openthos.printer.localprint.model.PrinterItem;
+import com.github.openthos.printer.localprint.model.PrinterOptionItem;
 import com.github.openthos.printer.localprint.task.DeletePrinterTask;
 import com.github.openthos.printer.localprint.task.PrintTask;
+import com.github.openthos.printer.localprint.task.QueryPrinterOptionsTask;
+import com.github.openthos.printer.localprint.task.UpdatePrinterOptionsTask;
 import com.github.openthos.printer.localprint.ui.AdvancedPrintOptionActivity;
 import com.github.openthos.printer.localprint.ui.ManagementActivity;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -33,10 +41,18 @@ import java.util.Map;
 public class ConfigPrinterDialogFragment extends DialogFragment {
 
     public static final String ITEM = "item";
+    private boolean UPDATING = false;
     private boolean IS_DELETEING = false;
     private PrinterItem item;
     private Button button_cancel;
     private Button button_ok;
+    private PrinterOptionItem optionItem;
+    private ArrayAdapter<String> spinner_color_adapter;
+    private ArrayAdapter<String> media_size_adapter;
+    private ArrayAdapter<String> spinner_duplex_adapter;
+    private Spinner spinner_media_size;
+    private Spinner spinner_color_mode;
+    private Spinner spinner_duplex_mode;
 
     @Nullable
     @Override
@@ -82,7 +98,49 @@ public class ConfigPrinterDialogFragment extends DialogFragment {
             }
         });
 
+        spinner_media_size = (Spinner) v.findViewById(R.id.spinner_media_size);
+        spinner_color_mode = (Spinner) v.findViewById(R.id.spinner_color_mode);
+        spinner_duplex_mode = (Spinner) v.findViewById(R.id.spinner_duplex_mode);   //暂时不处理
+
+        initData();
+
         return v;
+    }
+
+    private void initData() {
+        QueryPrinterOptionsTask<Void> task = new QueryPrinterOptionsTask<Void>(){
+            @Override
+            protected void onPostExecute(PrinterOptionItem printerOptionItem) {
+
+                optionItem = printerOptionItem;
+
+                media_size_adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, optionItem.getMediaSizeCupsList()){
+                    @Override
+                    public String getItem(int position) {
+                        return optionItem.getMediaSizeList().get(position).getId();
+                    }
+                };
+
+                spinner_color_adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, optionItem.getColorModeCupsList()){
+                    @Override
+                    public String getItem(int position) {
+                        String colorMode = getResources().getString(R.string.black_white);
+                        if(optionItem.getColorModeList().get(position) == PrintAttributes.COLOR_MODE_COLOR){
+                            colorMode = getResources().getString(R.string.color);
+                        }
+                        return colorMode;
+                    }
+                };
+
+                spinner_duplex_adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, new String[]{getString(R.string.no_double_side)});
+
+                spinner_media_size.setAdapter(media_size_adapter);
+                spinner_color_mode.setAdapter(spinner_color_adapter);
+                spinner_duplex_mode.setAdapter(spinner_duplex_adapter);
+            }
+        };
+
+        task.start(item.getNickName());
     }
 
     /**
@@ -91,6 +149,7 @@ public class ConfigPrinterDialogFragment extends DialogFragment {
     private void tuning() {
         Intent intent = new Intent(getActivity(), AdvancedPrintOptionActivity.class);
         getActivity().startActivity(intent);
+        // TODO: 2016/5/31 intent高级设置传参
     }
 
     /**
@@ -164,8 +223,33 @@ public class ConfigPrinterDialogFragment extends DialogFragment {
     }
 
     private void save() {
-        //// TODO: 2016/4/16 保存配置修改并退出 B5
 
+        if(UPDATING){
+            Toast.makeText(getActivity(), R.string.updating, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        UpdatePrinterOptionsTask<Void> task = new UpdatePrinterOptionsTask<Void>() {
+
+            @Override
+            protected void onPostExecute(Boolean aBoolean) {
+
+                UPDATING = false;
+
+                if(aBoolean){
+                    Toast.makeText(getActivity(), R.string.update_success, Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(getActivity(), getString(R.string.update_failed) + " " + ERROR, Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            protected String getPrinter() {
+                return item.getNickName();
+            }
+        };
+        task.start(optionItem);
+        UPDATING = true;
     }
 
     @Override
@@ -179,7 +263,7 @@ public class ConfigPrinterDialogFragment extends DialogFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        item = (PrinterItem) getArguments().getParcelable(ITEM);
+        item = getArguments().getParcelable(ITEM);
         setStyle(DialogFragment.STYLE_NO_TITLE, 0);
 
     }

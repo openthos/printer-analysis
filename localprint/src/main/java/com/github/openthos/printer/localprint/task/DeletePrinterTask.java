@@ -3,6 +3,7 @@ package com.github.openthos.printer.localprint.task;
 import java.util.List;
 
 /**
+ * 删除打印机 B4
  * Created by bboxh on 2016/5/16.
  */
 public class DeletePrinterTask<Progress> extends CommandTask<String, Progress, Boolean> {
@@ -35,7 +36,6 @@ public class DeletePrinterTask<Progress> extends CommandTask<String, Progress, B
         }
 
         boolean flag = true;
-        // TODO: 2016/5/16 删除打印机 B4
         for(String line:stdErr){
             if (line.contains("The printer or class does not exist.")) {
                 ERROR = "The printer or class does not exist.";

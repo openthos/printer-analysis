@@ -42,9 +42,9 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="@string/cancel"
-                android:id="@+id/cancel"
+                android:id="@+id/button_cancel"
                 android:layout_alignParentBottom="true"
-                android:layout_toStartOf="@+id/ok" />
+                android:layout_toStartOf="@+id/button_ok" />
 
             <Button
                 style="?android:attr/buttonBarButtonStyle"
@@ -52,7 +52,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/ok"
-                android:id="@+id/ok"
+                android:id="@+id/button_ok"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentEnd="true" />
         </LinearLayout>

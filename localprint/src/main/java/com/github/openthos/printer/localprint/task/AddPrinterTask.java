@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 添加打印机
+ * 添加打印机 B2
  * Created by bboxh on 2016/5/16.
  */
 public class AddPrinterTask<Progress> extends CommandTask<Map<String,String>, Progress, Boolean> {
@@ -37,8 +37,6 @@ public class AddPrinterTask<Progress> extends CommandTask<Map<String,String>, Pr
                 break;
             }
         }
-
-        // TODO: 2016/5/10 添加打印机 B2
 
 
         return flag;

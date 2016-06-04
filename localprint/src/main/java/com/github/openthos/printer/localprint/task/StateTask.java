@@ -5,6 +5,8 @@ import android.print.PrinterCapabilitiesInfo;
 import android.print.PrinterId;
 import android.print.PrinterInfo;
 
+import com.github.openthos.printer.localprint.model.PrinterOptionItem;
+
 import java.util.List;
 
 /**
@@ -58,18 +60,9 @@ public class StateTask<Progress> extends CommandTask<PrinterId , Progress, Print
                         flag = true;
                         splitLine[i] = splitLine[i].replace("*","");
                     }
-                    if(splitLine[i].equals("Letter"))
-                        state.addMediaSize(PrintAttributes.MediaSize.NA_LETTER,flag);
-                    if(splitLine[i].equals("A4"))
-                        state.addMediaSize(PrintAttributes.MediaSize.ISO_A4,flag);
-                    if(splitLine[i].equals("A5"))
-                        state.addMediaSize(PrintAttributes.MediaSize.ISO_A5,flag);
-                    if(splitLine[i].equals("A6"))
-                        state.addMediaSize(PrintAttributes.MediaSize.ISO_A6,flag);
-                    if(splitLine[i].equals("B5"))
-                        state.addMediaSize(PrintAttributes.MediaSize.ISO_B5,flag);
-                    if(splitLine[i].equals("Executive"))
-                        state.addMediaSize(PrintAttributes.MediaSize.NA_MONARCH,flag);
+
+                        state.addMediaSize(PrinterOptionItem.cups2media(splitLine[i]),flag);
+
                 }
                 //state.addMediaSize(PrintAttributes.MediaSize.ISO_A4, true);
             }
@@ -142,28 +135,4 @@ public class StateTask<Progress> extends CommandTask<PrinterId , Progress, Print
         return "StateTask";
     }
 
-    public static String Media2cups(PrintAttributes.MediaSize mediaSize) {
-
-        String result = "A4";
-
-        if(mediaSize.equals(PrintAttributes.MediaSize.NA_LETTER)){
-            result = "Letter";
-        }else if(mediaSize.equals(PrintAttributes.MediaSize.ISO_A4)){
-            result = "A4";
-        }else if(mediaSize.equals(PrintAttributes.MediaSize.ISO_A5)){
-            result = "A5";
-        }else if(mediaSize.equals(PrintAttributes.MediaSize.ISO_A6)){
-            result = "A6";
-        }else if(mediaSize.equals(PrintAttributes.MediaSize.ISO_B5)){
-            result = "B5";
-        }else if(mediaSize.equals(PrintAttributes.MediaSize.NA_MONARCH)){
-            result = "Executive";
-        }
-        return result;
-    }
-
-    public static String Resulution2cups(PrintAttributes.Resolution resolution) {
-        // TODO: 2016/5/29  Resulution2cups
-        return null;
-    }
 }

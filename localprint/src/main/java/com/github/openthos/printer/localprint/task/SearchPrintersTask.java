@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 查找可添加的打印机
+ * 扫描可添加打印机 B8
  * Created by bboxh on 2016/5/14.
  */
 public class SearchPrintersTask<Params, Progress> extends CommandTask<Params, Progress, List<PrinterItem>> {
@@ -44,7 +44,6 @@ public class SearchPrintersTask<Params, Progress> extends CommandTask<Params, Pr
 
         }
 
-        // TODO: 2016/5/10 扫描可添加打印机 B8
         List<PrinterItem> list = new ArrayList<>();
 
         for(String line: stdOut){

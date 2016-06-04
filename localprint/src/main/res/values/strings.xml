@@ -45,4 +45,13 @@
     <string name="query_error">Query Error</string>
     <string name="confirm_delete">Confirm delete ?</string>
     <string name="please_confirm_component">Please confirm the date file in /sdcard dictionary!</string>
+    <string name="color">Color</string>
+    <string name="black_white"><![CDATA[Black&White]]></string>
+    <string name="update_success">Update successfully.</string>
+    <string name="updating">Updating</string>
+    <string name="no_double_side">No Double Side</string>
+    <string name="paper_size">paper size</string>
+    <string name="color_mode">color mode</string>
+    <string name="duplx_mode">duplx mode</string>
+    <string name="update_failed">Update failed.</string>
 </resources>

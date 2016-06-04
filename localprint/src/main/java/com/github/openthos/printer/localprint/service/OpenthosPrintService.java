@@ -10,9 +10,9 @@ import android.view.WindowManager;
 
 import com.github.openthos.printer.localprint.APP;
 import com.github.openthos.printer.localprint.R;
+import com.github.openthos.printer.localprint.model.PrinterOptionItem;
 import com.github.openthos.printer.localprint.task.CancelPrintTask;
 import com.github.openthos.printer.localprint.task.PrintTask;
-import com.github.openthos.printer.localprint.task.StateTask;
 import com.github.openthos.printer.localprint.ui.ManagementActivity;
 import com.github.openthos.printer.localprint.util.FileUtils;
 import com.github.openthos.printer.localprint.util.LogUtils;
@@ -73,7 +73,7 @@ public class OpenthosPrintService extends PrintService {
         Map<String, String> map = new HashMap<>();
         map.put(PrintTask.LP_PRINTER, printJob.getInfo().getPrinterId().getLocalId());
         map.put(PrintTask.LP_FILE, FileUtils.getDocuFileName(printJob.getId().toString()));
-        map.put(PrintTask.LP_MEDIA, StateTask.Media2cups(printJob.getInfo().getAttributes().getMediaSize()));
+        map.put(PrintTask.LP_MEDIA, PrinterOptionItem.media2cups(printJob.getInfo().getAttributes().getMediaSize()));
         //map.put(PrintTask.LP_RESOLUTION,StateTask.Resulution2cups(printJob.getInfo().getAttributes().getResolution()));
         //map.put(PrintTask.LP_COLOR, "");
         //map.put(PrintTask.LP_LANDSCAPE,"");     //横竖可能在android中以及已经处理过，暂时不处理

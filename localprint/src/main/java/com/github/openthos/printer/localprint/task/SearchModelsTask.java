@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 查找驱动
+ * 查找可添加打印机型号（驱动） B1
  * Created by bboxh on 2016/5/16.
  */
 public class SearchModelsTask<Params, Progress> extends CommandTask<Params, Progress, ModelsItem> {
@@ -40,7 +40,7 @@ public class SearchModelsTask<Params, Progress> extends CommandTask<Params, Prog
 
         List<String> brand = new ArrayList<>();
         Map<String, List<PPDItem>> models = new HashMap<>();
-        // TODO: 2016/5/16 查找可添加打印机型号（驱动） B1
+
         for(String line:stdOut){
             String[] splitLine = line.split(" ");
             String currentPPD = splitLine[0];

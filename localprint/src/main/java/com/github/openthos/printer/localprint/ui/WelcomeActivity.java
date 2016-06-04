@@ -118,7 +118,7 @@ public class WelcomeActivity extends Activity {
 
         }else{
             progressbar.setVisibility(ProgressBar.INVISIBLE);
-            textView.setText(R.string.initialization_failure + "\n" + ERROR);
+            textView.setText(getString(R.string.initialization_failure) + "\n" + ERROR);
             button_ok.setClickable(true);
         }
 

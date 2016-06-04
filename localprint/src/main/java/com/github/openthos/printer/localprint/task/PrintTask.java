@@ -32,7 +32,7 @@ public class PrintTask<Progress> extends CommandTask<Map<String, String>, Progre
         String label = map.get(LP_LABEL);
         String copies = map.get(LP_COPIES);
 
-        // TODO: 2016/5/16 打印 C1
+        // TODO: 2016/5/16 完善打印参数 C1
 
         List<String> list = new ArrayList<String>();
         list.add("sh");
