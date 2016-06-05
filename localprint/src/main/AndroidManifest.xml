@@ -8,7 +8,6 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.ACCESS_USB_DEVICE" />
 
-
     <application
         android:name=".APP"
         android:allowBackup="true"
@@ -19,10 +18,11 @@
         <instrumentation
             android:name="android.test.InstrumentationTestRunner"
             android:targetPackage="com.github.openthos.printer.localprint.ApplicationTest" />
+
         <activity
             android:name=".ui.ManagementActivity"
-            android:launchMode="singleInstance"
-            android:exported="true">
+            android:exported="true"
+            android:launchMode="singleInstance">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -31,15 +31,15 @@
         </activity>
         <activity
             android:name=".ui.AdvancedPrintOptionActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:exported="true" />
+            android:exported="true"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.SettingsActivity"
-            android:exported="true"/>
+            android:exported="true" />
         <activity
             android:name=".ui.WelcomeActivity"
-            android:theme="@style/AppTheme.DialogWhenLarge"
-            android:launchMode="singleInstance"/>
+            android:launchMode="singleInstance"
+            android:theme="@style/AppTheme.DialogWhenLarge" />
 
         <service
             android:name=".service.OpenthosPrintService"
@@ -67,6 +67,7 @@
             </intent-filter>
         </receiver>
 
+        <activity android:name=".ui.JobManagerActivity"></activity>
     </application>
 
 </manifest>

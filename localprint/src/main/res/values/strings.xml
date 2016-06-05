@@ -46,7 +46,7 @@
     <string name="confirm_delete">Confirm delete ?</string>
     <string name="please_confirm_component">Please confirm the date file in /sdcard dictionary!</string>
     <string name="color">Color</string>
-    <string name="black_white"><![CDATA[Black&White]]></string>
+    <string name="black_white"><![CDATA[black & white]]></string>
     <string name="update_success">Update successfully.</string>
     <string name="updating">Updating</string>
     <string name="no_double_side">No Double Side</string>
@@ -54,4 +54,28 @@
     <string name="color_mode">color mode</string>
     <string name="duplx_mode">duplx mode</string>
     <string name="update_failed">Update failed.</string>
+    <string name="action_print_job_manager">print job manager</string>
+    <string name="document_name">document name</string>
+    <string name="device">device</string>
+    <string name="status">status</string>
+    <string name="size">size</string>
+    <string name="operation">operation</string>
+    <string name="pause_all">pause all</string>
+    <string name="start_all">start all</string>
+    <string name="cancel_all">cancel all</string>
+    <string name="pause">pause</string>
+    <string name="remove">remove</string>
+    <string name="canceled">Canceled.</string>
+    <string name="cancel_error">Cancel error.</string>
+    <string name="paused">Paused</string>
+    <string name="pause_error">Pause error.</string>
+    <string name="started">Started.</string>
+    <string name="start_error">Start error.</string>
+    <string name="error">error</string>
+    <string name="ready">ready</string>
+    <string name="waiting_for_printer">Waiting for printer to be ready.</string>
+    <string name="unknown">unknown</string>
+    <string name="resume">resume</string>
+    <string name="resumed">resumed</string>
+    <string name="resume_error">resume error</string>
 </resources>

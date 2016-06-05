@@ -46,4 +46,23 @@
     <string name="printing">打印中</string>
     <string name="query_error">查询出错</string>
     <string name="start_printing">开始打印</string>
+    <string name="color_mode">色彩</string>
+    <string name="color">彩色</string>
+    <string name="black_white">黑白</string>
+    <string name="duplx_mode">打印模式</string>
+    <string name="paper_size">纸张大小</string>
+    <string name="update_failed">更新失败</string>
+    <string name="update_success">更新成功</string>
+    <string name="updating">更新中</string>
+    <string name="no_double_side">单面打印</string>
+    <string name="action_print_job_manager">打印任务管理器</string>
+    <string name="device">设备</string>
+    <string name="document_name">文档名</string>
+    <string name="operation">操作</string>
+    <string name="pause_all">暂停所有</string>
+    <string name="size">大小</string>
+    <string name="start_all">开始所有</string>
+    <string name="status">状态</string>
+    <string name="cancel_all">取消所有</string>
+    <string name="ready">就绪</string>
 </resources>

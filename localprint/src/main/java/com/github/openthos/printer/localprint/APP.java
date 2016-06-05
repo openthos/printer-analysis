@@ -34,6 +34,8 @@ public class APP extends Application{
     public static final String JOBID = "jobid";
     public static final String COMPONENT_PATH = "/component_17";        //文件所在文件夹
 
+    public static final long JOB_REFRESH_INTERVAL = 3000;       //打印任务刷新间隔 单位：毫秒
+
     public static boolean MANAGEMENT_ACTIVITY_ON_TOP = false;
 
     public static boolean IS_LOGE = true;

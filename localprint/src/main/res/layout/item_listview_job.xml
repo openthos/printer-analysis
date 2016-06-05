@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/textview_name"
+        android:text="名字"
+        android:gravity="center"
+        android:layout_weight="2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content" />
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimary" />
+
+    <TextView
+        android:id="@+id/textview_device"
+        android:text="设备"
+        android:gravity="center"
+        android:layout_width="0dp"
+        android:layout_weight="3"
+        android:layout_height="wrap_content" />
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimary" />
+    <TextView
+        android:id="@+id/textview_status"
+        android:text="状态"
+        android:gravity="center"
+        android:layout_weight="2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content" />
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimary" />
+    <TextView
+        android:id="@+id/textview_size"
+        android:text="大小"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content" />
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimary" />
+
+    <Button
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/pause"
+        android:id="@+id/button_pause"
+        android:layout_weight="1"
+        style="?android:attr/buttonStyleSmall" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/remove"
+        android:id="@+id/button_remove"
+        android:layout_weight="1" />
+
+</LinearLayout>

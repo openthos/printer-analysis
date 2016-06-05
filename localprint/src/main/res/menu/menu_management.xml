@@ -2,6 +2,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.github.openthos.printer.testusb.MainActivity">
+
+    <item
+        android:id="@+id/action_print_job"
+        android:orderInCategory="98"
+        android:title="@string/action_print_job_manager"
+        app:showAsAction="ifRoom" />
+
     <item
         android:id="@+id/action_system_print_service"
         android:orderInCategory="99"

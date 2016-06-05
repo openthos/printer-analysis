@@ -10,8 +10,9 @@ import android.view.WindowManager;
 
 import com.github.openthos.printer.localprint.APP;
 import com.github.openthos.printer.localprint.R;
+import com.github.openthos.printer.localprint.model.JobItem;
 import com.github.openthos.printer.localprint.model.PrinterOptionItem;
-import com.github.openthos.printer.localprint.task.CancelPrintTask;
+import com.github.openthos.printer.localprint.task.JobCancelTask;
 import com.github.openthos.printer.localprint.task.PrintTask;
 import com.github.openthos.printer.localprint.ui.ManagementActivity;
 import com.github.openthos.printer.localprint.util.FileUtils;
@@ -43,9 +44,9 @@ public class OpenthosPrintService extends PrintService {
     protected void onRequestCancelPrintJob(final PrintJob printJob) {
         // 取消打印任务
 
-        CancelPrintTask<Void, Void> task = new CancelPrintTask<Void, Void>() {
+        JobCancelTask<Void> task = new JobCancelTask<Void>() {
             @Override
-            protected void onPostExecute(Void aVoid) {
+            protected void onPostExecute(Boolean aBoolean) {
                 printJob.cancel();
             }
         };
@@ -55,7 +56,9 @@ public class OpenthosPrintService extends PrintService {
         if(jobId == null){
             printJob.cancel();
         }else {
-            task.start(jobId);
+            JobItem item = new JobItem();
+            item.setJobId(Integer.parseInt(jobId));
+            task.start(item);
         }
 
     }
