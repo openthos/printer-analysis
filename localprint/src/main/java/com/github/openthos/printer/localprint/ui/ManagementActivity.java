@@ -33,6 +33,7 @@ import com.github.openthos.printer.localprint.util.LogUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -42,7 +43,7 @@ public class ManagementActivity extends BaseActivity {
     private boolean IS_DETECTING = false;       //是否正在检测新打印机
     private ListView listview;
     private ManagementAdapter adapter;
-    private final List<ManagementListItem> listItem = new ArrayList<>();;
+    private final List<ManagementListItem> listItem = new LinkedList<>();;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -282,13 +283,13 @@ public class ManagementActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        APP.MANAGEMENT_ACTIVITY_ON_TOP = true;
+        APP.IS_MANAGEMENT_ACTIVITY_ON_TOP = true;
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        APP.MANAGEMENT_ACTIVITY_ON_TOP = false;
+        APP.IS_MANAGEMENT_ACTIVITY_ON_TOP = false;
     }
 
     @Override

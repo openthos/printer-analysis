@@ -67,7 +67,12 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".ui.JobManagerActivity"></activity>
+        <activity android:name=".ui.JobManagerActivity" />
+
+        <service
+            android:name=".service.LocalPrintService"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>

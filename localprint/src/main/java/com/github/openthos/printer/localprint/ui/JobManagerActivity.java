@@ -1,5 +1,9 @@
 package com.github.openthos.printer.localprint.ui;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -17,21 +21,30 @@ import com.github.openthos.printer.localprint.task.JobQueryTask;
 import com.github.openthos.printer.localprint.ui.adapter.JobAdapter;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class JobManagerActivity extends BaseActivity {
 
     private ListView listview_job;
-    private List<JobItem> list = new ArrayList<>();
-    private JobQueryTask<Void, Void> task;
+    private List<JobItem> list;
     private JobAdapter jobAdapter;
+
+    private BroadcastReceiver jobReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            jobAdapter.notifyDataSetChanged();      //更新列表
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_job_manager);
 
         listview_job = (ListView)findViewById(R.id.listview_job);
+        list = APP.getJobList();
         jobAdapter = new JobAdapter(this, list);
         listview_job.setAdapter(jobAdapter);
 
@@ -46,15 +59,12 @@ public class JobManagerActivity extends BaseActivity {
                 pauseAll();
             }
         });
-
-
         button_start_all.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startAll();
             }
         });
-
         button_cancel_all.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -62,7 +72,6 @@ public class JobManagerActivity extends BaseActivity {
                 cancelAll();
             }
         });
-
         button_ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,33 +79,8 @@ public class JobManagerActivity extends BaseActivity {
             }
         });
 
-        refreshTimer();
+        registerReceiver(jobReceiver, new IntentFilter(APP.BROADCAST_REFRESH_JOBS));        //注册广播
 
-    }
-
-    /**
-     * 刷新列表
-     */
-    private void refreshTimer() {
-
-        final Handler handler = new Handler();
-
-        task = new JobQueryTask<Void, Void>(list) {
-            @Override
-            protected void onPostExecute(Boolean aBoolean) {
-
-                jobAdapter.notifyDataSetChanged();      //更新listview
-
-                //定时刷新列表
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        task.start();
-                    }
-                }, APP.JOB_REFRESH_INTERVAL);
-            }
-        };
-        task.start();
     }
 
     /**
@@ -161,6 +145,12 @@ public class JobManagerActivity extends BaseActivity {
         };
 
         task.start();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(jobReceiver);        //取消注册广播
     }
 
     @Override
