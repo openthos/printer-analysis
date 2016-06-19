@@ -71,6 +71,10 @@ public class JobQueryTask<Params, Progress> extends CommandTask<Params, Progress
                     }
                     if(statusLine.endsWith("Waiting for printer to become available."))
                         stat = JobItem.STATUS_WAITING_FOR_PRINTER;
+
+                    if(statusLine.contains("ing")) {
+                        stat = JobItem.STATUS_PRINTING;
+                    }
                     continue;
                 }
             }
@@ -83,6 +87,8 @@ public class JobQueryTask<Params, Progress> extends CommandTask<Params, Progress
                         printTask.setPrinter(splitLine[2]);
                         printTask.setStatus(stat);
                         if(stat == JobItem.STATUS_ERROR)
+                            printTask.setERROR(statusLine);
+                        if (stat == JobItem.STATUS_PRINTING)
                             printTask.setERROR(statusLine);
                     }
                     continue;
