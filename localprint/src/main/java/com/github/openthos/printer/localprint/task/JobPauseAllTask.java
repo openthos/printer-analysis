@@ -3,6 +3,7 @@ package com.github.openthos.printer.localprint.task;
 import com.github.openthos.printer.localprint.APP;
 import com.github.openthos.printer.localprint.model.JobItem;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,7 +20,20 @@ public class JobPauseAllTask<Params, Progress> extends CommandTask<Params, Progr
 
     @Override
     protected String[] setCmd(Params... params) {
-        return new String[]{};
+        List<String> command = new ArrayList<String>();
+        for (int i = 0; i < list.size(); i++) {
+            JobItem printTask = list.get(i);
+            command.add("sh");
+            command.add("proot.sh");
+            command.add("lp");
+            command.add("-i");
+            command.add(Integer.toString(printTask.getJobId()));
+            command.add("-H");
+            command.add("hold");
+            command.add(";");
+        }
+        String[] cmd = command.toArray(new String[0]);
+        return cmd;
     }
 
     @Override

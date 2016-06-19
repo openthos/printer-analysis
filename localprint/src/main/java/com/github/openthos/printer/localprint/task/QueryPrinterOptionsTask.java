@@ -13,7 +13,7 @@ public class QueryPrinterOptionsTask<Progress> extends  CommandTask<String, Prog
 
         String printerName = params[0];
 
-        return new String[]{};
+        return new String[]{"sh", "proot.sh", "lpoptions", "-p", params[0], "-l"};
     }
 
     @Override
