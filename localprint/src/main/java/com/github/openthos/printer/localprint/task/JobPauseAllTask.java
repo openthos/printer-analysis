@@ -21,17 +21,13 @@ public class JobPauseAllTask<Params, Progress> extends CommandTask<Params, Progr
     @Override
     protected String[] setCmd(Params... params) {
         List<String> command = new ArrayList<String>();
+        command.add("sh");
+        command.add("hold_release.sh");
         for (int i = 0; i < list.size(); i++) {
             JobItem printTask = list.get(i);
-            command.add("sh");
-            command.add("proot.sh");
-            command.add("lp");
-            command.add("-i");
             command.add(Integer.toString(printTask.getJobId()));
-            command.add("-H");
-            command.add("hold");
-            command.add(";");
         }
+        command.add("hold");
         String[] cmd = command.toArray(new String[0]);
         return cmd;
     }
