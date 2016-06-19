@@ -1,5 +1,6 @@
 package com.github.openthos.printer.localprint.task;
 
+import com.github.openthos.printer.localprint.APP;
 import com.github.openthos.printer.localprint.model.JobItem;
 
 import java.util.List;
