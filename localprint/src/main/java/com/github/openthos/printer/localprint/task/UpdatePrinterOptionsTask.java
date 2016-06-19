@@ -35,7 +35,12 @@ public abstract class UpdatePrinterOptionsTask<Progress> extends CommandTask<Pri
 
     @Override
     protected Boolean handleCommand(List<String> stdOut, List<String> stdErr) {
-        boolean flag = true;
+        boolean flag = false;
+
+        for(String line:stdOut){
+            if(line.isEmpty())
+                flag = true;
+        }
 
         // TODO: 2016/6/1 修改打印机设置 B11
         

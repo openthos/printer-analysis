@@ -41,6 +41,26 @@ public class QueryPrinterCupsOptoinsTask<Progress> extends CommandTask<String, P
 
         // TODO: 2016/5/27 查询打印机高级设置  B9
         List<PrinterCupsOptionItem> options = new ArrayList<>();
+        for(String line:stdOut){
+            String[] firstSplit = line.split("/");
+            PrinterCupsOptionItem item1 = new PrinterCupsOptionItem();
+            item1.setOption_id(firstSplit[0]);
+
+            String[] secondSplit = firstSplit[1].split(": ");
+            item1.setName(secondSplit[0]);
+
+            String[] thirdSplit = secondSplit[1].split(" ");
+            for (int i = 0; i < thirdSplit.length; i++) {
+                if(thirdSplit[i].startsWith("*")) {
+                    thirdSplit[i] = thirdSplit[i].replace("*", "");
+                    item1.add(thirdSplit[i],true);
+                }
+                else
+                    item1.add(thirdSplit[i],false);
+            }
+            options.add(item1);
+        }
+        /*List<PrinterCupsOptionItem> options = new ArrayList<>();
         //模拟数据
         PrinterCupsOptionItem item1 = new PrinterCupsOptionItem();
         item1.setName("Printing Quality");
@@ -53,7 +73,7 @@ public class QueryPrinterCupsOptoinsTask<Progress> extends CommandTask<String, P
         item2.setName("Color Mode");
         item2.add("ICM", false);
         item2.add("Monochrome", true);
-        options.add(item2);
+        options.add(item2);*/
 
         return options;
     }

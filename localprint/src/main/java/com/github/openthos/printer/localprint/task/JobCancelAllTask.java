@@ -18,7 +18,7 @@ public class JobCancelAllTask<Params, Progress> extends CommandTask<Params, Prog
 
     @Override
     protected String[] setCmd(Params... params) {
-        return new String[]{};
+        return new String[]{"sh","proot.sh","cancel","-a"};
     }
 
     @Override

@@ -38,8 +38,24 @@ public abstract class UpdatePrinterCupsOptionsTask<Progress, Result> extends Com
 
     @Override
     protected Result handleCommand(List<String> stdOut, List<String> stdErr) {
+
+        for (String line : stdErr) {
+
+            if (line.startsWith("WARNING"))
+                continue;
+            else if (line.contains("Bad file descriptor")) {
+                if (startCups()) {
+                    runCommandAgain();      //再次运行命令
+                    return null;
+                } else {
+                    ERROR = "Cups start failed.";
+                    return null;
+                }
+            }
+        }
         return null;
     }
+
 
     @Override
     protected String bindTAG() {
