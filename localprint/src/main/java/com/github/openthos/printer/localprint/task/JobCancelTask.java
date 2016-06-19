@@ -31,6 +31,9 @@ public class JobCancelTask<Progress> extends CommandTask<JobItem, Progress, Bool
                 ERROR = line;
             }
         }
+
+        APP.sendRefreshJobsIntent();        //发送更新打印任务信息Intent
+
         return stat;
     }
 

@@ -2,11 +2,14 @@ package com.github.openthos.printer.localprint.task;
 
 import android.util.Log;
 
+import com.github.openthos.printer.localprint.APP;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 /**
+ * 打印 C1
  * Created by bboxh on 2016/5/16.
  */
 public class PrintTask<Progress> extends CommandTask<Map<String, String>, Progress, String> {
@@ -115,6 +118,8 @@ public class PrintTask<Progress> extends CommandTask<Map<String, String>, Progre
 
             }
         }
+
+        APP.sendRefreshJobsIntent();        //发送更新打印任务信息Intent
 
         return flag;
     }

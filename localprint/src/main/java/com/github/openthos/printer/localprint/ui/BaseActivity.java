@@ -16,7 +16,7 @@ import com.github.openthos.printer.localprint.util.LogUtils;
 public abstract class BaseActivity extends AppCompatActivity {
 
     private String TAG = "BaseActivity";
-    BroadcastReceiver baseReceiver = new BroadcastReceiver() {
+    private BroadcastReceiver baseReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
 

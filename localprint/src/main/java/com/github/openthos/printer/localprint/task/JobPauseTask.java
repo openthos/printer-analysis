@@ -31,6 +31,9 @@ public class JobPauseTask<Progress> extends CommandTask<JobItem, Progress, Boole
                 ERROR = line;
             }
         }
+
+
+        APP.sendRefreshJobsIntent();        //发送更新打印任务信息Intent
         return stat;
     }
 

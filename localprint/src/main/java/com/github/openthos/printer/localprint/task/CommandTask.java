@@ -75,7 +75,7 @@ public abstract class CommandTask<Params, Progress, Result> extends BaseTask<Par
      * 执行命令
      * @param cmd
      */
-    private void runCommand(String[] cmd) {
+    protected void runCommand(String[] cmd) {
 
         if(cmd != null && cmd.length == 0){
             return;
