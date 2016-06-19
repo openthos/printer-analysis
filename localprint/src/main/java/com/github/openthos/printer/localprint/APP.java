@@ -49,6 +49,8 @@ public class APP extends Application{
     public static final long JOB_REFRESH_INTERVAL = 3000;       //打印任务刷新间隔 单位：毫秒
     public static final long JOB_REFRESH_WAITING_PRINTER_INTERVAL = 5100;       //更新由打印机可用导致的任务刷新时间，CUPS中是5秒，所以不能少于5秒 单位：毫秒
 
+    public static final int NOTIFY_JOBS_ID = 1000;          //打印任务 通知栏 编号
+
     public static boolean IS_LOGE = true;
     public static boolean IS_LOGD = true;
     public static boolean IS_LOGI = true;

@@ -78,4 +78,5 @@
     <string name="resume">resume</string>
     <string name="resumed">resumed</string>
     <string name="resume_error">resume error</string>
+    <string name="print_info">print info</string>
 </resources>

@@ -96,7 +96,7 @@ public class ConfigPrinterDialogFragment extends DialogFragment {
     }
 
     private void save() {
-        //// TODO: 2016/4/16 保存配置修改并退出
+        // 2016/4/16 保存配置修改并退出
         dismiss();
     }
 

@@ -1,7 +1,11 @@
 package com.github.openthos.printer.localprint;
 
 import android.app.Application;
+import android.app.NotificationManager;
+import android.content.Context;
+import android.support.v7.app.NotificationCompat;
 import android.test.ApplicationTestCase;
+import android.widget.RemoteViews;
 
 import com.github.openthos.printer.localprint.task.CommandTask;
 

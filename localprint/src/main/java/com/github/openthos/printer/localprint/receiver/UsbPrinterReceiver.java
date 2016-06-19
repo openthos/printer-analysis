@@ -49,9 +49,7 @@ public class UsbPrinterReceiver extends BroadcastReceiver {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        Intent new_intent = new Intent(APP.getApplicatioContext(), LocalPrintService.class);
-                        new_intent.putExtra(APP.TASK, APP.TASK_REFRESH_JOBS);
-                        APP.getApplicatioContext().startService(new_intent);
+                        APP.sendRefreshJobsIntent();
                     }
                 }, APP.JOB_REFRESH_WAITING_PRINTER_INTERVAL);
             }

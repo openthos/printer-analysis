@@ -114,7 +114,7 @@ public class JobManagerActivity extends BaseActivity {
      * 开始所有
      */
     private void startAll() {
-        JobPauseAllTask<Void, Void> task = new JobPauseAllTask<Void, Void>(){
+        JobPauseAllTask<Void, Void> task = new JobPauseAllTask<Void, Void>(list){
             @Override
             protected void onPostExecute(Boolean aBoolean) {
                 if(aBoolean){
@@ -133,7 +133,7 @@ public class JobManagerActivity extends BaseActivity {
      */
     private void pauseAll() {
 
-        JobPauseAllTask<Void, Void> task = new JobPauseAllTask<Void, Void>(){
+        JobPauseAllTask<Void, Void> task = new JobPauseAllTask<Void, Void>(list){
             @Override
             protected void onPostExecute(Boolean aBoolean) {
                 if(aBoolean){

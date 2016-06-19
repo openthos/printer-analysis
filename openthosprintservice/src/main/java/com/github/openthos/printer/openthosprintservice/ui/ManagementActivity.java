@@ -167,7 +167,7 @@ public class ManagementActivity extends BaseActivity {
     }
 
     private void detect_printers() {
-        // TODO: 2016/4/16 检测网络打印机时使用，本地打印机耗时短无需 IS_DETECTING
+
         if(IS_DETECTING){
             return;
         }
