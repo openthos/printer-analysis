@@ -24,11 +24,8 @@ public class QueryPrinterOptionsTask<Progress> extends  CommandTask<String, Prog
         PrinterOptionItem item = new PrinterOptionItem();
         for(String line:stdOut){
             String[] firstSplit = line.split("/");
-            boolean colorIsExist = false;
-            boolean sizeIsExist = false;
 
             if(firstSplit[0].equals("ColorModel") || firstSplit[0].equals("Color") || firstSplit[0].equals("ColorMode") ) {
-                colorIsExist = true;
                 item.setColorModeName(firstSplit[0]);
 
                 String[] secondSplit = firstSplit[1].split(": ");
@@ -41,13 +38,10 @@ public class QueryPrinterOptionsTask<Progress> extends  CommandTask<String, Prog
                         item.addColorModeItem(thirdSplit[i], false);
                 }
             }
-            if (!colorIsExist)
-                item.setColorModeName(null);
 
 
 
             if(firstSplit[0].equals("PageSize")) {
-                sizeIsExist = true;
                 item.setMediaSizeName(firstSplit[0]);
 
                 String[] secondSplit = firstSplit[1].split(": ");
@@ -60,8 +54,6 @@ public class QueryPrinterOptionsTask<Progress> extends  CommandTask<String, Prog
                         item.addMediaSizeItem(thirdSplit[i], false);
                 }
             }
-            if(!sizeIsExist)
-                item.setMediaSizeName(null);
 
         }
         //模拟数据

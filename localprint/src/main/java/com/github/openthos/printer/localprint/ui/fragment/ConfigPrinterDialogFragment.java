@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -115,6 +116,7 @@ public class ConfigPrinterDialogFragment extends DialogFragment {
                 optionItem = printerOptionItem;
 
                 media_size_adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, optionItem.getMediaSizeCupsList()){
+
                     @Override
                     public String getItem(int position) {
                         return optionItem.getMediaSizeList().get(position).getId();
@@ -137,6 +139,46 @@ public class ConfigPrinterDialogFragment extends DialogFragment {
                 spinner_media_size.setAdapter(media_size_adapter);
                 spinner_color_mode.setAdapter(spinner_color_adapter);
                 spinner_duplex_mode.setAdapter(spinner_duplex_adapter);
+
+                spinner_media_size.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                        optionItem.setMediaSizeSelected(i);
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> adapterView) {
+
+                    }
+                });
+
+                spinner_color_mode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                        optionItem.setColorModeSelected(i);
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> adapterView) {
+
+                    }
+                });
+
+                spinner_duplex_mode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> adapterView) {
+
+                    }
+                });
+
+                spinner_media_size.setSelection(optionItem.getMediaSizeSelected());
+                spinner_color_mode.setSelection(optionItem.getColorModeSelected());
+
             }
         };
 
@@ -150,6 +192,8 @@ public class ConfigPrinterDialogFragment extends DialogFragment {
         Intent intent = new Intent(getActivity(), AdvancedPrintOptionActivity.class);
         getActivity().startActivity(intent);
         // TODO: 2016/5/31 intent高级设置传参
+
+        dismissNoUpdate();
     }
 
     /**
@@ -238,6 +282,7 @@ public class ConfigPrinterDialogFragment extends DialogFragment {
 
                 if(aBoolean){
                     Toast.makeText(getActivity(), R.string.update_success, Toast.LENGTH_SHORT).show();
+                    dismiss();
                 }else{
                     Toast.makeText(getActivity(), getString(R.string.update_failed) + " " + ERROR, Toast.LENGTH_SHORT).show();
                 }
@@ -258,6 +303,13 @@ public class ConfigPrinterDialogFragment extends DialogFragment {
         Intent intent = new Intent(getActivity(), ManagementActivity.class);
         intent.putExtra(APP.TASK, APP.TASK_REFRESH_ADDED_PRINTERS);
         getActivity().startActivity(intent);
+    }
+
+    /**
+     * 关闭界面不更新ManagementActivity
+     */
+    public void dismissNoUpdate(){
+        super.dismissAllowingStateLoss();           //avoid report : Can not perform this action after onSaveInstanceState
     }
 
     @Override

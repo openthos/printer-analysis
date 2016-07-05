@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by bboxh on 2016/5/31.
  */
-public abstract class UpdatePrinterCupsOptionsTask<Progress, Result> extends CommandTask<List<PrinterCupsOptionItem>, Progress, Result>{
+public abstract class UpdatePrinterCupsOptionsTask<Progress> extends CommandTask<List<PrinterCupsOptionItem>, Progress, Boolean>{
     @Override
     protected String[] setCmd(List<PrinterCupsOptionItem>... params) {
 
@@ -37,7 +37,7 @@ public abstract class UpdatePrinterCupsOptionsTask<Progress, Result> extends Com
     protected abstract String getPrinter();
 
     @Override
-    protected Result handleCommand(List<String> stdOut, List<String> stdErr) {
+    protected Boolean handleCommand(List<String> stdOut, List<String> stdErr) {
 
         for (String line : stdErr) {
 

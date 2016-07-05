@@ -86,7 +86,7 @@ public abstract class CommandTask<Params, Progress, Result> extends BaseTask<Par
         stdErr.clear();
 
         try {
-            File file = new File(getWorkPath());
+            File file = new File(bindWorkPath());
             final Process p = Runtime.getRuntime().exec(cmd, null, file);
 
             final Lock lock_in = new Lock();
@@ -177,7 +177,7 @@ public abstract class CommandTask<Params, Progress, Result> extends BaseTask<Par
      * 可自行重写
      * @return 工作路径
      */
-    protected String getWorkPath() {
+    protected String bindWorkPath() {
         return FileUtils.getComponentPath();
     }
 
@@ -241,7 +241,7 @@ public abstract class CommandTask<Params, Progress, Result> extends BaseTask<Par
 
         //runCommand(new String[]{"sh", "proot.sh" ,"cupsd"});
 
-        File file = new File(getWorkPath());
+        File file = new File(bindWorkPath());
         try {
             APP.cupsdProcess = Runtime.getRuntime().exec(new String[]{"sh", "proot.sh" ,"cupsd"}, null, file);
         } catch (IOException e) {

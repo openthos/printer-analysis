@@ -44,7 +44,7 @@
     <string name="print_error">Printing error</string>
     <string name="query_error">Query Error</string>
     <string name="confirm_delete">Confirm delete ?</string>
-    <string name="please_confirm_component">Please confirm the date file in /sdcard dictionary!</string>
+    <string name="please_confirm_component">Please confirm the new date file in /sdcard dictionary!</string>
     <string name="color">Color</string>
     <string name="black_white"><![CDATA[black & white]]></string>
     <string name="update_success">Update successfully.</string>

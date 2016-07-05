@@ -21,7 +21,9 @@ public class JobResumeAllTask<Params, Progress> extends CommandTask<Params, Prog
     protected String[] setCmd(Params... params) {
         List<String> command = new ArrayList<String>();
         command.add("sh");
-        command.add("hold_release.sh");
+        command.add("proot.sh");
+        command.add("sh");
+        command.add("/hold_release.sh");
         for (int i = 0; i < list.size(); i++) {
             JobItem printTask = list.get(i);
             command.add(Integer.toString(printTask.getJobId()));
@@ -33,6 +35,21 @@ public class JobResumeAllTask<Params, Progress> extends CommandTask<Params, Prog
 
     @Override
     protected Boolean handleCommand(List<String> stdOut, List<String> stdErr) {
+
+        for (String line : stdErr) {
+
+            if (line.startsWith("WARNING"))
+                continue;
+            else if (line.contains("Bad file descriptor")) {
+                if (startCups()) {
+                    runCommandAgain();      //再次运行命令
+                    return null;
+                } else {
+                    ERROR = "Cups start failed.";
+                    return null;
+                }
+            }
+        }
 
         // TODO: 2016/6/5 恢复所有打印任务 C8
 

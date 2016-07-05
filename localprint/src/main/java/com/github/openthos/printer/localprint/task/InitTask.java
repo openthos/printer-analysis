@@ -13,7 +13,7 @@ import java.util.List;
 public class InitTask<Progress> extends CommandTask<Object, Progress, Boolean> {
     @Override
     protected String[] setCmd(Object[] params) {
-        return new String[]{"tar", "vxzf", "/mnt/sdcard"+ APP.COMPONENT_PATH + ".tar.gz"};
+        return new String[]{"tar", "vxzf", APP.COMPONENT_SOURCE_PATH + APP.COMPONENT_PATH + ".tar.gz"};
     }
 
     @Override
@@ -82,7 +82,7 @@ public class InitTask<Progress> extends CommandTask<Object, Progress, Boolean> {
     }
 
     @Override
-    protected String getWorkPath() {
+    protected String bindWorkPath() {
         return FileUtils.getFilePath();
     }
 

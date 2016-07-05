@@ -49,6 +49,9 @@ public class StateTask<Progress> extends CommandTask<PrinterId , Progress, Print
         PrinterCapabilitiesInfo.Builder state = new PrinterCapabilitiesInfo.Builder(printerId);
 
         state.setMinMargins(new PrintAttributes.Margins(200, 200, 200, 200));   //cups中暂未找到对应配置
+
+        PrintAttributes.Resolution r1 = null;
+        int colorMode = -1;
         for(String line:stdOut) {
             if (line.contains("PageSize")){
                 String[] splitLine = line.split(" ");
@@ -61,34 +64,41 @@ public class StateTask<Progress> extends CommandTask<PrinterId , Progress, Print
                         splitLine[i] = splitLine[i].replace("*","");
                     }
 
-                        state.addMediaSize(PrinterOptionItem.cups2media(splitLine[i]),flag);
+                    PrintAttributes.MediaSize size = PrinterOptionItem.cups2media(splitLine[i]);
+                    if(size != null){
+                        state.addMediaSize(size,flag);
+                    }
 
                 }
                 //state.addMediaSize(PrintAttributes.MediaSize.ISO_A4, true);
             }
 
             if(line.contains("Resolution")) {
+
                 String[] splitLine = line.split(" ");
                 for (int i = 1; i < splitLine.length; i++) {
                     if(splitLine[i].startsWith("*")){
                         splitLine[i] = splitLine[i].replace("*","");
-                        if(!splitLine[i].matches("^(\\d+)(.*)"))
+                        if(!splitLine[i].matches("^(\\d+)(.*)")){
                             continue;
-                        else {
+                        }else {
                             splitLine[i] = splitLine[i].replace("dpi", "");
                             String[] resolution = splitLine[i].split("x");
-                            state.addResolution(new PrintAttributes.Resolution("R" + i, resolution[0] + "x" + resolution[1], Integer.parseInt(resolution[0]), Integer.parseInt(resolution[1])), true);
+                            r1 = new PrintAttributes.Resolution("R" + i, resolution[0] + "x" + resolution[1], Integer.parseInt(resolution[0]), Integer.parseInt(resolution[1]));
+                            state.addResolution(r1, true);
                             continue;
                         }
                     }
-                    if(!splitLine[i].matches("^(\\d+)(.*)"))
+                    if(!splitLine[i].matches("^(\\d+)(.*)")) {
                         continue;
+                    }
 
                     splitLine[i] = splitLine[i].replace("dpi","");
                     String[] resolution = splitLine[i].split("x");
-                    state.addResolution(new PrintAttributes.Resolution("R"+i,resolution[0]+"x"+resolution[1],Integer.parseInt(resolution[0]),Integer.parseInt(resolution[1])),false);
+                    r1 = new PrintAttributes.Resolution("R"+i,resolution[0]+"x"+resolution[1],Integer.parseInt(resolution[0]),Integer.parseInt(resolution[1]));
+                    state.addResolution(r1,false);
                 }
-                //state.addResolution(new PrintAttributes.Resolution("R1", "600x600", 600, 600), true);
+
             }
 
             if(line.startsWith("ColorMode") || line.startsWith("ColorModel") || line.startsWith("Color/Color")){
@@ -109,20 +119,28 @@ public class StateTask<Progress> extends CommandTask<PrinterId , Progress, Print
                 }
 
                 if(color)
-                    state.setColorModes(PrintAttributes.COLOR_MODE_MONOCHROME|PrintAttributes.COLOR_MODE_COLOR,setDefault);
+                    //state.setColorModes(PrintAttributes.COLOR_MODE_MONOCHROME|PrintAttributes.COLOR_MODE_COLOR,setDefault);
+                    state.setColorModes(PrintAttributes.COLOR_MODE_COLOR,setDefault);
                 else
                     state.setColorModes(PrintAttributes.COLOR_MODE_MONOCHROME,setDefault);
 
+                colorMode = 1;
                 //state.setColorModes(PrintAttributes.COLOR_MODE_MONOCHROME | PrintAttributes.COLOR_MODE_COLOR, PrintAttributes.COLOR_MODE_MONOCHROME);
             }
 
         }
 
+        if(r1 == null){
+            state.addResolution(new PrintAttributes.Resolution("R0", "600x600", 600, 600), true);
+        }
+        if(colorMode == -1){
+            state.setColorModes(PrintAttributes.COLOR_MODE_MONOCHROME, PrintAttributes.COLOR_MODE_MONOCHROME);
+        }
+
+
+
         PrinterCapabilitiesInfo capabilities =state.build();
-
         PrinterInfo.Builder builder = new PrinterInfo.Builder(printerId, printerId.getLocalId(), PrinterInfo.STATUS_IDLE);
-
-
         PrinterInfo printer = builder.setCapabilities(capabilities)
                 //.setDescription(item.getManufacturerName())
                 .build();

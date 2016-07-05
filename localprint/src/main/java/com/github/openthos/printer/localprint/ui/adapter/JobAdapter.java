@@ -96,9 +96,9 @@ public class JobAdapter extends BaseAdapter {
 
         //判断状态
         if(item.getStatus() == JobItem.STATUS_HOLDING){
-            holder.button_pause.setText(R.string.pause);
-        }else{
             holder.button_pause.setText(R.string.resume);
+        }else{
+            holder.button_pause.setText(R.string.pause);
         }
 
         holder.button_pause.setOnClickListener(new View.OnClickListener() {

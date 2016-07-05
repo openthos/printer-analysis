@@ -49,7 +49,7 @@ public class QueryPrinterCupsOptoinsTask<Progress> extends CommandTask<String, P
             String[] secondSplit = firstSplit[1].split(": ");
             item1.setName(secondSplit[0]);
 
-            String[] thirdSplit = secondSplit[1].split(" ");
+            String[] thirdSplit = secondSplit[1].split("\\s+");
             for (int i = 0; i < thirdSplit.length; i++) {
                 if(thirdSplit[i].startsWith("*")) {
                     thirdSplit[i] = thirdSplit[i].replace("*", "");

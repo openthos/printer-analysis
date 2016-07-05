@@ -37,10 +37,23 @@ public abstract class UpdatePrinterOptionsTask<Progress> extends CommandTask<Pri
     protected Boolean handleCommand(List<String> stdOut, List<String> stdErr) {
         boolean flag = false;
 
-        for(String line:stdOut){
-            if(line.isEmpty())
-                flag = true;
+        for (String line : stdErr) {
+
+            if (line.startsWith("WARNING"))
+                continue;
+            else if (line.contains("Bad file descriptor")) {
+                if (startCups()) {
+                    runCommandAgain();      //再次运行命令
+                    return null;
+                } else {
+                    ERROR = "Cups start failed.";
+                    return null;
+                }
+            }
         }
+
+        if(stdOut.isEmpty())
+            flag = true;
 
         // TODO: 2016/6/1 修改打印机设置 B11
         

@@ -18,6 +18,7 @@ import com.github.openthos.printer.localprint.model.JobItem;
 import com.github.openthos.printer.localprint.task.JobCancelAllTask;
 import com.github.openthos.printer.localprint.task.JobPauseAllTask;
 import com.github.openthos.printer.localprint.task.JobQueryTask;
+import com.github.openthos.printer.localprint.task.JobResumeAllTask;
 import com.github.openthos.printer.localprint.ui.adapter.JobAdapter;
 
 import java.util.ArrayList;
@@ -114,7 +115,7 @@ public class JobManagerActivity extends BaseActivity {
      * 开始所有
      */
     private void startAll() {
-        JobPauseAllTask<Void, Void> task = new JobPauseAllTask<Void, Void>(list){
+        JobResumeAllTask<Void, Void> task = new JobResumeAllTask<Void, Void>(list){
             @Override
             protected void onPostExecute(Boolean aBoolean) {
                 if(aBoolean){

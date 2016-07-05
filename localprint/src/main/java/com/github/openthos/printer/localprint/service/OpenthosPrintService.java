@@ -77,7 +77,7 @@ public class OpenthosPrintService extends PrintService {
         map.put(PrintTask.LP_PRINTER, printJob.getInfo().getPrinterId().getLocalId());
         map.put(PrintTask.LP_FILE, FileUtils.getDocuFileName(printJob.getId().toString()));
         map.put(PrintTask.LP_MEDIA, PrinterOptionItem.media2cups(printJob.getInfo().getAttributes().getMediaSize()));
-        //map.put(PrintTask.LP_RESOLUTION,StateTask.Resulution2cups(printJob.getInfo().getAttributes().getResolution()));
+        //map.put(PrintTask.LP_RESOLUTION,PrinterOptionItem.resulution2cups(printJob.getInfo().getAttributes().getResolution()));
         //map.put(PrintTask.LP_COLOR, "");
         //map.put(PrintTask.LP_LANDSCAPE,"");     //横竖可能在android中以及已经处理过，暂时不处理
         map.put(PrintTask.LP_COPIES, String.valueOf(printJob.getInfo().getCopies()));

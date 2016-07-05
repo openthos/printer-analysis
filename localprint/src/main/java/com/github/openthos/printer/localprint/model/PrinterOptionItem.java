@@ -12,12 +12,12 @@ import java.util.List;
  */
 public class PrinterOptionItem {
 
-    private String mediaSizeName;           //在该驱动中纸张大小的标示
+    private String mediaSizeName = null;           //在该驱动中纸张大小的标示
     private int mediaSizeSelected = 0;          //当前选择的
     private List<String> mediaSizeCupsList = new ArrayList<>();     //存放cups中
     private List<PrintAttributes.MediaSize> mediaSizeList = new ArrayList<>();
 
-    private String colorModeName;
+    private String colorModeName = null;
     private int colorModeSelected = -1;
     private List<String> colorModeCupsList = new ArrayList<>();
     private List<Integer> colorModeList = new ArrayList<>();
@@ -53,8 +53,12 @@ public class PrinterOptionItem {
      * @param flag                  是否是默认值
      */
     public void addMediaSizeItem(String mediaSizeCupsItem, boolean flag){
+        PrintAttributes.MediaSize size = cups2media(mediaSizeCupsItem);
+        if(size == null){
+            return;
+        }
         mediaSizeCupsList.add(mediaSizeCupsItem);
-        mediaSizeList.add(cups2media(mediaSizeCupsItem));
+        mediaSizeList.add(size);
         if(flag){
             mediaSizeSelected = mediaSizeCupsList.size() - 1;
         }
@@ -196,7 +200,7 @@ public class PrinterOptionItem {
      * @return
      */
     public static PrintAttributes.MediaSize cups2media(String mediaSizeCupsItem) {
-        PrintAttributes.MediaSize result = PrintAttributes.MediaSize.ISO_A4;
+        PrintAttributes.MediaSize result = null;
         if(mediaSizeCupsItem.equals("Letter")) {
             result = PrintAttributes.MediaSize.NA_LETTER;
         }else if(mediaSizeCupsItem.equals("A4")) {

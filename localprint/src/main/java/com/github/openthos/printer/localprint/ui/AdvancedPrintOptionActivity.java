@@ -14,6 +14,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.openthos.printer.localprint.APP;
 import com.github.openthos.printer.localprint.R;
 import com.github.openthos.printer.localprint.model.PrinterCupsOptionItem;
 import com.github.openthos.printer.localprint.task.QueryPrinterCupsOptoinsTask;
@@ -86,7 +87,7 @@ public class AdvancedPrintOptionActivity extends BaseActivity {
 
         Toast.makeText(AdvancedPrintOptionActivity.this, R.string.updating, Toast.LENGTH_SHORT).show();
 
-        UpdatePrinterCupsOptionsTask<Void, Void> task = new UpdatePrinterCupsOptionsTask<Void, Void>(){
+        UpdatePrinterCupsOptionsTask<Void> task = new UpdatePrinterCupsOptionsTask<Void>(){
 
             @Override
             protected String getPrinter() {
@@ -94,8 +95,13 @@ public class AdvancedPrintOptionActivity extends BaseActivity {
             }
 
             @Override
-            protected void onPostExecute(Void aVoid) {
+            protected void onPostExecute(Boolean flag) {
                 Toast.makeText(AdvancedPrintOptionActivity.this, R.string.update_success, Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(AdvancedPrintOptionActivity.this, ManagementActivity.class);
+                intent.putExtra(APP.TASK, APP.TASK_REFRESH_ADDED_PRINTERS);
+                AdvancedPrintOptionActivity.this.startActivity(intent);
+
                 finish();
             }
         };
@@ -120,12 +126,12 @@ public class AdvancedPrintOptionActivity extends BaseActivity {
             TextView textView_option_name = (TextView) row.findViewById(R.id.textView_option_name);
             Spinner spinner_option = (Spinner) row.findViewById(R.id.spinner_option);
 
-            textView_option_name.setText(item.getName());
+            textView_option_name.setText(name);
             spinner_option.setTag(item);
 
             ArrayAdapter<String> adapter=new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, list);
             spinner_option.setAdapter(adapter);
-            spinner_option.setSelection(item.getDef());
+            spinner_option.setSelection(def);
             spinner_option.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
 
                 @Override

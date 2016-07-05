@@ -309,7 +309,9 @@ public class ManagementActivity extends BaseActivity {
         //noinspection SimplifiableIfStatement
 
         if(id == R.id.action_print_job) {
-            
+            Intent intent = new Intent(ManagementActivity.this, JobManagerActivity.class);
+            startActivity(intent);
+            return true;
         }
 
         if (id == R.id.action_settings) {

@@ -38,7 +38,7 @@
     <string name="delete_failed">删除失败</string>
     <string name="deleted_successfully">删除成功</string>
     <string name="deleting">删除中</string>
-    <string name="please_confirm_component">请确认数据包在 /sdcard 目录</string>
+    <string name="please_confirm_component">请确认新的数据包在 /sdcard 目录</string>
     <string name="print_copy_file_failed">拷贝文件失败</string>
     <string name="print_error">打印出错</string>
     <string name="print_failed">打印失败</string>
@@ -65,4 +65,19 @@
     <string name="status">状态</string>
     <string name="cancel_all">取消所有</string>
     <string name="ready">就绪</string>
+    <string name="paused">已暂停</string>
+    <string name="pause_error">暂停失败</string>
+    <string name="pause">暂停</string>
+    <string name="print_info">打印信息</string>
+    <string name="remove">移除</string>
+    <string name="resume">恢复</string>
+    <string name="resume_error">恢复出错</string>
+    <string name="resumed">已恢复</string>
+    <string name="start_error">开始出错</string>
+    <string name="started">已开始</string>
+    <string name="unknown">未知</string>
+    <string name="waiting_for_printer">等待打印机就绪</string>
+    <string name="cancel_error">暂停出错</string>
+    <string name="canceled">已取消</string>
+    <string name="error">错误</string>
 </resources>

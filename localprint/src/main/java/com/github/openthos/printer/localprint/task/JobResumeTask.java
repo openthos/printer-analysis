@@ -1,5 +1,6 @@
 package com.github.openthos.printer.localprint.task;
 
+import com.github.openthos.printer.localprint.APP;
 import com.github.openthos.printer.localprint.model.JobItem;
 
 import java.util.List;
@@ -31,6 +32,9 @@ public class JobResumeTask<Progress> extends CommandTask<JobItem, Progress, Bool
                 ERROR = line;
             }
         }
+
+        APP.sendRefreshJobsIntent();        //发送更新打印任务信息Intent
+
         return stat;
     }
 

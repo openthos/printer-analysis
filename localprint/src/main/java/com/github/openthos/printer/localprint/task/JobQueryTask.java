@@ -22,11 +22,28 @@ public class JobQueryTask<Params, Progress> extends CommandTask<Params, Progress
     protected String[] setCmd(Params... params) {
 
 
-        return new String[]{"sh","proot.sh","lpq","-a","&&","sh","proot.sh","lpstat","-l","-o"};
+        return new String[]{"sh","proot.sh","sh" , "/jobquery.sh"};
     }
 
     @Override
     protected Boolean handleCommand(List<String> stdOut, List<String> stdErr) {
+
+        for (String line : stdErr) {
+
+            if (line.startsWith("WARNING"))
+                continue;
+            else if (line.contains("Unable to connect to server")) {
+                if (startCups()) {
+                    runCommandAgain();      //再次运行命令
+                    return null;
+                } else {
+                    ERROR = "Cups start failed.";
+                    return null;
+                }
+            }
+        }
+
+        list.clear();
 
         // TODO: 2016/6/5 查询打印任务 C2
         String statusLine = " ";
@@ -37,7 +54,7 @@ public class JobQueryTask<Params, Progress> extends CommandTask<Params, Progress
                 continue;
 
             if(line.endsWith("bytes")){
-                String[] splitLine = line.split(" ");
+                String[] splitLine = line.split("\\s+");
                 JobItem printTask = new JobItem();
                 printTask.setJobId(Integer.parseInt(splitLine[2]));
                 printTask.setSize(splitLine[splitLine.length-2] + splitLine[splitLine.length-1]);
@@ -50,12 +67,12 @@ public class JobQueryTask<Params, Progress> extends CommandTask<Params, Progress
                 continue;
             }
 
-            if(line.startsWith("Status")) {
-                statusLine = line.replace("Status:",null);
+            if(line.startsWith("\tStatus")) {
+                statusLine = line.replace("\tStatus:","");
                 continue;
             }
 
-            if(line.startsWith("Alerts")){
+            if(line.startsWith("\tAlerts")){
                 String[] splitLine = line.split(":");
                 if(splitLine[1].contains("none")) {
                     stat = JobItem.STATUS_READY;
@@ -79,24 +96,25 @@ public class JobQueryTask<Params, Progress> extends CommandTask<Params, Progress
                 }
             }
 
-            if(line.startsWith("queued")){
-                String[] splitLine = line.split(" ");
+            if(line.startsWith("\tqueued")){
+                String[] splitLine = line.split("\\s+");
                 for (int i = 0; i < list.size(); i++) {
                     JobItem printTask = list.get(i);
                     if (printTask.getJobId() == id) {
-                        printTask.setPrinter(splitLine[2]);
+                        printTask.setPrinter(splitLine[3]);
                         printTask.setStatus(stat);
                         if(stat == JobItem.STATUS_ERROR)
                             printTask.setERROR(statusLine);
                         if (stat == JobItem.STATUS_PRINTING)
                             printTask.setERROR(statusLine);
+                        break;
                     }
                     continue;
                 }
                 continue;
             }
 
-            String[] splitLine = line.split(" ");
+            String[] splitLine = line.split("\\s+");
             String[] info = splitLine[0].split("-");
             id = Integer.parseInt(info[info.length-1]);
 

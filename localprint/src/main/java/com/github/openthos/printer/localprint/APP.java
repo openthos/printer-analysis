@@ -44,7 +44,8 @@ public class APP extends Application{
     public static final String MESSAGE = "message";
     public static final String RESULT = "result";
     public static final String JOBID = "jobid";
-    public static final String COMPONENT_PATH = "/component_17";        //文件所在文件夹
+    public static final String COMPONENT_PATH = "/component_19";        //文件所在文件夹
+    public static final String COMPONENT_SOURCE_PATH = "/system";       //打印数据包位置
 
     public static final long JOB_REFRESH_INTERVAL = 3000;       //打印任务刷新间隔 单位：毫秒
     public static final long JOB_REFRESH_WAITING_PRINTER_INTERVAL = 5100;       //更新由打印机可用导致的任务刷新时间，CUPS中是5秒，所以不能少于5秒 单位：毫秒
