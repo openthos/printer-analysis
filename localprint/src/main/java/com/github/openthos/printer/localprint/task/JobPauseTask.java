@@ -14,7 +14,7 @@ public class JobPauseTask<Progress> extends CommandTask<JobItem, Progress, Boole
 
         JobItem item = params[0];
 
-        return new String[]{"sh", "proot.sh", "lp", "-i", String.valueOf(item.getJobId()), "-H", "hold"};
+        return new String[]{"sh", "proot.sh", "ipptool", "http://localhost:"+"6310"+"/jobs", "-d", "job-id="+String.valueOf(item.getJobId()), "hold-jobs.test"};
     }
 
     @Override

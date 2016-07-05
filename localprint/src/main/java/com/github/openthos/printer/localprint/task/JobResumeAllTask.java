@@ -28,6 +28,7 @@ public class JobResumeAllTask<Params, Progress> extends CommandTask<Params, Prog
             JobItem printTask = list.get(i);
             command.add(Integer.toString(printTask.getJobId()));
         }
+        command.add("6310");
         command.add("release");
         String[] cmd = command.toArray(new String[0]);
         return cmd;
