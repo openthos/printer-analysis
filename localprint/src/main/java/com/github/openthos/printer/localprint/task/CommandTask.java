@@ -15,14 +15,15 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
+ * 基础命令模板
  * Created by bboxh on 2016/5/14.
  */
 public abstract class CommandTask<Params, Progress, Result> extends BaseTask<Params, Progress, Result> {
 
-    private static Boolean IS_STARTING_CUPS = false;        //启动CUPS时的锁
+    private static final Boolean IS_STARTING_CUPS = false;        //启动CUPS时的锁
     private boolean RUN_AGAIN = true;
-    private List<String> stdOut = new ArrayList<String>();
-    private List<String> stdErr = new ArrayList<String>();
+    private List<String> stdOut = new ArrayList<>();
+    private List<String> stdErr = new ArrayList<>();
     protected  String ERROR = "";                   //可以填写错误信息，输出给用户
     private String[] cmd = null;
     private Thread cupsdThread = null;
@@ -58,7 +59,7 @@ public abstract class CommandTask<Params, Progress, Result> extends BaseTask<Par
     /**
      * 在command运行之前执行
      * 仍然在doInBackground里执行
-     * @return
+     * @return boolean
      */
     protected boolean beforeCommand() {
 
@@ -67,14 +68,14 @@ public abstract class CommandTask<Params, Progress, Result> extends BaseTask<Par
 
     /**
      * 设置要执行的命令
-     * @return
-     * @param params
+     * @return cmds
+     * @param params cmd
      */
     protected abstract String[] setCmd(Params... params);
 
     /**
      * 执行命令
-     * @param cmd
+     * @param cmd cmd
      */
     protected void runCommand(String[] cmd) {
 
@@ -98,7 +99,7 @@ public abstract class CommandTask<Params, Progress, Result> extends BaseTask<Par
                 public void run() {
 
                     BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
-                    String line = null;
+                    String line;
                     try {
                         while ((line = in.readLine()) != null) {
                             stdOut.add(line);
@@ -121,7 +122,7 @@ public abstract class CommandTask<Params, Progress, Result> extends BaseTask<Par
                 public void run() {
 
                     BufferedReader in = new BufferedReader(new InputStreamReader(p.getErrorStream()));
-                    String line = null;
+                    String line;
                     try {
                         while((line = in.readLine()) != null){
                             stdErr.add(line);
@@ -153,9 +154,7 @@ public abstract class CommandTask<Params, Progress, Result> extends BaseTask<Par
             }
 
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
+        } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
 
@@ -167,9 +166,9 @@ public abstract class CommandTask<Params, Progress, Result> extends BaseTask<Par
     /**
      * 命令执行完毕，处理命令。
      * 仍然在doInBackground里执行。
-     * @param stdOut
-     * @param stdErr
-     * @return
+     * @param stdOut    标准输出
+     * @param stdErr    错误输出
+     * @return Result
      */
     protected abstract Result handleCommand(List<String> stdOut, List<String> stdErr);
 
@@ -196,7 +195,7 @@ public abstract class CommandTask<Params, Progress, Result> extends BaseTask<Par
 
     /**
      * 检测cups是否在运行
-     * @return
+     * @return boolean
      */
     protected boolean cupsIsRunning(){
         boolean flag = false;
@@ -215,7 +214,7 @@ public abstract class CommandTask<Params, Progress, Result> extends BaseTask<Par
     /**
      * 检测cups是否在运行
      * 另一个检查方法
-     * @return
+     * @return boolean
      */
     protected boolean cupsIsRunning1(){
         boolean flag = false;
@@ -272,7 +271,6 @@ public abstract class CommandTask<Params, Progress, Result> extends BaseTask<Par
 
     /**
      * 关闭cups
-     * @return
      */
     protected void killCups(){
         // 2016/5/15 关闭CUPS A3
