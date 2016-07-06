@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Printer Name"
+        android:text="@string/device"
         android:id="@+id/textView_printer_name"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true" />
@@ -18,7 +18,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="INFO"
+        android:text="@string/print_info"
         android:id="@+id/textView_printer_info"
         android:layout_below="@+id/textView_printer_name"
         android:layout_alignParentStart="true" />

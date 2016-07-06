@@ -19,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Medium Text"
+        android:text="@string/device"
         android:id="@+id/textView_printer_name"
         android:layout_marginLeft="32dp"
         android:layout_marginRight="32dp"
