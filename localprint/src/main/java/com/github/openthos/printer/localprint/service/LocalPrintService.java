@@ -23,6 +23,9 @@ import com.github.openthos.printer.localprint.ui.JobManagerActivity;
 import java.util.List;
 
 public class LocalPrintService extends Service {
+
+    public static boolean IS_REFRESHING_JOBS = false;     //正在计时刷新任务
+
     public LocalPrintService() {
     }
 
@@ -72,13 +75,20 @@ public class LocalPrintService extends Service {
         APP.IS_JOB_WAITING_FOR_PRINTER = false;         //重置存在 等待打印打印机可用的任务 的标记
 
         for(JobItem item: list){
-            if(item.getStatus() == JobItem.STATUS_PRINTING || item.getStatus() == JobItem.STATUS_READY){
+            if(item.getStatus() == JobItem.STATUS_PRINTING){
+
+                if(IS_REFRESHING_JOBS){         //代表已经有定时刷新任务
+                    break;
+                }
+
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         refreshJobs();
+                        IS_REFRESHING_JOBS = false;
                     }
                 }, APP.JOB_REFRESH_INTERVAL);       //有打印任务，则一段时间后刷新任务信息
+                IS_REFRESHING_JOBS = true;
                 break;
             }else if(item.getStatus() == JobItem.STATUS_WAITING_FOR_PRINTER){
                 APP.IS_JOB_WAITING_FOR_PRINTER = true;          //有任务在等待打印机

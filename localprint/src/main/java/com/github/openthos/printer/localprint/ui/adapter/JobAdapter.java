@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.github.openthos.printer.localprint.R;
 import com.github.openthos.printer.localprint.model.JobItem;
 import com.github.openthos.printer.localprint.task.JobCancelTask;
+import com.github.openthos.printer.localprint.task.JobPauseTask;
 import com.github.openthos.printer.localprint.task.JobResumeTask;
 
 import java.util.List;
@@ -134,7 +135,7 @@ public class JobAdapter extends BaseAdapter {
             @Override
             protected void onPostExecute(Boolean aBoolean) {
                 if(aBoolean){
-                    Toast.makeText(context, R.string.resumed, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(context, R.string.resumed, Toast.LENGTH_SHORT).show();
                     jobItem.setStatus(JobItem.STATUS_READY);
                     Button button = (Button) v;
                     button.setText(R.string.pause);
@@ -156,7 +157,7 @@ public class JobAdapter extends BaseAdapter {
             @Override
             protected void onPostExecute(Boolean aBoolean) {
                 if(aBoolean){
-                    Toast.makeText(context, R.string.canceled, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(context, R.string.canceled, Toast.LENGTH_SHORT).show();
                 }else{
                     Toast.makeText(context, R.string.cancel_error, Toast.LENGTH_SHORT).show();
                 }
@@ -171,11 +172,11 @@ public class JobAdapter extends BaseAdapter {
      * @param v
      */
     private void pauseJob(final JobItem jobItem, final View v) {
-        JobResumeTask<Void> task = new JobResumeTask<Void>() {
+        JobPauseTask<Void> task = new JobPauseTask<Void>() {
             @Override
             protected void onPostExecute(Boolean aBoolean) {
                 if(aBoolean){
-                    Toast.makeText(context, R.string.paused, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(context, R.string.paused, Toast.LENGTH_SHORT).show();
                     jobItem.setStatus(JobItem.STATUS_HOLDING);
                     Button button = (Button) v;
                     button.setText(R.string.resume);

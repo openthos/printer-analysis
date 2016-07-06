@@ -5,7 +5,7 @@
 
     <TextView
         android:id="@+id/textview_name"
-        android:text="名字"
+        android:text="@string/document_name"
         android:gravity="center"
         android:layout_weight="2"
         android:layout_width="0dp"
@@ -17,7 +17,7 @@
 
     <TextView
         android:id="@+id/textview_device"
-        android:text="设备"
+        android:text="@string/device"
         android:gravity="center"
         android:layout_width="0dp"
         android:layout_weight="3"
@@ -28,7 +28,7 @@
         android:background="@color/colorPrimary" />
     <TextView
         android:id="@+id/textview_status"
-        android:text="状态"
+        android:text="@string/status"
         android:gravity="center"
         android:layout_weight="2"
         android:layout_width="0dp"
@@ -39,7 +39,7 @@
         android:background="@color/colorPrimary" />
     <TextView
         android:id="@+id/textview_size"
-        android:text="大小"
+        android:text="@string/size"
         android:gravity="center"
         android:layout_weight="1"
         android:layout_width="0dp"

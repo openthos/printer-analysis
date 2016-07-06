@@ -108,7 +108,7 @@ public class WelcomeActivity extends Activity {
             APP.IS_FIRST_RUN = false;
             SharedPreferences sp = WelcomeActivity.this.getSharedPreferences(APP.GLOBAL, ContextWrapper.MODE_PRIVATE);
             SharedPreferences.Editor editer = sp.edit();
-            editer.putBoolean(APP.FIRST_RUN, false);
+            editer.putString(APP.FIRST_RUN, APP.COMPONENT_PATH);
             editer.apply();
 
             progressbar.setVisibility(ProgressBar.INVISIBLE);

@@ -73,44 +73,48 @@ public class JobQueryTask<Params, Progress> extends CommandTask<Params, Progress
             }
 
             if(line.startsWith("\tAlerts")){
+
                 String[] splitLine = line.split(":");
-                if(splitLine[1].contains("none")) {
+                if(splitLine[1].contains("none") && statusLine.equals("")) {
                     stat = JobItem.STATUS_READY;
-                    continue;
-                }
-                if(splitLine[1].contains("job-hold-until-specified")) {
+                }else if(splitLine[1].contains("job-hold-until-specified")) {
                     stat = JobItem.STATUS_HOLDING;
-                    continue;
-                }
-                if(splitLine[1].contains("job-printing")){
+                }else if(splitLine[1].contains("none") || splitLine[1].contains("job-printing") || splitLine[1].contains("printer-stopped")){
                     if (statusLine.endsWith("failed")) {
                         stat = JobItem.STATUS_ERROR;
-                    }
-                    if(statusLine.endsWith("Waiting for printer to become available."))
+                    }else if(statusLine.endsWith("Waiting for printer to become available.")) {
                         stat = JobItem.STATUS_WAITING_FOR_PRINTER;
-
-                    if(statusLine.contains("ing")) {
+                    }else if(statusLine.contains("ing")) {
                         stat = JobItem.STATUS_PRINTING;
+                    }else{
+                        stat = JobItem.STATUS_READY;
                     }
-                    continue;
                 }
+                continue;
+
             }
 
             if(line.startsWith("\tqueued")){
                 String[] splitLine = line.split("\\s+");
                 for (int i = 0; i < list.size(); i++) {
+
                     JobItem printTask = list.get(i);
                     if (printTask.getJobId() == id) {
                         printTask.setPrinter(splitLine[3]);
                         printTask.setStatus(stat);
-                        if(stat == JobItem.STATUS_ERROR)
-                            printTask.setERROR(statusLine);
-                        if (stat == JobItem.STATUS_PRINTING)
-                            printTask.setERROR(statusLine);
+                        switch(stat){
+                            case JobItem.STATUS_ERROR:
+                            case JobItem.STATUS_PRINTING:           //暂时把打印的详细状态也放入ERROR
+                                printTask.setERROR(statusLine);
+                                break;
+                            default:
+                                break;
+                        }
                         break;
                     }
-                    continue;
+
                 }
+                statusLine = "";
                 continue;
             }
 

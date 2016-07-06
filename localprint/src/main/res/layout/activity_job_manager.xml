@@ -17,10 +17,10 @@
         android:id="@+id/linearLayout">
         <TextView
             android:layout_width="0dp"
-            android:layout_weight="3"
+            android:layout_weight="2"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:text="@string/document_name" />
         <TextView
             android:layout_width="0dp"
@@ -28,35 +28,36 @@
             android:layout_height="match_parent"
             android:text="@string/device"
             android:gravity="center"
-            android:textSize="20dp"/>
+            android:textSize="20sp"/>
         <TextView
             android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:layout_height="match_parent"
             android:text="@string/status"
             android:gravity="center"
-            android:textSize="20dp"/>
+            android:textSize="20sp"/>
         <TextView
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"
             android:text="@string/size"
             android:gravity="center"
-            android:textSize="20dp"/>
+            android:textSize="20sp"/>
         <TextView
             android:layout_width="0dp"
             android:layout_weight="2"
             android:gravity="center"
             android:layout_height="match_parent"
             android:text="@string/operation"
-            android:textSize="20dp"/>
+            android:textSize="20sp"/>
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/colorPrimary"
-        android:layout_above="@+id/listview_job"/>
+        android:layout_above="@+id/listview_job"
+        android:id="@+id/view2" />
 
     <ListView
         android:id="@+id/listview_job"
@@ -68,18 +69,22 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/colorPrimary"
-        android:layout_below="@+id/listview_job"/>
+        android:layout_below="@+id/listview_job"
+        android:id="@+id/view3" />
     <View
         android:layout_width="1dp"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
-        android:layout_alignLeft="@+id/listview_job"/>
+        android:layout_alignLeft="@+id/listview_job"
+        android:layout_below="@+id/linearLayout"
+        android:layout_alignBottom="@+id/view3" />
     <View
         android:layout_width="1dp"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
         android:layout_alignRight="@+id/listview_job"
-        />
+        android:layout_alignTop="@+id/view2"
+        android:layout_alignBottom="@+id/view3" />
 
 
     <RelativeLayout

@@ -6,6 +6,7 @@ import com.github.openthos.printer.localprint.model.JobItem;
 import java.util.List;
 
 /**
+ * 暂停打印任务 C4
  * Created by bboxh on 2016/6/5.
  */
 public class JobPauseTask<Progress> extends CommandTask<JobItem, Progress, Boolean> {
@@ -14,13 +15,12 @@ public class JobPauseTask<Progress> extends CommandTask<JobItem, Progress, Boole
 
         JobItem item = params[0];
 
-        return new String[]{"sh", "proot.sh", "ipptool", "http://localhost:"+"6310"+"/jobs", "-d", "job-id="+String.valueOf(item.getJobId()), "hold-jobs.test"};
+        return new String[]{"sh", "proot.sh", "ipptool", "http://localhost:"+"6310"+"/jobs", "-d", "job-id="+String.valueOf(item.getJobId()), "hold-job.test"};
     }
 
     @Override
     protected Boolean handleCommand(List<String> stdOut, List<String> stdErr) {
 
-        // TODO: 2016/6/5  暂停打印任务 C4
         boolean stat = true;
         for(String line:stdErr){
             if (line.contains("lp:") && line.contains("is finished and cannot be altered.")){

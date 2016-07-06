@@ -27,7 +27,7 @@ public class APP extends Application{
     public static final String BROADCAST_REFRESH_JOBS = "com.github.openthos.printer.openthosprintservice.broadcast_refresh_jobs";
 
     public static final String GLOBAL = "global";
-    public static final String FIRST_RUN = "frist_run";
+    public static final String FIRST_RUN = "is_frist_run";
     public static final String COMPONENT_FILE_NAME_x86 = "component_x86.zip";
     public static final String TASK = "task";
 
@@ -44,11 +44,11 @@ public class APP extends Application{
     public static final String MESSAGE = "message";
     public static final String RESULT = "result";
     public static final String JOBID = "jobid";
-    public static final String COMPONENT_PATH = "/component_19";        //文件所在文件夹
+    public static final String COMPONENT_PATH = "/component_22";        //文件所在文件夹
     public static final String COMPONENT_SOURCE_PATH = "/system";       //打印数据包位置
 
-    public static final long JOB_REFRESH_INTERVAL = 3000;       //打印任务刷新间隔 单位：毫秒
-    public static final long JOB_REFRESH_WAITING_PRINTER_INTERVAL = 5100;       //更新由打印机可用导致的任务刷新时间，CUPS中是5秒，所以不能少于5秒 单位：毫秒
+    public static final long JOB_REFRESH_INTERVAL = 4000;                       //打印任务刷新间隔 单位：毫秒
+    public static final long JOB_REFRESH_WAITING_PRINTER_INTERVAL = 5100;       //更新由打印机可用导致的任务刷新时间，CUPS中扫描间隔是5秒，所以不能少于5秒 单位：毫秒
 
     public static final int NOTIFY_JOBS_ID = 1000;          //打印任务 通知栏 编号
 
@@ -84,12 +84,12 @@ public class APP extends Application{
         //读取SharedPreferences，检测是否是第一次运行
 
         SharedPreferences sp = this.getSharedPreferences(GLOBAL, ContextWrapper.MODE_PRIVATE);
-        boolean first_run = sp.getBoolean(FIRST_RUN, true);
+        String first_run = sp.getString(FIRST_RUN, "");
 
         // 屏蔽首次运行检测
         //first_run = false;
 
-        if (first_run) {
+        if (!first_run.equals(COMPONENT_PATH)) {
             IS_FIRST_RUN = true;
             initData();
         } else {
