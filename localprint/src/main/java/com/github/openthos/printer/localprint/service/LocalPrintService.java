@@ -1,24 +1,15 @@
 package com.github.openthos.printer.localprint.service;
 
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.IBinder;
-import android.os.Looper;
-import android.support.annotation.Nullable;
-import android.support.v7.app.NotificationCompat;
-import android.widget.RemoteViews;
 import android.widget.Toast;
 
 import com.github.openthos.printer.localprint.APP;
 import com.github.openthos.printer.localprint.R;
 import com.github.openthos.printer.localprint.model.JobItem;
 import com.github.openthos.printer.localprint.task.JobQueryTask;
-import com.github.openthos.printer.localprint.ui.JobManagerActivity;
 
 import java.util.List;
 
@@ -113,7 +104,6 @@ public class LocalPrintService extends Service {
 
     }
 
-    @Nullable
     @Override
     public IBinder onBind(Intent intent) {
         return null;
