@@ -14,7 +14,7 @@ public class JobResumeTask<Progress> extends CommandTask<JobItem, Progress, Bool
 
         JobItem item = params[0];
 
-        return new String[]{"sh", "proot.sh", "ipptool", "http://localhost:"+"6310"+"/jobs","-d", "job-id="+String.valueOf(item.getJobId()), "release-job.test"};
+        return new String[]{"sh", "proot.sh", "ipptool", "http://localhost:"+APP.CUPS_PORT+"/jobs","-d", "job-id="+String.valueOf(item.getJobId()), "release-job.test"};
     }
 
     @Override

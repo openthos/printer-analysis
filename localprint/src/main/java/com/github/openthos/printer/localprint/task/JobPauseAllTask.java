@@ -29,7 +29,7 @@ public class JobPauseAllTask<Params, Progress> extends CommandTask<Params, Progr
             JobItem printTask = list.get(i);
             command.add(Integer.toString(printTask.getJobId()));
         }
-        command.add("6310");
+        command.add(String.valueOf(APP.CUPS_PORT));
         command.add("hold");
         String[] cmd = command.toArray(new String[0]);
         return cmd;

@@ -51,6 +51,7 @@ public class APP extends Application{
     public static final long JOB_REFRESH_WAITING_PRINTER_INTERVAL = 5100;       //更新由打印机可用导致的任务刷新时间，CUPS中扫描间隔是5秒，所以不能少于5秒 单位：毫秒
 
     public static final int NOTIFY_JOBS_ID = 1000;          //打印任务 通知栏 编号
+    public static int CUPS_PORT = 6310;                     //CUPS端口号
 
     public static boolean IS_LOGE = true;
     public static boolean IS_LOGD = true;
@@ -60,7 +61,7 @@ public class APP extends Application{
     public static boolean IS_NOTIFICATION = true;                   //是否开启通知栏
     public static boolean IS_JOB_WAITING_FOR_PRINTER = false;       //是否存在 等待打印打印机可用的任务
 
-    public static Process cupsdProcess;
+    public static Process cupsdProcess;                             //绑定到CUPS运行的进程
     private static List<JobItem> jobList = new LinkedList<JobItem>();       //打印任务列表数据，必须在主线程里操作
 
 

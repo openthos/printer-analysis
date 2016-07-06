@@ -19,6 +19,7 @@ import java.util.List;
  */
 public abstract class CommandTask<Params, Progress, Result> extends BaseTask<Params, Progress, Result> {
 
+    private static Boolean IS_STARTING_CUPS = false;        //启动CUPS时的锁
     private boolean RUN_AGAIN = true;
     private List<String> stdOut = new ArrayList<String>();
     private List<String> stdErr = new ArrayList<String>();
@@ -235,17 +236,28 @@ public abstract class CommandTask<Params, Progress, Result> extends BaseTask<Par
      */
     protected boolean startCups(){
 
-        if(cupsIsRunning()){
-            return true;
-        }
+        synchronized (IS_STARTING_CUPS){            //防止重复启动CUPS
 
-        //runCommand(new String[]{"sh", "proot.sh" ,"cupsd"});
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
 
-        File file = new File(bindWorkPath());
-        try {
-            APP.cupsdProcess = Runtime.getRuntime().exec(new String[]{"sh", "proot.sh" ,"cupsd"}, null, file);
-        } catch (IOException e) {
-            e.printStackTrace();
+            if (cupsIsRunning()) {
+                return true;
+            }
+
+            //runCommand(new String[]{"sh", "proot.sh" ,"cupsd"});
+
+            File file = new File(bindWorkPath());
+            try {
+                APP.cupsdProcess = Runtime.getRuntime().exec(new String[]{"sh", "proot.sh", "cupsd"}, null, file);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
         }
 
         try {
