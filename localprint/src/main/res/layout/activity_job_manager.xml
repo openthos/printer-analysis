@@ -10,118 +10,126 @@
     tools:context="com.github.openthos.printer.localprint.ui.JobManagerActivity">
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="top"
-        android:orientation="horizontal"
-        android:id="@+id/linearLayout">
+        android:orientation="horizontal">
+
         <TextView
             android:layout_width="0dp"
-            android:layout_weight="2"
             android:layout_height="match_parent"
+            android:layout_weight="2"
             android:gravity="center"
-            android:textSize="20sp"
-            android:text="@string/document_name" />
+            android:text="@string/document_name"
+            android:textSize="20sp" />
+
         <TextView
             android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_weight="3"
-            android:layout_height="match_parent"
+            android:gravity="center"
             android:text="@string/device"
-            android:gravity="center"
-            android:textSize="20sp"/>
+            android:textSize="20sp" />
+
         <TextView
             android:layout_width="0dp"
-            android:layout_weight="2"
             android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:gravity="center"
             android:text="@string/status"
-            android:gravity="center"
-            android:textSize="20sp"/>
+            android:textSize="20sp" />
+
         <TextView
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="match_parent"
-            android:text="@string/size"
+            android:layout_weight="1"
             android:gravity="center"
-            android:textSize="20sp"/>
+            android:text="@string/size"
+            android:textSize="20sp" />
+
         <TextView
             android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_weight="2"
             android:gravity="center"
-            android:layout_height="match_parent"
             android:text="@string/operation"
-            android:textSize="20sp"/>
+            android:textSize="20sp" />
     </LinearLayout>
 
     <View
+        android:id="@+id/view2"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/colorPrimary"
         android:layout_above="@+id/listview_job"
-        android:id="@+id/view2" />
+        android:background="@color/colorPrimary" />
 
     <ListView
         android:id="@+id/listview_job"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/linearLayout"
-        android:layout_above="@+id/relativeLayout" />
+        android:layout_above="@+id/relativeLayout"
+        android:layout_below="@+id/linearLayout" />
+
     <View
+        android:id="@+id/view3"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/colorPrimary"
         android:layout_below="@+id/listview_job"
-        android:id="@+id/view3" />
+        android:background="@color/colorPrimary" />
+
     <View
         android:layout_width="1dp"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
+        android:layout_alignBottom="@+id/view3"
         android:layout_alignLeft="@+id/listview_job"
         android:layout_below="@+id/linearLayout"
-        android:layout_alignBottom="@+id/view3" />
+        android:background="@color/colorPrimary" />
+
     <View
         android:layout_width="1dp"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
+        android:layout_alignBottom="@+id/view3"
         android:layout_alignRight="@+id/listview_job"
         android:layout_alignTop="@+id/view2"
-        android:layout_alignBottom="@+id/view3" />
+        android:background="@color/colorPrimary" />
 
 
     <RelativeLayout
+        android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:id="@+id/relativeLayout">
+        android:layout_alignParentBottom="true">
 
         <Button
+            android:id="@+id/button_pause_all"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/pause_all"
-            android:id="@+id/button_pause_all" />
+            android:text="@string/pause_all" />
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/start_all"
             android:id="@+id/button_start_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/button_pause_all"
             android:layout_toRightOf="@+id/button_pause_all"
-            android:layout_toEndOf="@+id/button_pause_all" />
+            android:text="@string/start_all" />
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/cancel_all"
             android:id="@+id/button_cancel_all"
-            android:layout_toRightOf="@+id/button_start_all"
-            android:layout_toEndOf="@+id/button_start_all" />
-
-        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/ok"
+            android:layout_toEndOf="@+id/button_start_all"
+            android:layout_toRightOf="@+id/button_start_all"
+            android:text="@string/cancel_all" />
+
+        <Button
             android:id="@+id/button_ok"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            android:text="@string/ok" />
 
     </RelativeLayout>
 

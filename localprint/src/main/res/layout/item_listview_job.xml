@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
 
     <TextView
         android:id="@+id/textview_name"
-        android:text="@string/document_name"
-        android:gravity="center"
-        android:layout_weight="2"
         android:layout_width="0dp"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:gravity="center"
+        android:text="@string/document_name" />
+
     <View
         android:layout_width="1dp"
         android:layout_height="match_parent"
@@ -17,53 +19,57 @@
 
     <TextView
         android:id="@+id/textview_device"
-        android:text="@string/device"
-        android:gravity="center"
-        android:layout_width="0dp"
-        android:layout_weight="3"
-        android:layout_height="wrap_content" />
-    <View
-        android:layout_width="1dp"
-        android:layout_height="match_parent"
-        android:background="@color/colorPrimary" />
-    <TextView
-        android:id="@+id/textview_status"
-        android:text="@string/status"
-        android:gravity="center"
-        android:layout_weight="2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content" />
-    <View
-        android:layout_width="1dp"
-        android:layout_height="match_parent"
-        android:background="@color/colorPrimary" />
-    <TextView
-        android:id="@+id/textview_size"
-        android:text="@string/size"
-        android:gravity="center"
-        android:layout_weight="1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content" />
-
-    <View
-        android:layout_width="1dp"
-        android:layout_height="match_parent"
-        android:background="@color/colorPrimary" />
-
-    <Button
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/pause"
-        android:id="@+id/button_pause"
+        android:layout_weight="3"
+        android:gravity="center"
+        android:text="@string/device" />
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimary" />
+
+    <TextView
+        android:id="@+id/textview_status"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:gravity="center"
+        android:text="@string/status" />
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimary" />
+
+    <TextView
+        android:id="@+id/textview_size"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
-        style="?android:attr/buttonStyleSmall" />
+        android:gravity="center"
+        android:text="@string/size" />
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimary" />
 
     <Button
+        android:id="@+id/button_pause"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/remove"
+        android:layout_weight="1"
+        android:text="@string/pause" />
+
+    <Button
         android:id="@+id/button_remove"
-        android:layout_weight="1" />
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/remove" />
 
 </LinearLayout>

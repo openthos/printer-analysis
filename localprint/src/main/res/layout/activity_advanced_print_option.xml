@@ -6,55 +6,53 @@
     tools:context=".ui.AdvancedPrintOptionActivity">
 
     <android.support.v7.widget.Toolbar
-        android:layout_height="?attr/actionBarSize"
         android:id="@+id/toolbar"
-        android:layout_width="match_parent">
-
-    </android.support.v7.widget.Toolbar>
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize" />
 
     <ScrollView
+        android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/scrollView2"
         android:layout_above="@+id/linearLayout"
         android:layout_below="@+id/toolbar">
 
         <TableLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="32dp"
-                android:id="@+id/tableLayout_options"
-                android:stretchColumns="*" >
+            android:id="@+id/tableLayout_options"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="32dp"
+            android:stretchColumns="*">
 
-            </TableLayout>
+        </TableLayout>
     </ScrollView>
 
     <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true">
+
+        <Button
+            android:id="@+id/button_cancel"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-        android:id="@+id/linearLayout">
+            android:layout_toStartOf="@+id/button_ok"
+            android:layout_weight="1"
+            android:text="@string/cancel" />
 
-            <Button
-                style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="match_parent"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="@string/cancel"
-                android:id="@+id/button_cancel"
-                android:layout_alignParentBottom="true"
-                android:layout_toStartOf="@+id/button_ok" />
-
-            <Button
-                style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/ok"
-                android:id="@+id/button_ok"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true" />
-        </LinearLayout>
+        <Button
+            android:id="@+id/button_ok"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_weight="1"
+            android:text="@string/ok" />
+    </LinearLayout>
 
 </RelativeLayout>
