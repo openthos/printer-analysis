@@ -21,35 +21,38 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * List adapter in Management activity
  * Created by bboxh on 2016/4/15.
  */
 public class ManagementAdapter extends BaseAdapter {
 
     private static final String TAG = "ManagementAdapter";
-    private final List<ManagementListItem> listItem;
-    private final ManagementActivity context;
-    private int local_printer_position = -1;
+
+    private final List<ManagementListItem> mListItem;
+    private final ManagementActivity mContext;
+
     private boolean IS_DECTECTING = false;
     private boolean IS_DECTECTING_ADDED = false;
-    private int net_printer_position = -1;
-    private List<PrinterItem> addedList = new ArrayList<>();
+
+    private int mLocalPrinterPosition = -1;
+    private int mNetPrinterPosition = -1;
+    
+    private List<PrinterItem> mAddedList = new ArrayList<>();
 
     public ManagementAdapter(ManagementActivity context, List<ManagementListItem> listItem) {
-        this.context = context;
-        this.listItem = listItem;
-
+        mContext = context;
+        mListItem = listItem;
     }
-
 
 
     @Override
     public int getCount() {
-        return listItem.size();
+        return mListItem.size();
     }
 
     @Override
     public ManagementListItem getItem(int position) {
-        return listItem.get(position);
+        return mListItem.get(position);
     }
 
     @Override
@@ -60,7 +63,7 @@ public class ManagementAdapter extends BaseAdapter {
     @Override
     public int getItemViewType(int position) {
 
-        return listItem.get(position).getType();
+        return mListItem.get(position).getType();
     }
 
     @Override
@@ -73,7 +76,7 @@ public class ManagementAdapter extends BaseAdapter {
 
         boolean flag = false;
 
-        switch (listItem.get(position).getType()){
+        switch (mListItem.get(position).getType()) {
             case ManagementListItem.TYPE_ADDED_PRINTER:
                 flag = true;
                 break;
@@ -88,30 +91,31 @@ public class ManagementAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ManagementListItem item = listItem.get(position);
+        ManagementListItem item = mListItem.get(position);
         int type = item.getType();
 
-        LayoutInflater inflater = LayoutInflater.from(context);
+        LayoutInflater inflater = LayoutInflater.from(mContext);
 
         ADDED_PRINTER holder2 = null;
         LOCAL_PRINTER holder6 = null;
 
-        if(convertView == null){
-            switch (type){
+        if (convertView == null) {
+            switch (type) {
                 case ManagementListItem.TYPE_ADDED_PRINTERS_WORDS:
                     convertView = inflater.inflate(R.layout.item_added_printers_words, null);
                     break;
                 case ManagementListItem.TYPE_ADDED_ENDLINE:
                     convertView = inflater.inflate(R.layout.item_added_endline, null);
                     //ADDED_ENDLINE holder3 = (ADDED_ENDLINE) item.getViewHolder();
-                    Button button_add_printers = (Button)convertView.findViewById(R.id.button_add_printers);
-                    //添加监听->扫描新的打印机
+                    Button button_add_printers
+                            = (Button) convertView.findViewById(R.id.button_add_printers);
+                    //add listener for scanning new printers
                     button_add_printers.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Intent intent = new Intent(context, ManagementActivity.class);
+                            Intent intent = new Intent(mContext, ManagementActivity.class);
                             intent.putExtra(APP.TASK, APP.TASK_ADD_NEW_PRINTER);
-                            context.startActivity(intent);
+                            mContext.startActivity(intent);
                         }
                     });
                     break;
@@ -128,24 +132,28 @@ public class ManagementAdapter extends BaseAdapter {
                     convertView = inflater.inflate(R.layout.item_empty, null);
                     break;
                 case ManagementListItem.TYPE_ADDED_PRINTER:
-                    holder2 = (ADDED_PRINTER)item.getViewHolder();
+                    holder2 = (ADDED_PRINTER) item.getViewHolder();
                     convertView = inflater.inflate(R.layout.item_printer, null);
-                    holder2.textView_printer_name = (TextView) convertView.findViewById(R.id.textView_printer_name);
-                    holder2.textView_printer_info = (TextView) convertView.findViewById(R.id.textView_printer_info);
+                    holder2.textView_printer_name
+                            = (TextView) convertView.findViewById(R.id.textView_printer_name);
+                    holder2.textView_printer_info
+                            = (TextView) convertView.findViewById(R.id.textView_printer_info);
                     convertView.setTag(holder2);
                     break;
                 case ManagementListItem.TYPE_LOCAL_PRINTER:
-                    holder6 = (LOCAL_PRINTER)item.getViewHolder();
+                    holder6 = (LOCAL_PRINTER) item.getViewHolder();
                     convertView = inflater.inflate(R.layout.item_printer, null);
-                    holder6.textView_printer_name = (TextView) convertView.findViewById(R.id.textView_printer_name);
-                    holder6.textView_printer_info = (TextView) convertView.findViewById(R.id.textView_printer_info);
+                    holder6.textView_printer_name
+                            = (TextView) convertView.findViewById(R.id.textView_printer_name);
+                    holder6.textView_printer_info
+                            = (TextView) convertView.findViewById(R.id.textView_printer_info);
                     convertView.setTag(holder6);
                     break;
                 default:
                     break;
             }
-        }else{
-            switch (type){
+        } else {
+            switch (type) {
                 case ManagementListItem.TYPE_ADDED_PRINTER:
                     holder2 = (ADDED_PRINTER) convertView.getTag();
                     break;
@@ -157,7 +165,7 @@ public class ManagementAdapter extends BaseAdapter {
             }
         }
 
-        switch (type){
+        switch (type) {
             case ManagementListItem.TYPE_ADDED_PRINTER:
                 holder2.textView_printer_name.setText(item.getPrinteritem().getNickName());
                 holder2.textView_printer_info.setText(item.getPrinteritem().getURL());
@@ -173,23 +181,20 @@ public class ManagementAdapter extends BaseAdapter {
         return convertView;
     }
 
-    /**
-     * 刷新已添加的打印机
-     */
-    public void refreshAddedPrinters(){
+    public void refreshAddedPrinters() {
 
-        if(IS_DECTECTING_ADDED){
+        if (IS_DECTECTING_ADDED) {
             return;
         }
 
         IS_DECTECTING_ADDED = true;
 
-        new ListAddedTask<Void, Void>(){
+        new ListAddedTask<Void, Void>() {
             @Override
             protected void onPostExecute(List<PrinterItem> printerItems) {
-                addedList.clear();
-                addedList.addAll(printerItems);
-                setAddedPrinters(addedList);
+                mAddedList.clear();
+                mAddedList.addAll(printerItems);
+                setAddedPrinters(mAddedList);
                 IS_DECTECTING_ADDED = false;
             }
         }.start();
@@ -198,121 +203,121 @@ public class ManagementAdapter extends BaseAdapter {
 
     }
 
-    private void setAddedPrinters(List<PrinterItem> list){
-        removeSub(listItem, 1, local_printer_position - 1);
-        local_printer_position = 2 ;
+    private void setAddedPrinters(List<PrinterItem> list) {
+        removeSub(mListItem, 1, mLocalPrinterPosition - 1);
+        mLocalPrinterPosition = 2;
 
-        //null代表正在搜索
-        if(list == null){
-            listItem.add(local_printer_position ++ - 1, new ManagementListItem.Builder(ManagementListItem.TYPE_LOADING).get());
-        }else if(!list.isEmpty()){
-            for(PrinterItem printerItem: list) {
-                ManagementListItem item = new ManagementListItem.Builder(ManagementListItem.TYPE_ADDED_PRINTER).get();
+        //null represent searching event is being executed
+        if (list == null) {
+            mListItem.add(mLocalPrinterPosition++ - 1
+                    , new ManagementListItem.Builder(ManagementListItem.TYPE_LOADING).get());
+        } else if (!list.isEmpty()) {
+            for (PrinterItem printerItem : list) {
+                ManagementListItem item
+                        = new ManagementListItem.Builder(ManagementListItem.TYPE_ADDED_PRINTER).get();
                 item.setPrinteritem(printerItem);
-                listItem.add(local_printer_position ++ - 1, item);
+                mListItem.add(mLocalPrinterPosition++ - 1, item);
             }
-        }else{
-            listItem.add(local_printer_position ++ - 1, new ManagementListItem.Builder(ManagementListItem.TYPE_EMPTY).get());
+        } else {
+            mListItem.add(mLocalPrinterPosition++ - 1
+                    , new ManagementListItem.Builder(ManagementListItem.TYPE_EMPTY).get());
         }
 
         notifyDataSetChanged();
     }
 
     /**
-     * 获得已添加打印机
-     * @return null代表正在获取
+     * Get added printers
+     *
+     * @return null represent this time is in retrieving process
      */
     private List<PrinterItem> getAddedPrinters() {
-
-
-
 
         return null;
     }
 
-    /**
-     * 初始化列表
-     */
     public void initList() {
 
-        listItem.add(new ManagementListItem.Builder(ManagementListItem.TYPE_ADDED_PRINTERS_WORDS).get());
+        mListItem.add(new ManagementListItem.Builder(ManagementListItem.TYPE_ADDED_PRINTERS_WORDS).get());
 
         refreshAddedPrinters();
 
         /*List<PrinterItem> list = getAddedPrinters();
 
         if(list == null){
-            listItem.add(new ManagementListItem.Builder(ManagementListItem.TYPE_LOADING).get());
+            mListItem.add(new ManagementListItem.Builder(ManagementListItem.TYPE_LOADING).get());
         }else if(list.isEmpty()){
-            listItem.add(new ManagementListItem.Builder(ManagementListItem.TYPE_EMPTY).get());
+            mListItem.add(new ManagementListItem.Builder(ManagementListItem.TYPE_EMPTY).get());
         }else{
             for(PrinterItem printerItem: list) {
-                ManagementListItem item = new ManagementListItem.Builder(ManagementListItem.TYPE_ADDED_PRINTER).get();
+                ManagementListItem item
+                    = new ManagementListItem.Builder(ManagementListItem.TYPE_ADDED_PRINTER).get();
                 item.setPrinteritem(printerItem);
-                listItem.add(item);
+                mListItem.add(item);
             }
         }*/
 
-        listItem.add(new ManagementListItem.Builder(ManagementListItem.TYPE_ADDED_ENDLINE).get());
+        mListItem.add(new ManagementListItem.Builder(ManagementListItem.TYPE_ADDED_ENDLINE).get());
     }
 
     /**
-     * 显示检测打印机的条目
+     * show the detecting progress
      */
     public void startDetecting() {
 
-        if(IS_DECTECTING){
-            removeSub(listItem, local_printer_position + 1, net_printer_position);
-            net_printer_position = local_printer_position + 1;
-            listItem.add(net_printer_position ++, new ManagementListItem.Builder(ManagementListItem.TYPE_LOADING).get());
-        }else{
+        if (IS_DECTECTING) {
+            removeSub(mListItem, mLocalPrinterPosition + 1, mNetPrinterPosition);
+            mNetPrinterPosition = mLocalPrinterPosition + 1;
+            mListItem.add(mNetPrinterPosition++
+                    , new ManagementListItem.Builder(ManagementListItem.TYPE_LOADING).get());
+        } else {
             IS_DECTECTING = true;
-            listItem.add(new ManagementListItem.Builder(ManagementListItem.TYPE_LOCAL_PRINTER_WORDS).get());
-            local_printer_position = listItem.size() - 1;
-            listItem.add(new ManagementListItem.Builder(ManagementListItem.TYPE_LOADING).get());
-            listItem.add(new ManagementListItem.Builder(ManagementListItem.TYPE_NET_PRINTER_WORDS).get());
-            net_printer_position = listItem.size() - 1;
-            listItem.add(new ManagementListItem.Builder(ManagementListItem.TYPE_EMPTY).get());
-            //listItem.add(new ManagementListItem.Builder(ManagementListItem.TYPE_LOADING).get());
+            mListItem.add(new ManagementListItem.Builder(ManagementListItem.TYPE_LOCAL_PRINTER_WORDS).get());
+            mLocalPrinterPosition = mListItem.size() - 1;
+            mListItem.add(new ManagementListItem.Builder(ManagementListItem.TYPE_LOADING).get());
+            mListItem.add(new ManagementListItem.Builder(ManagementListItem.TYPE_NET_PRINTER_WORDS).get());
+            mNetPrinterPosition = mListItem.size() - 1;
+            mListItem.add(new ManagementListItem.Builder(ManagementListItem.TYPE_EMPTY).get());
+            //mListItem.add(new ManagementListItem.Builder(ManagementListItem.TYPE_LOADING).get());
         }
 
         addLocalPrinter();
 
-        LogUtils.d(TAG, "local_printer_position -> " + local_printer_position + " net_printer_position -> " + net_printer_position);
+        LogUtils.d(TAG, "mLocalPrinterPosition -> " + mLocalPrinterPosition
+                + " mNetPrinterPosition -> " + mNetPrinterPosition);
 
         this.notifyDataSetChanged();
 
     }
 
-    /**
-     * 添加本地可添加打印机
-     */
-    public void addLocalPrinter(){
+    public void addLocalPrinter() {
 
 
-        SearchPrintersTask<Void,Void> task = new SearchPrintersTask<Void, Void>(){
+        SearchPrintersTask<Void, Void> task = new SearchPrintersTask<Void, Void>() {
             @Override
             protected void onPostExecute(List<PrinterItem> printerItems) {
 
-                removeSub(listItem, local_printer_position + 1, net_printer_position);
-                net_printer_position = local_printer_position + 1;
+                removeSub(mListItem, mLocalPrinterPosition + 1, mNetPrinterPosition);
+                mNetPrinterPosition = mLocalPrinterPosition + 1;
 
-                if(printerItems != null){
-                    for(PrinterItem p: printerItems){
-                        ManagementListItem item = new ManagementListItem.Builder(ManagementListItem.TYPE_LOCAL_PRINTER).get();
+                if (printerItems != null) {
+                    for (PrinterItem p : printerItems) {
+                        ManagementListItem item
+                                = new ManagementListItem.Builder(ManagementListItem.TYPE_LOCAL_PRINTER).get();
                         item.setPrinteritem(p);
-                        listItem.add(net_printer_position ++, item);
+                        mListItem.add(mNetPrinterPosition++, item);
                     }
                 }
 
-                if( net_printer_position == local_printer_position + 1 ){
-                    listItem.add(net_printer_position ++, new ManagementListItem.Builder(ManagementListItem.TYPE_EMPTY).get());
+                if (mNetPrinterPosition == mLocalPrinterPosition + 1) {
+                    mListItem.add(mNetPrinterPosition++
+                            , new ManagementListItem.Builder(ManagementListItem.TYPE_EMPTY).get());
                 }
 
-                //关闭正在搜索的标记
-                context.setIS_DETECTING(false);
+                //Close the detecting flag
+                mContext.setIS_DETECTING(false);
                 notifyDataSetChanged();
-                Toast.makeText(context, R.string.search_finished, Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, R.string.search_finished, Toast.LENGTH_SHORT).show();
             }
         };
         task.start();
@@ -320,11 +325,11 @@ public class ManagementAdapter extends BaseAdapter {
 
     }
 
-    public void removeSub(List<?> listItem, int i, int j){
+    public void removeSub(List<?> listItem, int i, int j) {
 
         LogUtils.d(TAG, "removeSub() i -> " + i + " j -> " + j);
 
-        for(j--;i <= j; j--){
+        for (j--; i <= j; j--) {
             listItem.remove(j);
         }
     }

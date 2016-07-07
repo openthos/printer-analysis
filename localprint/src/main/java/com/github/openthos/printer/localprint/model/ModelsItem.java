@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 返回从CUPS中获取的PPD驱动信息
+ * The PPD driver info returned from CUPS.
  * Created by bboxh on 2016/5/16.
  */
 public class ModelsItem {

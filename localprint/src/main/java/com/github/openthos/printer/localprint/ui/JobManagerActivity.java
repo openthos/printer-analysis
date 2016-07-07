@@ -5,8 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -17,24 +15,21 @@ import com.github.openthos.printer.localprint.R;
 import com.github.openthos.printer.localprint.model.JobItem;
 import com.github.openthos.printer.localprint.task.JobCancelAllTask;
 import com.github.openthos.printer.localprint.task.JobPauseAllTask;
-import com.github.openthos.printer.localprint.task.JobQueryTask;
 import com.github.openthos.printer.localprint.task.JobResumeAllTask;
 import com.github.openthos.printer.localprint.ui.adapter.JobAdapter;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 public class JobManagerActivity extends BaseActivity {
 
-    private ListView listview_job;
-    private List<JobItem> list;
-    private JobAdapter jobAdapter;
+    private ListView mListviewJob;
+    private List<JobItem> mList;
+    private JobAdapter mJobAdapter;
 
     private BroadcastReceiver jobReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            jobAdapter.notifyDataSetChanged();      //更新列表
+            mJobAdapter.notifyDataSetChanged();
         }
     };
 
@@ -44,10 +39,10 @@ public class JobManagerActivity extends BaseActivity {
 
         setContentView(R.layout.activity_job_manager);
 
-        listview_job = (ListView)findViewById(R.id.listview_job);
-        list = APP.getJobList();
-        jobAdapter = new JobAdapter(this, list);
-        listview_job.setAdapter(jobAdapter);
+        mListviewJob = (ListView) findViewById(R.id.listview_job);
+        mList = APP.getJobList();
+        mJobAdapter = new JobAdapter(this, mList);
+        mListviewJob.setAdapter(mJobAdapter);
 
         Button button_pause_all = (Button) findViewById(R.id.button_pause_all);
         Button button_start_all = (Button) findViewById(R.id.button_start_all);
@@ -80,28 +75,22 @@ public class JobManagerActivity extends BaseActivity {
             }
         });
 
-        registerReceiver(jobReceiver, new IntentFilter(APP.BROADCAST_REFRESH_JOBS));        //注册广播
+        registerReceiver(jobReceiver, new IntentFilter(APP.BROADCAST_REFRESH_JOBS));
 
     }
 
-    /**
-     * 完成
-     */
     private void ok() {
         this.finish();
     }
 
-    /**
-     * 取消所有
-     */
     private void cancelAll() {
 
-        JobCancelAllTask<Void, Void> task = new JobCancelAllTask<Void, Void>(list){
+        JobCancelAllTask<Void, Void> task = new JobCancelAllTask<Void, Void>(mList) {
             @Override
             protected void onPostExecute(Boolean aBoolean) {
-                if(aBoolean){
+                if (aBoolean) {
                     Toast.makeText(JobManagerActivity.this, R.string.canceled, Toast.LENGTH_SHORT).show();
-                }else{
+                } else {
                     Toast.makeText(JobManagerActivity.this, R.string.cancel_error, Toast.LENGTH_SHORT).show();
                 }
             }
@@ -111,16 +100,13 @@ public class JobManagerActivity extends BaseActivity {
 
     }
 
-    /**
-     * 开始所有
-     */
     private void startAll() {
-        JobResumeAllTask<Void, Void> task = new JobResumeAllTask<Void, Void>(list){
+        JobResumeAllTask<Void, Void> task = new JobResumeAllTask<Void, Void>(mList) {
             @Override
             protected void onPostExecute(Boolean aBoolean) {
-                if(aBoolean){
+                if (aBoolean) {
                     Toast.makeText(JobManagerActivity.this, R.string.started, Toast.LENGTH_SHORT).show();
-                }else{
+                } else {
                     Toast.makeText(JobManagerActivity.this, R.string.start_error, Toast.LENGTH_SHORT).show();
                 }
             }
@@ -129,17 +115,14 @@ public class JobManagerActivity extends BaseActivity {
         task.start();
     }
 
-    /**
-     * 暂停所有
-     */
     private void pauseAll() {
 
-        JobPauseAllTask<Void, Void> task = new JobPauseAllTask<Void, Void>(list){
+        JobPauseAllTask<Void, Void> task = new JobPauseAllTask<Void, Void>(mList) {
             @Override
             protected void onPostExecute(Boolean aBoolean) {
-                if(aBoolean){
+                if (aBoolean) {
                     Toast.makeText(JobManagerActivity.this, R.string.paused, Toast.LENGTH_SHORT).show();
-                }else{
+                } else {
                     Toast.makeText(JobManagerActivity.this, R.string.pause_error, Toast.LENGTH_SHORT).show();
                 }
             }
@@ -151,7 +134,7 @@ public class JobManagerActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unregisterReceiver(jobReceiver);        //取消注册广播
+        unregisterReceiver(jobReceiver);
     }
 
     @Override

@@ -15,7 +15,10 @@ import java.util.List;
 
 public class LocalPrintService extends Service {
 
-    public static boolean IS_REFRESHING_JOBS = false;     //正在计时刷新任务
+    /**
+     * Whether is refreshing jobs.
+     */
+    public static boolean IS_REFRESHING_JOBS = false;
 
     public LocalPrintService() {
     }
@@ -29,7 +32,7 @@ public class LocalPrintService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
 
         int task = intent.getIntExtra(APP.TASK, APP.TASK_DEFAULT);
-        switch (task){
+        switch (task) {
             case APP.TASK_REFRESH_JOBS:
                 refreshJobs();
                 break;
@@ -41,66 +44,52 @@ public class LocalPrintService extends Service {
     }
 
     /**
-     * 刷新打印任务信息
+     * refresh jobs info.
      */
     private void refreshJobs() {
         final List<JobItem> list = APP.getJobList();
-        new JobQueryTask<Void, Void>(list){
+        new JobQueryTask<Void, Void>(list) {
             @Override
             protected void onPostExecute(Boolean aBoolean) {
-                if(aBoolean){
+                if (aBoolean) {
                     updateJobs(list);
-                }else{
-                    Toast.makeText(LocalPrintService.this, getString(R.string.query_error) + " -refreshJobs- " + ERROR, Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(LocalPrintService.this, getString(R.string.query_error)
+                            + " -refreshJobs- " + ERROR, Toast.LENGTH_SHORT).show();
                 }
             }
         }.start();
     }
 
-    /**
-     * 通知其他模块更新打印任务信息
-     * @param list
-     */
     private void updateJobs(List<JobItem> list) {
 
-        APP.IS_JOB_WAITING_FOR_PRINTER = false;         //重置存在 等待打印打印机可用的任务 的标记
+        APP.IS_JOB_WAITING_FOR_PRINTER = false;
 
-        for(JobItem item: list){
-            if(item.getStatus() == JobItem.STATUS_PRINTING){
+        for (JobItem item : list) {
+            if (item.getStatus() == JobItem.STATUS_PRINTING) {
 
-                if(IS_REFRESHING_JOBS){         //代表已经有定时刷新任务
+                if (IS_REFRESHING_JOBS) {
                     break;
                 }
 
+                //Refresh later when there has printing jobs
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         refreshJobs();
                         IS_REFRESHING_JOBS = false;
                     }
-                }, APP.JOB_REFRESH_INTERVAL);       //有打印任务，则一段时间后刷新任务信息
+                }, APP.JOB_REFRESH_INTERVAL);
                 IS_REFRESHING_JOBS = true;
                 break;
-            }else if(item.getStatus() == JobItem.STATUS_WAITING_FOR_PRINTER){
-                APP.IS_JOB_WAITING_FOR_PRINTER = true;          //有任务在等待打印机
+            } else if (item.getStatus() == JobItem.STATUS_WAITING_FOR_PRINTER) {
+                APP.IS_JOB_WAITING_FOR_PRINTER = true;
                 continue;
             }
         }
 
-        sendBroadcast(new Intent(APP.BROADCAST_REFRESH_JOBS));      //通知其他模块更新打印任务列表
-
-        if(!APP.IS_NOTIFICATION) return;        //是否开启通知栏
-
-        // TODO: 2016/6/7 显示通知栏信息
-
-        showNotification();
-
-    }
-
-    /**
-     *显示通知栏
-     */
-    private void showNotification() {
+        //send broadcast to inform others that jobs info refreshed.
+        sendBroadcast(new Intent(APP.BROADCAST_REFRESH_JOBS));
 
     }
 

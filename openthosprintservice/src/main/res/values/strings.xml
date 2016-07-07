@@ -1,6 +1,5 @@
 <resources>
 
-    <!-- TODO: 完善中文翻译 -->
     <string name="app_name">OpenthosPrintManager</string>
     <string name="openthos_print_service">openthos print service</string>
     <string name="print_manager">printer manager</string>

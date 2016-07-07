@@ -1,15 +1,9 @@
 package com.github.openthos.printer.localprint.service;
 
-import android.content.Context;
-import android.hardware.usb.UsbDevice;
-import android.hardware.usb.UsbManager;
-import android.print.PrintAttributes;
-import android.print.PrinterCapabilitiesInfo;
 import android.print.PrinterId;
 import android.print.PrinterInfo;
 import android.printservice.PrinterDiscoverySession;
 import android.widget.Toast;
-
 
 import com.github.openthos.printer.localprint.R;
 import com.github.openthos.printer.localprint.model.PrinterItem;
@@ -18,25 +12,26 @@ import com.github.openthos.printer.localprint.task.StateTask;
 import com.github.openthos.printer.localprint.util.LogUtils;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
 /**
+ * System will call PrinterDiscoverySession.
  * Created by bboxh on 2016/4/12.
  */
 public class PrintDiscoverySession extends PrinterDiscoverySession {
 
     private static final String TAG = "PrintDiscoverySession";
-    private final OpenthosPrintService openthosPrintService;
+
+    private final OpenthosPrintService mOpenthosPrintService;
 
     public PrintDiscoverySession(OpenthosPrintService openthosPrintService) {
-        this.openthosPrintService = openthosPrintService;
+        mOpenthosPrintService = openthosPrintService;
     }
 
     /**
-     *开始寻找打印机
-     * @param priorityList
+     * begin to search printers.
+     *
+     * @param priorityList List<PrinterId>
      */
     @Override
     public void onStartPrinterDiscovery(final List<PrinterId> priorityList) {
@@ -54,21 +49,24 @@ public class PrintDiscoverySession extends PrinterDiscoverySession {
                 if (list != null) {
                     for (PrinterItem printerItem : list) {
 
-                        PrinterId id = openthosPrintService.generatePrinterId(String.valueOf(printerItem.getNickName()));
+                        PrinterId id = mOpenthosPrintService
+                                .generatePrinterId(String.valueOf(printerItem.getNickName()));
 
-                        if(priorityList.contains(id)){
+                        if (priorityList.contains(id)) {
                             old_list.remove(id);
                             continue;
                         }
 
-                        PrinterInfo.Builder builder =
-                                new PrinterInfo.Builder(id, printerItem.getNickName(), PrinterInfo.STATUS_IDLE);
+                        PrinterInfo.Builder builder = new PrinterInfo.Builder(id
+                                , printerItem.getNickName()
+                                , PrinterInfo.STATUS_IDLE);
                         PrinterInfo myprinter = builder.build();
                         printers.add(myprinter);
                     }
                     addPrinters(printers);
-                }else{
-                    Toast.makeText(openthosPrintService, openthosPrintService.getResources().getString(R.string.query_error) + " " + ERROR, Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(mOpenthosPrintService, mOpenthosPrintService.getResources().getString(R.string.query_error)
+                            + " " + ERROR, Toast.LENGTH_SHORT).show();
                 }
 
                 removePrinters(old_list);
@@ -80,16 +78,18 @@ public class PrintDiscoverySession extends PrinterDiscoverySession {
     }
 
     /**
-     * 停止寻找
+     * Stop searching.
+     * In CUPS, whether the printer is connected or not, the printer's status is idle.
+     * So do not need to scan the whole time, Once is enough and do not need the stop.
      */
     @Override
     public void onStopPrinterDiscovery() {
-        // 由于在CUPS中不管打印机有没有连接，都属于空闲打印机，所以只要寻找一次，获取参数就可以了。不需要一直扫描。
     }
 
     /**
-     * ？不明
-     * @param printerIds
+     * ？Unknown.
+     *
+     * @param printerIds List<PrinterId>
      */
     @Override
     public void onValidatePrinters(List<PrinterId> printerIds) {
@@ -97,8 +97,9 @@ public class PrintDiscoverySession extends PrinterDiscoverySession {
     }
 
     /**
-     * 选择打印机时调用该方法更新打印机的状态，功能
-     * @param printerId
+     * Called by the system when a user select a printer to update the printer info.
+     *
+     * @param printerId PrinterId
      */
     @Override
     public void onStartPrinterStateTracking(final PrinterId printerId) {
@@ -108,10 +109,12 @@ public class PrintDiscoverySession extends PrinterDiscoverySession {
             @Override
             protected void onPostExecute(PrinterInfo printerInfo) {
 
-                if(printerInfo == null){
-                    Toast.makeText(openthosPrintService, openthosPrintService.getResources().getString(R.string.query_error) + " " + ERROR, Toast.LENGTH_LONG).show();
+                if (printerInfo == null) {
+                    Toast.makeText(mOpenthosPrintService
+                            , mOpenthosPrintService.getResources().getString(R.string.query_error) + " " + ERROR, Toast.LENGTH_LONG).show();
                     PrinterInfo.Builder builder =
-                            new PrinterInfo.Builder(printerId, printerId.getLocalId(), PrinterInfo.STATUS_UNAVAILABLE);
+                            new PrinterInfo.Builder(printerId, printerId.getLocalId()
+                                    , PrinterInfo.STATUS_UNAVAILABLE);
                     printerInfo = builder.build();
                 }
 
@@ -125,19 +128,18 @@ public class PrintDiscoverySession extends PrinterDiscoverySession {
     }
 
     /**
-     * 选择结束，停止更新
-     * @param printerId
+     * Called by the system When a user finish the event of selecting a printer.
+     *
+     * @param printerId PrinterId
      */
     @Override
     public void onStopPrinterStateTracking(PrinterId printerId) {
-        // 同上，不需要该函数停止，对于CUPS只要获取一次
+        // For CUPS, we only track once, so we do not need the stop.
     }
 
     @Override
     public void onDestroy() {
 
     }
-
-
 
 }

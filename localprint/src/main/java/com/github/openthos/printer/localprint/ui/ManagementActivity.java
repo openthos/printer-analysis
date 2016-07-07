@@ -40,10 +40,16 @@ import java.util.Map;
 public class ManagementActivity extends BaseActivity {
 
     private static final String TAG = "ManagementActivity";
-    private boolean IS_DETECTING = false;       //是否正在检测新打印机
-    private ListView listview;
-    private ManagementAdapter adapter;
-    private final List<ManagementListItem> listItem = new LinkedList<>();;
+
+    /**
+     * Whether is detecting new printers.
+     */
+    private boolean IS_DETECTING = false;
+
+    private final List<ManagementListItem> mListItem = new LinkedList<>();
+
+    private ListView mListview;
+    private ManagementAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,23 +59,23 @@ public class ManagementActivity extends BaseActivity {
         handlerIntent(getIntent());
     }
 
-    private void init(){
+    private void init() {
 
 
         setContentView(R.layout.activity_management);
-        listview = (ListView)findViewById(R.id.listView);
-        adapter = new ManagementAdapter(this, listItem);
-        adapter.initList();
-        listview.setAdapter(adapter);
-        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mListview = (ListView) findViewById(R.id.listView);
+        mAdapter = new ManagementAdapter(this, mListItem);
+        mAdapter.initList();
+        mListview.setAdapter(mAdapter);
+        mListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                ManagementListItem item = adapter.getItem(position);
+                ManagementListItem item = mAdapter.getItem(position);
                 LogUtils.d(TAG, "onItemClick -> " + item.toString());
-                if(item.getType() == ManagementListItem.TYPE_ADDED_PRINTER){
+                if (item.getType() == ManagementListItem.TYPE_ADDED_PRINTER) {
                     showConfigDialog(item);
-                }else if(item.getType() == ManagementListItem.TYPE_LOCAL_PRINTER){
+                } else if (item.getType() == ManagementListItem.TYPE_LOCAL_PRINTER) {
                     showAddLocalDialog(item);
                 }
             }
@@ -92,8 +98,9 @@ public class ManagementActivity extends BaseActivity {
     }
 
     /**
-     * 显示添加本地打印机Dialog
-     * @param deviceItem
+     * Show the Dialog of adding local printers.
+     *
+     * @param deviceItem ManagementListItem
      */
     private void showAddLocalDialog(final ManagementListItem deviceItem) {
 
@@ -110,21 +117,23 @@ public class ManagementActivity extends BaseActivity {
         tipBrand.setText(R.string.select_brand);
         Spinner brand = new Spinner(this);
         final List<String> brandList = new ArrayList<String>();
-        final ArrayAdapter<String> brandAdapter=new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, brandList);
+        final ArrayAdapter<String> brandAdapter
+                = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, brandList);
         brand.setAdapter(brandAdapter);
 
         TextView tipModel = new TextView(this);
         tipModel.setText(R.string.select_model);
         final Spinner model = new Spinner(this);
         final List<PPDItem> modelList = new ArrayList<PPDItem>();
-        final ArrayAdapter<PPDItem> modelAdapter=new ArrayAdapter<PPDItem>(this, android.R.layout.simple_spinner_dropdown_item, modelList);
+        final ArrayAdapter<PPDItem> modelAdapter
+                = new ArrayAdapter<PPDItem>(this, android.R.layout.simple_spinner_dropdown_item, modelList);
         model.setAdapter(modelAdapter);
 
         brand.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 modelList.clear();
-                modelList.addAll(models.get(brandList.get(position)) );
+                modelList.addAll(models.get(brandList.get(position)));
                 modelAdapter.notifyDataSetChanged();
             }
 
@@ -165,19 +174,18 @@ public class ManagementActivity extends BaseActivity {
 
         dialog.show();
 
-        //手动设置监听器，使得dialog点击不消失
+        //Manually set the listener, aim to click dialog does not disappear
         dialog.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
             private boolean PRESSED = false;
 
             @Override
             public void onClick(View v) {
-                if(PRESSED){
+                if (PRESSED) {
                     Toast.makeText(ManagementActivity.this, R.string.adding, Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                //传入参数
-                Map<String,String> p = new HashMap<>();
+                Map<String, String> p = new HashMap<>();
                 p.put("name", name.getText().toString());
                 p.put("model", modelList.get(model.getSelectedItemPosition()).getModel());
                 p.put("url", deviceItem.getPrinteritem().getURL());
@@ -188,11 +196,13 @@ public class ManagementActivity extends BaseActivity {
                     @Override
                     protected void onPostExecute(Boolean aBoolean) {
                         if (aBoolean) {
-                            Toast.makeText(ManagementActivity.this, R.string.add_success, Toast.LENGTH_SHORT).show();
-                            adapter.refreshAddedPrinters();
+                            Toast.makeText(ManagementActivity.this
+                                    , R.string.add_success, Toast.LENGTH_SHORT).show();
+                            mAdapter.refreshAddedPrinters();
                             dialog.dismiss();
                         } else {
-                            Toast.makeText(ManagementActivity.this, R.string.add_fail, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ManagementActivity.this
+                                    , R.string.add_fail, Toast.LENGTH_SHORT).show();
                         }
                         PRESSED = false;
                     }
@@ -205,12 +215,13 @@ public class ManagementActivity extends BaseActivity {
         });
 
 
-        new SearchModelsTask<Void, Void>(){
+        new SearchModelsTask<Void, Void>() {
             @Override
             protected void onPostExecute(ModelsItem modelsItem) {
 
-                if(modelsItem == null){
-                    Toast.makeText(ManagementActivity.this, getResources().getString(R.string.query_error) + " " + ERROR, Toast.LENGTH_SHORT).show();
+                if (modelsItem == null) {
+                    Toast.makeText(ManagementActivity.this, getResources().getString(R.string.query_error)
+                            + " " + ERROR, Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -237,44 +248,42 @@ public class ManagementActivity extends BaseActivity {
 
     private void handlerIntent(Intent intent) {
 
-        if(intent == null){
+        if (intent == null) {
             return;
         }
 
         int task = intent.getIntExtra(APP.TASK, APP.TASK_DEFAULT);
         LogUtils.d(TAG, "Intent -> task = " + task);
 
-        switch (task){
+        switch (task) {
             case APP.TASK_ADD_NEW_PRINTER:
-                detect_printers();
+                detectPrinters();
                 break;
             case APP.TASK_REFRESH_ADDED_PRINTERS:
-                adapter.refreshAddedPrinters();
+                mAdapter.refreshAddedPrinters();
                 break;
             case APP.TASK_DEFAULT:
                 break;
         }
     }
 
-    /**
-     * 搜索打印机
-     */
-    private void detect_printers() {
+    private void detectPrinters() {
 
-        if(IS_DETECTING){
+        if (IS_DETECTING) {
             Toast.makeText(ManagementActivity.this, R.string.searching, Toast.LENGTH_SHORT).show();
             return;
         }
 
         IS_DETECTING = true;
 
-        adapter.startDetecting();
+        mAdapter.startDetecting();
 
     }
 
     /**
-     * 设置是否正在检测
-     * @param IS_DETECTING
+     * Set the flag about whether is detecting new printers.
+     *
+     * @param IS_DETECTING boolean
      */
     public void setIS_DETECTING(boolean IS_DETECTING) {
         this.IS_DETECTING = IS_DETECTING;
@@ -308,7 +317,7 @@ public class ManagementActivity extends BaseActivity {
 
         //noinspection SimplifiableIfStatement
 
-        if(id == R.id.action_print_job) {
+        if (id == R.id.action_print_job) {
             Intent intent = new Intent(ManagementActivity.this, JobManagerActivity.class);
             startActivity(intent);
             return true;
@@ -320,7 +329,7 @@ public class ManagementActivity extends BaseActivity {
             return true;
         }
 
-        if(id == R.id.action_system_print_service){
+        if (id == R.id.action_system_print_service) {
             Intent intent = new Intent(Settings.ACTION_PRINT_SETTINGS);
             startActivity(intent);
             return true;

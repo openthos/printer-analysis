@@ -1,12 +1,10 @@
 package com.github.openthos.printer.localprint.model;
 
-import android.hardware.usb.UsbDevice;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * 描述一个打印机
- * 存在于添加，删除打印机以及打印的时候
+ * Describe a printer when add,delete a printer and printing.
  * Created by bboxh on 2016/4/14.
  */
 public class PrinterItem implements Parcelable {

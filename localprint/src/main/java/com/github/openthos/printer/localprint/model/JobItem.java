@@ -1,24 +1,31 @@
 package com.github.openthos.printer.localprint.model;
 
 /**
- * 打印任务
+ * Printer job item.
  * Created by bboxh on 2016/6/4.
  */
 public class JobItem {
 
-    //发现新的状态时，再补充
-    public static final int STATUS_READY = 1;         //就绪状态，排队打印
-    public static final int STATUS_PRINTING = 2;      //打印中
-    public static final int STATUS_HOLDING = 3;       //暂停
-    public static final int STATUS_ERROR = 4;         //错误，需要在ERROR中叙述具体错误内容
-    public static final int STATUS_WAITING_FOR_PRINTER = 5;   //等待打印机可用
+    /**
+     * Add more when we found a new state.
+     * STATUS_READY                 Ready to print , may be in the queue.
+     * STATUS_PRINTING              Printing.
+     * STATUS_HOLDING               Pause/Hold.
+     * STATUS_ERROR                 Error occurred , more info in ERROR variable.
+     * STATUS_WAITING_FOR_PRINTER   Waiting for printing available.
+     */
+    public static final int STATUS_READY = 1;
+    public static final int STATUS_PRINTING = 2;
+    public static final int STATUS_HOLDING = 3;
+    public static final int STATUS_ERROR = 4;
+    public static final int STATUS_WAITING_FOR_PRINTER = 5;
 
-    private String fileName;        //文档名
-    private String printer;        //打印机
-    private int status;        //状态
-    private String size;        //文档大小
-    private int jobId;        //任务编号
-    private String ERROR = "";        //错误信息
+    private String fileName;
+    private String printer;
+    private int status;
+    private String size;
+    private int jobId;
+    private String ERROR = "";
 
     public JobItem() {
     }
@@ -40,8 +47,10 @@ public class JobItem {
     }
 
     /**
-     * 如果是 STATUS_ERROR 错误状态，还需要自行读取ERROR变量
-     * @return
+     * Need to read ERROR variable manually for more details
+     * when the status is STATUS_ERROR or STATUS_PRINTING.
+     *
+     * @return status
      */
     public int getStatus() {
         return status;

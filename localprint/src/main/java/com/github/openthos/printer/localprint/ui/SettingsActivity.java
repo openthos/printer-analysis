@@ -11,7 +11,7 @@ public class SettingsActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // TODO: 2016/5/10 SettingsActivity 打印插件设置
+        // TODO: 2016/5/10 SettingsActivity
 
         setContentView(R.layout.activity_settings);
     }

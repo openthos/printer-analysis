@@ -5,17 +5,13 @@ import android.os.ParcelFileDescriptor;
 
 import com.github.openthos.printer.localprint.APP;
 
-import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
 
 /**
+ * FileUtils
  * Created by bboxh on 2016/4/12.
  */
 public class FileUtils {
@@ -24,12 +20,11 @@ public class FileUtils {
     private static final String TAG = "FileUtils";
 
     /**
-     *
-     * @param docu_file_path
-     * @param data
-     * @return 成功 失败
+     * @param docu_file_path String
+     * @param data           ParcelFileDescriptor
+     * @return success or failure
      */
-    public static boolean copyFile(String docu_file_path,ParcelFileDescriptor data){
+    public static boolean copyFile(String docu_file_path, ParcelFileDescriptor data) {
 
         boolean flag = false;
 
@@ -42,19 +37,19 @@ public class FileUtils {
         outfile.delete();
 
         FileInputStream file = new ParcelFileDescriptor.AutoCloseInputStream(data);
-        //创建一个长度为1024的内存空间
+
         byte[] bbuf = new byte[1024];
 
-        //用于保存实际读取的字节数
+        //save the actual size of reading
         int hasRead = 0;
-        //使用循环来重复读取数据
+
         try {
 
             FileOutputStream outStream = new FileOutputStream(outfile);
 
             while ((hasRead = file.read(bbuf)) > 0) {
 
-                //将字节数组转换为字符串输出
+                //Converts the byte array to a string and send out
                 //System.out.print(new String(bbuf, 0, hasRead));
                 outStream.write(bbuf);
 
@@ -67,8 +62,8 @@ public class FileUtils {
         } catch (IOException e) {
             e.printStackTrace();
             flag = false;
-        }finally {
-            //关闭文件输出流，放在finally块里更安全
+        } finally {
+            //Close the stream in finally ,may be safety.
             try {
                 file.close();
             } catch (IOException e) {
@@ -81,28 +76,31 @@ public class FileUtils {
     }
 
     /**
-     * 获得待打印文件的绝对路径
+     * Get the absolute path of the file to be printed
+     *
+     * @param s generate a file name by s
      * @return
-     * @param s 根据s值自动生成文件名
      */
-    public static String getDocuFilePath(String s){
-        return getComponentPath() + getDocuFileName(s) ;
+    public static String getDocuFilePath(String s) {
+        return getComponentPath() + getDocuFileName(s);
     }
 
-    public static String getDocuFileName(String s){
-        return  "/" + s + "_" + APP.DOCU_FILE;
+    public static String getDocuFileName(String s) {
+        return "/" + s + "_" + APP.DOCU_FILE;
     }
 
     /**
-     * 获得CUPS所在路径
+     * Get the CUPS running path.
+     *
      * @return
      */
-    public static String getComponentPath(){
+    public static String getComponentPath() {
         return getFilePath() + APP.COMPONENT_PATH;
     }
 
     /**
-     *获得文件存放路径
+     * Get the path of the app files.
+     *
      * @return
      */
     public static String getFilePath() {

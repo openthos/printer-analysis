@@ -13,22 +13,25 @@ import com.github.openthos.printer.localprint.R;
 import com.github.openthos.printer.localprint.util.LogUtils;
 
 /**
- * 基础Activity
+ * Base activity
  */
 public abstract class BaseActivity extends ActionBarActivity {
 
     private String TAG = "BaseActivity";
-    private BroadcastReceiver baseReceiver = new BroadcastReceiver() {
+    private BroadcastReceiver mBaseReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
 
             int task = intent.getIntExtra(APP.TASK, APP.TASK_DEFAULT);
 
-            switch (task){
+            switch (task) {
                 case APP.TASK_INIT_FINISH:
                     break;
                 case APP.TASK_INIT_FAIL:
-                    Toast.makeText(BaseActivity.this, R.string.initialization_failure, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(BaseActivity.this
+                            , R.string.initialization_failure
+                            , Toast.LENGTH_SHORT)
+                            .show();
                     BaseActivity.this.finish();
                     break;
                 default:
@@ -42,7 +45,7 @@ public abstract class BaseActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if(bindTAG() != null){
+        if (bindTAG() != null) {
             TAG = bindTAG();
         }
 
@@ -55,14 +58,14 @@ public abstract class BaseActivity extends ActionBarActivity {
         IntentFilter filter = new IntentFilter();
         filter.addAction(APP.BROADCAST_ALL_ACTIVITY);
 
-        registerReceiver(baseReceiver, filter);
+        registerReceiver(mBaseReceiver, filter);
 
 
         LogUtils.d(TAG, "initialize()");
     }
 
     private void if_first_run() {
-        if(APP.IS_FIRST_RUN){
+        if (APP.IS_FIRST_RUN) {
             Intent intent = new Intent(this, WelcomeActivity.class);
             startActivity(intent);
         }
@@ -78,11 +81,12 @@ public abstract class BaseActivity extends ActionBarActivity {
     protected void onDestroy() {
         super.onDestroy();
         LogUtils.d(TAG, "onDestroy()");
-        unregisterReceiver(baseReceiver);
+        unregisterReceiver(mBaseReceiver);
     }
 
     /**
-     * 必须设置一个TAG
+     * Must to set a TAG
+     *
      * @return TAG
      */
     protected abstract String bindTAG();

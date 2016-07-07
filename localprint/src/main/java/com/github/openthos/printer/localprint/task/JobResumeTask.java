@@ -6,6 +6,7 @@ import com.github.openthos.printer.localprint.model.JobItem;
 import java.util.List;
 
 /**
+ * Resume a printing task C5
  * Created by bboxh on 2016/6/5.
  */
 public class JobResumeTask<Progress> extends CommandTask<JobItem, Progress, Boolean> {
@@ -14,27 +15,28 @@ public class JobResumeTask<Progress> extends CommandTask<JobItem, Progress, Bool
 
         JobItem item = params[0];
 
-        return new String[]{"sh", "proot.sh", "ipptool", "http://localhost:"+APP.CUPS_PORT+"/jobs","-d", "job-id="+String.valueOf(item.getJobId()), "release-job.test"};
+        return new String[]{"sh", "proot.sh", "ipptool"
+                , "http://localhost:" + APP.CUPS_PORT + "/jobs", "-d"
+                , "job-id=" + String.valueOf(item.getJobId()), "release-job.test"};
     }
 
     @Override
     protected Boolean handleCommand(List<String> stdOut, List<String> stdErr) {
 
-        // TODO: 2016/6/5  恢复打印任务 C5
         boolean stat = true;
-        for(String line:stdErr){
-            if (line.contains("lp:") && line.contains("is finished and cannot be altered.")){
+        for (String line : stdErr) {
+            if (line.contains("lp:") && line.contains("is finished and cannot be altered.")) {
                 stat = false;
                 ERROR = line;
             }
-            if(line.contains("lp:") && line.contains("does not exist.")){
+            if (line.contains("lp:") && line.contains("does not exist.")) {
                 stat = false;
                 ERROR = line;
             }
         }
 
-        APP.sendRefreshJobsIntent();        //发送更新打印任务信息Intent
-
+        APP.sendRefreshJobsIntent();
+        
         return stat;
     }
 

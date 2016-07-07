@@ -28,8 +28,9 @@ public class OpenthosPrintService extends PrintService {
     private static final String TAG = "OpenthosPrintService";
 
     /**
-     * 系统请求寻找打印机
-     * @return
+     * System ask for searching printers
+     *
+     * @return PrinterDiscoverySession
      */
     @Override
     protected PrinterDiscoverySession onCreatePrinterDiscoverySession() {
@@ -37,12 +38,12 @@ public class OpenthosPrintService extends PrintService {
     }
 
     /**
-     * 系统请求取消打印任务
-     * @param printJob
+     * System ask for canceling a printJob
+     *
+     * @param printJob PrintJob
      */
     @Override
     protected void onRequestCancelPrintJob(final PrintJob printJob) {
-        // 取消打印任务
 
         JobCancelTask<Void> task = new JobCancelTask<Void>() {
             @Override
@@ -53,9 +54,9 @@ public class OpenthosPrintService extends PrintService {
 
         String jobId = printJob.getTag();
 
-        if(jobId == null){
+        if (jobId == null) {
             printJob.cancel();
-        }else {
+        } else {
             JobItem item = new JobItem();
             item.setJobId(Integer.parseInt(jobId));
             task.start(item);
@@ -64,8 +65,9 @@ public class OpenthosPrintService extends PrintService {
     }
 
     /**
-     * 系统发出新的打印任务
-     * @param printJob
+     * System send out a new printJob.
+     *
+     * @param printJob PrintJob
      */
     @Override
     protected void onPrintJobQueued(final PrintJob printJob) {
@@ -76,17 +78,19 @@ public class OpenthosPrintService extends PrintService {
         Map<String, String> map = new HashMap<>();
         map.put(PrintTask.LP_PRINTER, printJob.getInfo().getPrinterId().getLocalId());
         map.put(PrintTask.LP_FILE, FileUtils.getDocuFileName(printJob.getId().toString()));
-        map.put(PrintTask.LP_MEDIA, PrinterOptionItem.media2cups(printJob.getInfo().getAttributes().getMediaSize()));
-        //map.put(PrintTask.LP_RESOLUTION,PrinterOptionItem.resulution2cups(printJob.getInfo().getAttributes().getResolution()));
+        map.put(PrintTask.LP_MEDIA,
+                PrinterOptionItem.media2cups(printJob.getInfo().getAttributes().getMediaSize()));
+        //map.put(PrintTask.LP_RESOLUTION
+        // , PrinterOptionItem.resulution2cups(printJob.getInfo().getAttributes().getResolution()));
         //map.put(PrintTask.LP_COLOR, "");
-        //map.put(PrintTask.LP_LANDSCAPE,"");     //横竖可能在android中以及已经处理过，暂时不处理
+        //map.put(PrintTask.LP_LANDSCAPE,"");     //System may has handled
         map.put(PrintTask.LP_COPIES, String.valueOf(printJob.getInfo().getCopies()));
         map.put(PrintTask.LP_LABEL, printJob.getDocument().getInfo().getName());
 
-        // 发出打印任务
+        //Send a printing job.
 
         boolean flag = FileUtils.copyFile(docu_file_path, printJob.getDocument().getData());
-        if(!flag){
+        if (!flag) {
             printJob.fail(getResources().getString(R.string.print_copy_file_failed));
             return;
         }
@@ -95,7 +99,9 @@ public class OpenthosPrintService extends PrintService {
 
             @Override
             protected void onPreExecute() {
-                printJob.start();       //必须在主线程操作 printJob
+
+                //Must operate printJob in the main thread.
+                printJob.start();
             }
 
             @Override
@@ -103,10 +109,11 @@ public class OpenthosPrintService extends PrintService {
 
                 new File(docu_file_path).delete();
 
-                if(jobId == null){
+                if (jobId == null) {
                     printJob.fail(ERROR);
-                }else{
-                    printJob.setTag(String.valueOf(jobId));     //填充CUPS返回的任务编号
+                } else {
+                    //Fill the job id got from CUPS.
+                    printJob.setTag(String.valueOf(jobId));
                     printJob.complete();
                 }
             }
@@ -122,16 +129,17 @@ public class OpenthosPrintService extends PrintService {
     }
 
     /**
-     * 接收处理Intent传送过来的任务
-     * @param intent
-     * @param flags
-     * @param startId
-     * @return
+     * Receive a task in the intent.
+     *
+     * @param intent  Intent
+     * @param flags   int
+     * @param startId int
+     * @return handle killed event
      */
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        if(intent == null){
+        if (intent == null) {
             return START_STICKY;
         }
 
@@ -139,7 +147,7 @@ public class OpenthosPrintService extends PrintService {
 
         LogUtils.d(TAG, "task -> " + task);
 
-        switch(task){
+        switch (task) {
             case APP.TASK_DETECT_USB_PRINTER:
                 detectPrinter();
                 break;
@@ -147,47 +155,46 @@ public class OpenthosPrintService extends PrintService {
                 showAddPrinterDialog();
                 break;
             case APP.TASK_JOB_RESULT:
-                handleJobResult(intent.getBooleanExtra(APP.RESULT, false), intent.getStringExtra(APP.JOBID), intent.getStringExtra(APP.MESSAGE));
+                handleJobResult(intent.getBooleanExtra(APP.RESULT, false)
+                        , intent.getStringExtra(APP.JOBID), intent.getStringExtra(APP.MESSAGE));
                 break;
             case APP.TASK_DEFAULT:
                 break;
         }
 
-        return START_STICKY;        // START_STICKY 当service被系统意外干掉时，会重新启动，但是不保留Intent
+        /**
+         * START_STICKY
+         * when the service is killed , it will start automatically,not keep the Intent
+         */
+        return START_STICKY;
     }
 
-    /**
-     * 处理打印任务结果
-     * @param result
-     * @param jobId
-     * @param message
-     */
     private void handleJobResult(boolean result, String jobId, String message) {
 
         PrintJob jobitem = null;
 
         List<PrintJob> jobs = getActivePrintJobs();
-        for(PrintJob job: jobs){
-            if(job.getId().toString().equals(jobId)){
+        for (PrintJob job : jobs) {
+            if (job.getId().toString().equals(jobId)) {
                 jobitem = job;
             }
         }
 
-        if(jobitem == null){
+        if (jobitem == null) {
             LogUtils.d(TAG, "empty jobitem");
             return;
         }
 
-        if(result){
+        if (result) {
             jobitem.complete();
-        }else{
+        } else {
             jobitem.fail(message);
         }
 
     }
 
-    private void detectPrinter(){
-        // TODO: 2016/5/10 发出检测是否有新打印机插入的任务，android层面检测
+    // TODO: 2016/5/10 send task to check whether there has new printer pulgged in with Android API.
+    private void detectPrinter() {
         //TaskUtils.execute(new DetectPrinterTask(TAG));
     }
 
@@ -197,14 +204,17 @@ public class OpenthosPrintService extends PrintService {
      */
     private void showAddPrinterDialog() {
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this, android.R.style.Theme_DeviceDefault_Light_Dialog)
+        AlertDialog.Builder builder
+                = new AlertDialog.Builder(this, android.R.style.Theme_DeviceDefault_Light_Dialog)
                 .setTitle(R.string.new_printer__notification)
                 .setMessage(R.string.whether_add_new_printer)
                 .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = new Intent(OpenthosPrintService.this, ManagementActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);     //对于非activity栈中的context必须要此标志才能启动activity
+                        Intent intent
+                                = new Intent(OpenthosPrintService.this, ManagementActivity.class);
+                        //对于非activity栈中的context必须要此标志才能启动activity
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         intent.putExtra(APP.TASK, APP.TASK_ADD_NEW_PRINTER);
                         APP.getApplicatioContext().startActivity(intent);
                     }

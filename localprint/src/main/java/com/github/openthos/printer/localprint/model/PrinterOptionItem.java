@@ -6,15 +6,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 打印机设置项
- * 设置安卓中匹配的项
+ * PrinterOptionItem represent the option that Android can read.
+ * Setting the matching options between CUPS and Android.
  * Created by bboxh on 2016/5/29.
  */
 public class PrinterOptionItem {
 
-    private String mediaSizeName = null;           //在该驱动中纸张大小的标示
-    private int mediaSizeSelected = 0;          //当前选择的
-    private List<String> mediaSizeCupsList = new ArrayList<>();     //存放cups中
+    /**
+     * Describe the mediaSize symbol used in the current driver.
+     */
+    private String mediaSizeName = null;
+    private int mediaSizeSelected = 0;
+    private List<String> mediaSizeCupsList = new ArrayList<>();
     private List<PrintAttributes.MediaSize> mediaSizeList = new ArrayList<>();
 
     private String colorModeName = null;
@@ -32,76 +35,81 @@ public class PrinterOptionItem {
     }
 
     /**
-     * 获得选择的MediaSize项CUPS对应的内容
-     * @return
+     * Get the mapping item of selected MediaSize in CUPS.
+     *
+     * @return MediaSize
      */
-    public String getMediaSizeCupsSelectedItem(){
+    public String getMediaSizeCupsSelectedItem() {
         return mediaSizeCupsList.get(mediaSizeSelected);
     }
 
     /**
-     * 获得选择的MediaSize项的内容，android中的
-     * @return
+     * Get the mapping item of selected MediaSize in Android.
+     *
+     * @return MediaSize
      */
-    public PrintAttributes.MediaSize getMediaSizeSelectedItem(){
+    public PrintAttributes.MediaSize getMediaSizeSelectedItem() {
         return mediaSizeList.get(mediaSizeSelected);
     }
 
     /**
-     * 添加一项尺寸
-     * @param mediaSizeCupsItem     Cups中的内容
-     * @param flag                  是否是默认值
+     * Add a mediaSize.
+     *
+     * @param mediaSizeCupsItem Value in CUPS
+     * @param flag              Set as default
      */
-    public void addMediaSizeItem(String mediaSizeCupsItem, boolean flag){
+    public void addMediaSizeItem(String mediaSizeCupsItem, boolean flag) {
         PrintAttributes.MediaSize size = cups2media(mediaSizeCupsItem);
-        if(size == null){
+        if (size == null) {
             return;
         }
         mediaSizeCupsList.add(mediaSizeCupsItem);
         mediaSizeList.add(size);
-        if(flag){
+        if (flag) {
             mediaSizeSelected = mediaSizeCupsList.size() - 1;
         }
     }
 
     /**
-     * 获取选择的色彩，android中的
-     * @return
+     * Get the mapping item of selected ColorMode in Android.
+     *
+     * @return ColorMode
      */
-    public int getColorModeSelectedItem(){
+    public int getColorModeSelectedItem() {
         return colorModeList.get(colorModeSelected);
     }
 
     /**
-     * 获取选择的色彩，Cups中对应的内容
-     * @return
+     * Get the mapping item of selected ColorMode in CUPS.
+     *
+     * @return ColorMode
      */
-    public String getColorModeCupsSelectedItem(){
+    public String getColorModeCupsSelectedItem() {
         return colorModeCupsList.get(colorModeSelected);
     }
 
     /**
-     * 添加一项色彩
-     * 注意：先添加默认项
-     * @param colorModeCupsItem     Cups中的内容
-     * @param flag                  是否是默认值
+     * Add a ColorMode
+     * Attention: add the default item firstly.
+     *
+     * @param colorModeCupsItem Value in CUPS
+     * @param flag              Set as default
      */
-    public void addColorModeItem(String colorModeCupsItem, boolean flag){
+    public void addColorModeItem(String colorModeCupsItem, boolean flag) {
 
         Integer colorModeItem = cups2color(colorModeCupsItem);
 
-        //每种色彩只添加一次
-        if(colorModeList.contains(colorModeItem)){
+        //Each color can be added only once.
+        if (colorModeList.contains(colorModeItem)) {
             return;
         }
 
         colorModeCupsList.add(colorModeCupsItem);
         colorModeList.add(colorModeItem);
-        if(flag){
+        if (flag) {
             colorModeSelected = colorModeCupsList.size() - 1;
         }
     }
-
 
 
     public String getMediaSizeName() {
@@ -170,48 +178,52 @@ public class PrinterOptionItem {
 
 
     /**
-     * 转换android中的mediaSize到Cups中的表示符号
-     * @param mediaSize
-     * @return
+     * Convert the mediaSize from Android to CUPS.
+     *
+     * @param mediaSize mediaSize in Android
+     * @return mediaSize in CUPS
      */
     public static String media2cups(PrintAttributes.MediaSize mediaSize) {
 
+        // TODO: 2016/7/7 Add more mediaSize.
+
         String result = "A4";
 
-        if(mediaSize.equals(PrintAttributes.MediaSize.NA_LETTER)){
+        if (mediaSize.equals(PrintAttributes.MediaSize.NA_LETTER)) {
             result = "Letter";
-        }else if(mediaSize.equals(PrintAttributes.MediaSize.ISO_A4)){
+        } else if (mediaSize.equals(PrintAttributes.MediaSize.ISO_A4)) {
             result = "A4";
-        }else if(mediaSize.equals(PrintAttributes.MediaSize.ISO_A5)){
+        } else if (mediaSize.equals(PrintAttributes.MediaSize.ISO_A5)) {
             result = "A5";
-        }else if(mediaSize.equals(PrintAttributes.MediaSize.ISO_A6)){
+        } else if (mediaSize.equals(PrintAttributes.MediaSize.ISO_A6)) {
             result = "A6";
-        }else if(mediaSize.equals(PrintAttributes.MediaSize.ISO_B5)){
+        } else if (mediaSize.equals(PrintAttributes.MediaSize.ISO_B5)) {
             result = "B5";
-        }else if(mediaSize.equals(PrintAttributes.MediaSize.NA_MONARCH)){
+        } else if (mediaSize.equals(PrintAttributes.MediaSize.NA_MONARCH)) {
             result = "Executive";
         }
         return result;
     }
 
     /**
-     * 转换Cups中的mediaSize表示符号到android中的mediaSize
-     * @param mediaSizeCupsItem
-     * @return
+     * Convert the mediaSize from CUPS to Android.
+     *
+     * @param mediaSizeCupsItem mediaSize in CUPS
+     * @return mediaSize in Android
      */
     public static PrintAttributes.MediaSize cups2media(String mediaSizeCupsItem) {
         PrintAttributes.MediaSize result = null;
-        if(mediaSizeCupsItem.equals("Letter")) {
+        if (mediaSizeCupsItem.equals("Letter")) {
             result = PrintAttributes.MediaSize.NA_LETTER;
-        }else if(mediaSizeCupsItem.equals("A4")) {
+        } else if (mediaSizeCupsItem.equals("A4")) {
             result = PrintAttributes.MediaSize.ISO_A4;
-        }else if(mediaSizeCupsItem.equals("A5")) {
+        } else if (mediaSizeCupsItem.equals("A5")) {
             result = PrintAttributes.MediaSize.ISO_A5;
-        }else if(mediaSizeCupsItem.equals("A6")) {
+        } else if (mediaSizeCupsItem.equals("A6")) {
             result = PrintAttributes.MediaSize.ISO_A6;
-        }else if(mediaSizeCupsItem.equals("B5")) {
+        } else if (mediaSizeCupsItem.equals("B5")) {
             result = PrintAttributes.MediaSize.ISO_B5;
-        }else if(mediaSizeCupsItem.equals("Executive")) {
+        } else if (mediaSizeCupsItem.equals("Executive")) {
             result = PrintAttributes.MediaSize.NA_MONARCH;
         }
 
@@ -219,26 +231,27 @@ public class PrinterOptionItem {
     }
 
     /**
-     * 转换Cups中的colorMode表示符号到android中的颜色
-     * @param colorModeCupsItem
-     * @return
+     * Convert the colorMode from CUPS to Android.
+     *
+     * @param colorModeCupsItem colorMode in CUPS
+     * @return colorMode in Android
      */
     public static Integer cups2color(String colorModeCupsItem) {
         int result = PrintAttributes.COLOR_MODE_MONOCHROME;
-        if(colorModeCupsItem.compareToIgnoreCase("Color") == 0){
+        if (colorModeCupsItem.compareToIgnoreCase("Color") == 0) {
             result = PrintAttributes.COLOR_MODE_COLOR;
-        }else if(colorModeCupsItem.compareToIgnoreCase("Grayscale") == 0){
+        } else if (colorModeCupsItem.compareToIgnoreCase("Grayscale") == 0) {
             result = PrintAttributes.COLOR_MODE_MONOCHROME;
-        }else if(colorModeCupsItem.compareToIgnoreCase("ICM") == 0){
+        } else if (colorModeCupsItem.compareToIgnoreCase("ICM") == 0) {
             result = PrintAttributes.COLOR_MODE_COLOR;
-        }else if(colorModeCupsItem.compareToIgnoreCase("Monochrome") == 0){
+        } else if (colorModeCupsItem.compareToIgnoreCase("Monochrome") == 0) {
             result = PrintAttributes.COLOR_MODE_MONOCHROME;
-        }else if(colorModeCupsItem.compareToIgnoreCase("Gray") == 0){
+        } else if (colorModeCupsItem.compareToIgnoreCase("Gray") == 0) {
             result = PrintAttributes.COLOR_MODE_MONOCHROME;
-        }else if(colorModeCupsItem.compareToIgnoreCase("RGB") == 0){
+        } else if (colorModeCupsItem.compareToIgnoreCase("RGB") == 0) {
             result = PrintAttributes.COLOR_MODE_COLOR;
         }
-        return new Integer(result);
+        return result;
     }
 
     public static String resulution2cups(PrintAttributes.Resolution resolution) {

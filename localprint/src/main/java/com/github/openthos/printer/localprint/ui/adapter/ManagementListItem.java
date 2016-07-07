@@ -1,11 +1,11 @@
 package com.github.openthos.printer.localprint.ui.adapter;
 
-import android.hardware.usb.UsbDevice;
 import android.widget.TextView;
 
 import com.github.openthos.printer.localprint.model.PrinterItem;
 
 /**
+ * ManagementListItem
  * Created by bboxh on 2016/4/15.
  */
 public class ManagementListItem<T> {
@@ -57,7 +57,7 @@ public class ManagementListItem<T> {
     }
 
 
-    public static class Builder{
+    public static class Builder {
 
         ManagementListItem item = null;
 
@@ -66,25 +66,31 @@ public class ManagementListItem<T> {
 
             switch (type) {
                 case TYPE_ADDED_PRINTERS_WORDS:
-                    item = new ManagementListItem<ADDED_PRINTERS_WORDS>(TYPE_ADDED_PRINTERS_WORDS, new ADDED_PRINTERS_WORDS());
+                    item = new ManagementListItem<ADDED_PRINTERS_WORDS>(TYPE_ADDED_PRINTERS_WORDS
+                            , new ADDED_PRINTERS_WORDS());
                     break;
                 case TYPE_ADDED_PRINTER:
-                    item = new ManagementListItem<ADDED_PRINTER>(TYPE_ADDED_PRINTER, new ADDED_PRINTER());
+                    item = new ManagementListItem<ADDED_PRINTER>(TYPE_ADDED_PRINTER
+                            , new ADDED_PRINTER());
                     break;
                 case TYPE_ADDED_ENDLINE:
-                    item = new ManagementListItem<ADDED_ENDLINE>(TYPE_ADDED_ENDLINE, new ADDED_ENDLINE());
+                    item = new ManagementListItem<ADDED_ENDLINE>(TYPE_ADDED_ENDLINE
+                            , new ADDED_ENDLINE());
                     break;
                 case TYPE_LOCAL_PRINTER_WORDS:
-                    item = new ManagementListItem<LOCAL_PRINTER_WORDS>(TYPE_LOCAL_PRINTER_WORDS, new LOCAL_PRINTER_WORDS());
+                    item = new ManagementListItem<LOCAL_PRINTER_WORDS>(TYPE_LOCAL_PRINTER_WORDS
+                            , new LOCAL_PRINTER_WORDS());
                     break;
                 case TYPE_NET_PRINTER_WORDS:
-                    item = new ManagementListItem<NET_PRINTER_WORDS>(TYPE_NET_PRINTER_WORDS, new NET_PRINTER_WORDS());
+                    item = new ManagementListItem<NET_PRINTER_WORDS>(TYPE_NET_PRINTER_WORDS
+                            , new NET_PRINTER_WORDS());
                     break;
                 case TYPE_LOADING:
                     item = new ManagementListItem<LOADING>(TYPE_LOADING, new LOADING());
                     break;
                 case TYPE_LOCAL_PRINTER:
-                    item = new ManagementListItem<LOCAL_PRINTER>(TYPE_LOCAL_PRINTER, new LOCAL_PRINTER());
+                    item = new ManagementListItem<LOCAL_PRINTER>(TYPE_LOCAL_PRINTER
+                            , new LOCAL_PRINTER());
                     break;
                 case TYPE_EMPTY:
                     item = new ManagementListItem<EMPTY>(TYPE_EMPTY, new EMPTY());
@@ -95,7 +101,7 @@ public class ManagementListItem<T> {
             }
         }
 
-        public ManagementListItem get(){
+        public ManagementListItem get() {
             return item;
         }
 
@@ -108,7 +114,6 @@ public class ManagementListItem<T> {
                 ", printeritem=" + printeritem +
                 '}';
     }
-
 
 
 }

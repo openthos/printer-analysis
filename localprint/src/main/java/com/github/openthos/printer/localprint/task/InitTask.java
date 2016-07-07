@@ -7,13 +7,13 @@ import com.github.openthos.printer.localprint.util.FileUtils;
 import java.util.List;
 
 /**
- * 初始化CUPS等数据
+ * Initialize CUPS data.
  * Created by bboxh on 2016/5/15.
  */
 public class InitTask<Progress> extends CommandTask<Object, Progress, Boolean> {
     @Override
     protected String[] setCmd(Object[] params) {
-        return new String[]{"tar", "vxzf", APP.COMPONENT_SOURCE_PATH + APP.COMPONENT_PATH + ".tar.gz"};
+        return new String[]{"tar", "vxzf", APP.COMPONENT_SOURCE_PATH};
     }
 
     @Override
@@ -21,20 +21,20 @@ public class InitTask<Progress> extends CommandTask<Object, Progress, Boolean> {
 
         final Boolean[] flag = {false};
 
-        for(String line: stdErr){
+        for (String line : stdErr) {
 
-            if( line.startsWith("WARNING") )
+            if (line.startsWith("WARNING"))
                 continue;
-            else if (line.contains("No such file")){
+            else if (line.contains("No such file")) {
                 ERROR = APP.getApplicatioContext().getResources().getString(R.string.please_confirm_component);
             }
 
         }
 
-        //判断是否执行成功，大于4条信息就成功
-        if(stdOut.size() > 4 ){
+        //More than four lines represent success, we think.
+        if (stdOut.size() > 4) {
             flag[0] = true;
-        }else{
+        } else {
             return false;
         }
 
@@ -62,7 +62,7 @@ public class InitTask<Progress> extends CommandTask<Object, Progress, Boolean> {
             @Override
             protected void onPostExecute(Boolean aBoolean) {
                 flag[0] = aBoolean;
-                synchronized(this){
+                synchronized (this) {
                     this.notify();
                 }
             }
@@ -71,7 +71,7 @@ public class InitTask<Progress> extends CommandTask<Object, Progress, Boolean> {
         task.start();
 
         try {
-            synchronized(task){
+            synchronized (task) {
                 task.wait();
             }
         } catch (InterruptedException e) {

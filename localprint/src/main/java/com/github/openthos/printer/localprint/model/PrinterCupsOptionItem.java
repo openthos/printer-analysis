@@ -4,17 +4,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 打印机高级设置项
- * 描述cups中所有的设置
+ * PrinterCupsOptionItem describes one option of a printer in CUPS.
  * Created by bboxh on 2016/5/27.
  */
 public class PrinterCupsOptionItem {
 
     private int def = 0;
     private List<String> option = new ArrayList<>();
-    private String name;            //此项配置的名称
-    private String option_id;       //配置代号，给cups识别
-    private int def2 = -1;               //修改后的默认值
+
+    /**
+     * The nickName of the option.
+     */
+    private String name;
+
+    /**
+     * The name of the option , which is CUPS can read.
+     */
+    private String option_id;
+
+    /**
+     * The default value after a change operation.
+     */
+    private int def2 = -1;
 
     public PrinterCupsOptionItem() {
     }
@@ -24,18 +35,19 @@ public class PrinterCupsOptionItem {
     }
 
     /**
-     * 添加一项选项的内容
-     * @param item  值
-     * @param flag  是否是默认值  多次指定会覆盖设置
+     * Add a optional value.
+     *
+     * @param item value
+     * @param flag to be default , many times assignment will record the last one.
      */
-    public void add(String item, boolean flag){
+    public void add(String item, boolean flag) {
         this.option.add(item);
-        if(flag){
+        if (flag) {
             def = this.option.size() - 1;
         }
     }
 
-    public int getDef(){
+    public int getDef() {
         return def;
     }
 
@@ -44,10 +56,10 @@ public class PrinterCupsOptionItem {
     }
 
     public int getDef2() {
-        return def2 == -1?def:def2;
+        return def2 == -1 ? def : def2;
     }
 
-    public String getDefValue(){
+    public String getDefValue() {
         return option.get(def);
     }
 

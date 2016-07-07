@@ -25,36 +25,36 @@ import java.util.List;
 public class AdvancedPrintOptionActivity extends BaseActivity {
 
     private static final String TAG = "AdvancedPrintOptionActivity";
-    private TableLayout tableLayout_options;
-    public List<PrinterCupsOptionItem> printerOptionItems;
-    private Button button_ok;
-    private Button button_cancel;
-    private String printerName;
+
+    private TableLayout mTableLayoutOptions;
+    public List<PrinterCupsOptionItem> mPrinterOptionItems;
+    private Button mButtonOk;
+    private Button mButtonCancel;
+    private String mPrinterName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // TODO: 2016/5/10 AdvancedPrintOptionActivity 打印机高级设置
+        // TODO: 2016/5/10 System printer service how to call AdvancedPrintOptionActivity
 
         Intent intent = getIntent();
-        //模拟
-        printerName = "HP_LaserJet_Professional_P1108";
+        mPrinterName = intent.getStringExtra(APP.PRINTER_NAME);
 
         setContentView(R.layout.activity_advanced_print_option);
-        tableLayout_options = (TableLayout)findViewById(R.id.tableLayout_options);
-        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+        mTableLayoutOptions = (TableLayout) findViewById(R.id.tableLayout_options);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        button_ok = (Button)findViewById(R.id.button_ok);
-        button_cancel = (Button)findViewById(R.id.button_cancel);
+        mButtonOk = (Button) findViewById(R.id.button_ok);
+        mButtonCancel = (Button) findViewById(R.id.button_cancel);
 
-        button_ok.setOnClickListener(new View.OnClickListener() {
+        mButtonOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 save();
             }
         });
 
-        button_cancel.setOnClickListener(new View.OnClickListener(){
+        mButtonCancel.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -66,37 +66,36 @@ public class AdvancedPrintOptionActivity extends BaseActivity {
 
             @Override
             protected void onPostExecute(List<PrinterCupsOptionItem> printerOptionItems) {
-                if(printerOptionItems == null){
-                    Toast.makeText(AdvancedPrintOptionActivity.this, getResources().getString(R.string.query_error) + " " + ERROR, Toast.LENGTH_SHORT).show();
+                if (printerOptionItems == null) {
+                    Toast.makeText(AdvancedPrintOptionActivity.this
+                            , getResources().getString(R.string.query_error) + " " + ERROR, Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                AdvancedPrintOptionActivity.this.printerOptionItems = printerOptionItems;
+                AdvancedPrintOptionActivity.this.mPrinterOptionItems = printerOptionItems;
                 addItems();
             }
         };
-        task.start(printerName);
+        task.start(mPrinterName);
 
 
     }
 
-    /**
-     * 保存修改
-     */
     private void save() {
 
         Toast.makeText(AdvancedPrintOptionActivity.this, R.string.updating, Toast.LENGTH_SHORT).show();
 
-        UpdatePrinterCupsOptionsTask<Void> task = new UpdatePrinterCupsOptionsTask<Void>(){
+        UpdatePrinterCupsOptionsTask<Void> task = new UpdatePrinterCupsOptionsTask<Void>() {
 
             @Override
             protected String getPrinter() {
-                return printerName;
+                return mPrinterName;
             }
 
             @Override
             protected void onPostExecute(Boolean flag) {
-                Toast.makeText(AdvancedPrintOptionActivity.this, R.string.update_success, Toast.LENGTH_SHORT).show();
+                Toast.makeText(AdvancedPrintOptionActivity.this
+                        , R.string.update_success, Toast.LENGTH_SHORT).show();
 
                 Intent intent = new Intent(AdvancedPrintOptionActivity.this, ManagementActivity.class);
                 intent.putExtra(APP.TASK, APP.TASK_REFRESH_ADDED_PRINTERS);
@@ -106,37 +105,39 @@ public class AdvancedPrintOptionActivity extends BaseActivity {
             }
         };
 
-        task.start(printerOptionItems);
+        task.start(mPrinterOptionItems);
     }
 
     /**
-     * 添加每一项配置界面
+     * Add each of the configuration interface
      */
     private void addItems() {
 
         LayoutInflater inflater = LayoutInflater.from(AdvancedPrintOptionActivity.this);
 
-        for(PrinterCupsOptionItem item: printerOptionItems){
+        for (PrinterCupsOptionItem item : mPrinterOptionItems) {
             int def = item.getDef();
             String name = item.getName();
             List<String> list = item.getOption();
 
             TableRow row = (TableRow) inflater.inflate(R.layout.item_advanced_printer_option, null);
-            tableLayout_options.addView(row);
+            mTableLayoutOptions.addView(row);
             TextView textView_option_name = (TextView) row.findViewById(R.id.textView_option_name);
             Spinner spinner_option = (Spinner) row.findViewById(R.id.spinner_option);
 
             textView_option_name.setText(name);
             spinner_option.setTag(item);
 
-            ArrayAdapter<String> adapter=new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, list);
+            ArrayAdapter<String> adapter
+                    = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, list);
             spinner_option.setAdapter(adapter);
             spinner_option.setSelection(def);
-            spinner_option.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+            spinner_option.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    PrinterCupsOptionItem optionItem = (PrinterCupsOptionItem) ((View)view.getParent()).getTag();
+                    PrinterCupsOptionItem optionItem
+                            = (PrinterCupsOptionItem) ((View) view.getParent()).getTag();
                     optionItem.setDef2(position);
                 }
 

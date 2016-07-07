@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 查找可添加打印机型号（驱动） B1
+ * Search available printer models(drivers) B1
  * Created by bboxh on 2016/5/16.
  */
 public class SearchModelsTask<Params, Progress> extends CommandTask<Params, Progress, ModelsItem> {
@@ -21,15 +21,15 @@ public class SearchModelsTask<Params, Progress> extends CommandTask<Params, Prog
     @Override
     protected ModelsItem handleCommand(List<String> stdOut, List<String> stdErr) {
 
-        for(String line: stdErr){
+        for (String line : stdErr) {
 
-            if( line.startsWith("WARNING") )
+            if (line.startsWith("WARNING"))
                 continue;
-            else if (line.contains("Bad file descriptor")){
-                if( startCups() ){
-                    runCommandAgain();      //再次运行命令
+            else if (line.contains("Bad file descriptor")) {
+                if (startCups()) {
+                    runCommandAgain();
                     return null;
-                }else{
+                } else {
                     ERROR = "Cups start failed.";
                     return null;
                 }
@@ -41,27 +41,26 @@ public class SearchModelsTask<Params, Progress> extends CommandTask<Params, Prog
         List<String> brand = new ArrayList<>();
         Map<String, List<PPDItem>> models = new HashMap<>();
 
-        for(String line:stdOut){
+        for (String line : stdOut) {
             String[] splitLine = line.split(" ");
             String currentPPD = splitLine[0];
             String currentBrand = splitLine[1];
             String currentDriver = "";
-            for(int i = 2; i < splitLine.length;i++){
-                currentDriver = currentDriver+ " " + splitLine[i];
+            for (int i = 2; i < splitLine.length; i++) {
+                currentDriver = currentDriver + " " + splitLine[i];
             }
 
             List<PPDItem> location;
 
-            if(brand.contains(currentBrand)){
+            if (brand.contains(currentBrand)) {
                 location = models.get(currentBrand);
-            }
-            else{
+            } else {
                 brand.add(currentBrand);
                 location = new ArrayList<>();
-                models.put(currentBrand,location);
+                models.put(currentBrand, location);
             }
 
-            location.add(new PPDItem(currentPPD,currentBrand,currentDriver));
+            location.add(new PPDItem(currentPPD, currentBrand, currentDriver));
         }
 
 
@@ -72,7 +71,7 @@ public class SearchModelsTask<Params, Progress> extends CommandTask<Params, Prog
 //        models.put("Epson", epsonBrand);
 //        List test = models.get("Epson");
 
-        return new ModelsItem(brand,models);
+        return new ModelsItem(brand, models);
     }
 
     @Override

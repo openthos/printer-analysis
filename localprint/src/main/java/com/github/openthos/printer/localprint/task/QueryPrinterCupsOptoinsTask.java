@@ -6,12 +6,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Query a printer's advanced options in CUPS B9
  * Created by bboxh on 2016/5/27.
  */
-public class QueryPrinterCupsOptoinsTask<Progress> extends CommandTask<String, Progress, List<PrinterCupsOptionItem>> {
+public class QueryPrinterCupsOptoinsTask<Progress>
+        extends CommandTask<String, Progress, List<PrinterCupsOptionItem>> {
     @Override
     protected String[] setCmd(String... params) {
-        if(params == null){
+        if (params == null) {
             return null;
         }
         return new String[]{"sh", "proot.sh", "lpoptions", "-p", params[0], "-l"};
@@ -20,28 +22,27 @@ public class QueryPrinterCupsOptoinsTask<Progress> extends CommandTask<String, P
     @Override
     protected List<PrinterCupsOptionItem> handleCommand(List<String> stdOut, List<String> stdErr) {
 
-        for(String line: stdErr){
+        for (String line : stdErr) {
 
-            if( line.startsWith("WARNING") )
+            if (line.startsWith("WARNING"))
                 continue;
-            else if (line.contains("Bad file descriptor")){
-                if( startCups() ){
-                    runCommandAgain();      //再次运行命令
+            else if (line.contains("Bad file descriptor")) {
+                if (startCups()) {
+                    runCommandAgain();
                     return null;
-                }else{
+                } else {
                     ERROR = "Cups start failed.";
                     return null;
                 }
-            }else if (line.contains("The printer or class does not exist")){
+            } else if (line.contains("The printer or class does not exist")) {
                 ERROR = "The printer or class does not exist.";
                 return null;
             }
 
         }
 
-        // TODO: 2016/5/27 查询打印机高级设置  B9
         List<PrinterCupsOptionItem> options = new ArrayList<>();
-        for(String line:stdOut){
+        for (String line : stdOut) {
             String[] firstSplit = line.split("/");
             PrinterCupsOptionItem item1 = new PrinterCupsOptionItem();
             item1.setOption_id(firstSplit[0]);
@@ -51,17 +52,17 @@ public class QueryPrinterCupsOptoinsTask<Progress> extends CommandTask<String, P
 
             String[] thirdSplit = secondSplit[1].split("\\s+");
             for (int i = 0; i < thirdSplit.length; i++) {
-                if(thirdSplit[i].startsWith("*")) {
+                if (thirdSplit[i].startsWith("*")) {
                     thirdSplit[i] = thirdSplit[i].replace("*", "");
-                    item1.add(thirdSplit[i],true);
-                }
-                else
-                    item1.add(thirdSplit[i],false);
+                    item1.add(thirdSplit[i], true);
+                } else
+                    item1.add(thirdSplit[i], false);
             }
             options.add(item1);
         }
+
+        //simulated data
         /*List<PrinterCupsOptionItem> options = new ArrayList<>();
-        //模拟数据
         PrinterCupsOptionItem item1 = new PrinterCupsOptionItem();
         item1.setName("Printing Quality");
         item1.setOption_id("Quality");

@@ -7,15 +7,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 暂停所有打印任务 C7
+ * Pause all jobs C7
  * Created by bboxh on 2016/6/5.
  */
 public class JobPauseAllTask<Params, Progress> extends CommandTask<Params, Progress, Boolean> {
-    private final List<JobItem> list;
+    private final List<JobItem> mList;
 
     public JobPauseAllTask(List<JobItem> list) {
         super();
-        this.list = list;
+        mList = list;
     }
 
     @Override
@@ -25,8 +25,8 @@ public class JobPauseAllTask<Params, Progress> extends CommandTask<Params, Progr
         command.add("proot.sh");
         command.add("sh");
         command.add("/hold_release.sh");
-        for (int i = 0; i < list.size(); i++) {
-            JobItem printTask = list.get(i);
+        for (int i = 0; i < mList.size(); i++) {
+            JobItem printTask = mList.get(i);
             command.add(Integer.toString(printTask.getJobId()));
         }
         command.add(String.valueOf(APP.CUPS_PORT));
@@ -44,7 +44,7 @@ public class JobPauseAllTask<Params, Progress> extends CommandTask<Params, Progr
                 continue;
             else if (line.contains("Bad file descriptor")) {
                 if (startCups()) {
-                    runCommandAgain();      //再次运行命令
+                    runCommandAgain();
                     return null;
                 } else {
                     ERROR = "Cups start failed.";
@@ -53,9 +53,7 @@ public class JobPauseAllTask<Params, Progress> extends CommandTask<Params, Progr
             }
         }
 
-        // TODO: 2016/6/5 暂停所有打印任务 C7
-
-        APP.sendRefreshJobsIntent();        //发送更新打印任务信息Intent
+        APP.sendRefreshJobsIntent();
 
         return true;
     }

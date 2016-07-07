@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- TODO: Perfect Chinese translation -->
     <string name="app_name">本地打印服务</string>
     <string name="print_manager">打印管理</string>
     <string name="action_settings">设置</string>
@@ -38,7 +39,7 @@
     <string name="delete_failed">删除失败</string>
     <string name="deleted_successfully">删除成功</string>
     <string name="deleting">删除中</string>
-    <string name="please_confirm_component">请确认新的数据包在 /sdcard 目录</string>
+    <string name="please_confirm_component">请确认数据包在 /system 目录并重试！</string>
     <string name="print_copy_file_failed">拷贝文件失败</string>
     <string name="print_error">打印出错</string>
     <string name="print_failed">打印失败</string>
@@ -80,4 +81,5 @@
     <string name="cancel_error">暂停出错</string>
     <string name="canceled">已取消</string>
     <string name="error">错误</string>
+    <string name="option">选项</string>
 </resources>

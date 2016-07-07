@@ -6,9 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Update a printer's options for the need of Android printing B11
  * Created by bboxh on 2016/6/1.
  */
-public abstract class UpdatePrinterOptionsTask<Progress> extends CommandTask<PrinterOptionItem, Progress, Boolean> {
+public abstract class UpdatePrinterOptionsTask<Progress>
+        extends CommandTask<PrinterOptionItem, Progress, Boolean> {
     @Override
     protected String[] setCmd(PrinterOptionItem... params) {
         PrinterOptionItem item = params[0];
@@ -28,8 +30,9 @@ public abstract class UpdatePrinterOptionsTask<Progress> extends CommandTask<Pri
     }
 
     /**
-     * 取得打印机的名称
-     * @return
+     * Need to be overwritten.
+     *
+     * @return the printer name
      */
     protected abstract String getPrinter();
 
@@ -43,7 +46,7 @@ public abstract class UpdatePrinterOptionsTask<Progress> extends CommandTask<Pri
                 continue;
             else if (line.contains("Bad file descriptor")) {
                 if (startCups()) {
-                    runCommandAgain();      //再次运行命令
+                    runCommandAgain();
                     return null;
                 } else {
                     ERROR = "Cups start failed.";
@@ -52,11 +55,9 @@ public abstract class UpdatePrinterOptionsTask<Progress> extends CommandTask<Pri
             }
         }
 
-        if(stdOut.isEmpty())
+        if (stdOut.isEmpty())
             flag = true;
 
-        // TODO: 2016/6/1 修改打印机设置 B11
-        
         return flag;
     }
 

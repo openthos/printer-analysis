@@ -1,12 +1,12 @@
 package com.github.openthos.printer.localprint.ui.fragment;
 
+import android.app.AlertDialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.print.PrintAttributes;
 import android.support.annotation.Nullable;
-import android.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -30,30 +30,26 @@ import com.github.openthos.printer.localprint.task.UpdatePrinterOptionsTask;
 import com.github.openthos.printer.localprint.ui.AdvancedPrintOptionActivity;
 import com.github.openthos.printer.localprint.ui.ManagementActivity;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-
-/**
- * Created by bboxh on 2016/4/16.
- */
 public class ConfigPrinterDialogFragment extends DialogFragment {
 
     public static final String ITEM = "item";
-    private boolean UPDATING = false;
+
+    private boolean IS_UPDATING = false;
     private boolean IS_DELETEING = false;
-    private PrinterItem item;
-    private Button button_cancel;
-    private Button button_ok;
-    private PrinterOptionItem optionItem;
-    private ArrayAdapter<String> spinner_color_adapter;
-    private ArrayAdapter<String> media_size_adapter;
-    private ArrayAdapter<String> spinner_duplex_adapter;
-    private Spinner spinner_media_size;
-    private Spinner spinner_color_mode;
-    private Spinner spinner_duplex_mode;
+
+    private PrinterItem mItem;
+    private Button mButtonCancel;
+    private Button mButtonOk;
+    private PrinterOptionItem mOptionItem;
+    private ArrayAdapter<String> mSpinnerColorAdapter;
+    private ArrayAdapter<String> mMediaSizeAdapter;
+    private ArrayAdapter<String> mSpinnerDuplexAdapter;
+    private Spinner mSpinnerMediaSize;
+    private Spinner mSpinnerColorMode;
+    private Spinner mSpinnerDuplexMode;
 
     @Nullable
     @Override
@@ -61,7 +57,7 @@ public class ConfigPrinterDialogFragment extends DialogFragment {
 
         View v = inflater.inflate(R.layout.fragment_dialog_config_printer, container, false);
 
-        //getDialog().setTitle(item.getNickName());
+        //getDialog().setTitle(mItem.getNickName());
         Toolbar toolbar = (Toolbar) v.findViewById(R.id.toolbar);
         //toolbar.setTitle(R.string.printer_setting);
         toolbar.setTitle("");
@@ -69,11 +65,11 @@ public class ConfigPrinterDialogFragment extends DialogFragment {
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                if(item.getItemId() == R.id.action_delete){
+                if (item.getItemId() == R.id.action_delete) {
                     delete();
-                }else if(item.getItemId() == R.id.action_test_page) {
-                    test_page();
-                }else if(item.getItemId() == R.id.action_tuning){
+                } else if (item.getItemId() == R.id.action_test_page) {
+                    testPage();
+                } else if (item.getItemId() == R.id.action_tuning) {
                     tuning();
                 }
 
@@ -82,26 +78,30 @@ public class ConfigPrinterDialogFragment extends DialogFragment {
         });
 
         TextView textView_printer_name = (TextView) v.findViewById(R.id.textView_printer_name);
-        textView_printer_name.setText(item.getNickName());
+        textView_printer_name.setText(mItem.getNickName());
 
-        button_cancel = (Button) v.findViewById(R.id.button_cancel);
-        button_ok = (Button) v.findViewById(R.id.button_ok);
-        button_cancel.setOnClickListener(new View.OnClickListener() {
+        mButtonCancel = (Button) v.findViewById(R.id.button_cancel);
+        mButtonOk = (Button) v.findViewById(R.id.button_ok);
+        mButtonCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ConfigPrinterDialogFragment.this.dismiss();
             }
         });
-        button_ok.setOnClickListener(new View.OnClickListener() {
+        mButtonOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 save();
             }
         });
 
-        spinner_media_size = (Spinner) v.findViewById(R.id.spinner_media_size);
-        spinner_color_mode = (Spinner) v.findViewById(R.id.spinner_color_mode);
-        spinner_duplex_mode = (Spinner) v.findViewById(R.id.spinner_duplex_mode);   //暂时不处理
+        mSpinnerMediaSize = (Spinner) v.findViewById(R.id.spinner_media_size);
+        mSpinnerColorMode = (Spinner) v.findViewById(R.id.spinner_color_mode);
+
+        /**
+         * Have not handle it temporarily.
+         */
+        mSpinnerDuplexMode = (Spinner) v.findViewById(R.id.spinner_duplex_mode);
 
         initData();
 
@@ -109,41 +109,47 @@ public class ConfigPrinterDialogFragment extends DialogFragment {
     }
 
     private void initData() {
-        QueryPrinterOptionsTask<Void> task = new QueryPrinterOptionsTask<Void>(){
+        QueryPrinterOptionsTask<Void> task = new QueryPrinterOptionsTask<Void>() {
             @Override
             protected void onPostExecute(PrinterOptionItem printerOptionItem) {
 
-                optionItem = printerOptionItem;
+                mOptionItem = printerOptionItem;
 
-                media_size_adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, optionItem.getMediaSizeCupsList()){
+                mMediaSizeAdapter = new ArrayAdapter<String>(getActivity()
+                        , android.R.layout.simple_spinner_dropdown_item
+                        , mOptionItem.getMediaSizeCupsList()) {
 
                     @Override
                     public String getItem(int position) {
-                        return optionItem.getMediaSizeList().get(position).getId();
+                        return mOptionItem.getMediaSizeList().get(position).getId();
                     }
                 };
 
-                spinner_color_adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, optionItem.getColorModeCupsList()){
+                mSpinnerColorAdapter = new ArrayAdapter<String>(getActivity()
+                        , android.R.layout.simple_spinner_dropdown_item
+                        , mOptionItem.getColorModeCupsList()) {
                     @Override
                     public String getItem(int position) {
                         String colorMode = getResources().getString(R.string.black_white);
-                        if(optionItem.getColorModeList().get(position) == PrintAttributes.COLOR_MODE_COLOR){
+                        if (mOptionItem.getColorModeList().get(position)
+                                == PrintAttributes.COLOR_MODE_COLOR) {
                             colorMode = getResources().getString(R.string.color);
                         }
                         return colorMode;
                     }
                 };
 
-                spinner_duplex_adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, new String[]{getString(R.string.no_double_side)});
+                mSpinnerDuplexAdapter = new ArrayAdapter<>(getActivity()
+                        , android.R.layout.simple_spinner_dropdown_item, new String[]{getString(R.string.no_double_side)});
 
-                spinner_media_size.setAdapter(media_size_adapter);
-                spinner_color_mode.setAdapter(spinner_color_adapter);
-                spinner_duplex_mode.setAdapter(spinner_duplex_adapter);
+                mSpinnerMediaSize.setAdapter(mMediaSizeAdapter);
+                mSpinnerColorMode.setAdapter(mSpinnerColorAdapter);
+                mSpinnerDuplexMode.setAdapter(mSpinnerDuplexAdapter);
 
-                spinner_media_size.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                mSpinnerMediaSize.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                        optionItem.setMediaSizeSelected(i);
+                        mOptionItem.setMediaSizeSelected(i);
                     }
 
                     @Override
@@ -152,10 +158,10 @@ public class ConfigPrinterDialogFragment extends DialogFragment {
                     }
                 });
 
-                spinner_color_mode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                mSpinnerColorMode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                        optionItem.setColorModeSelected(i);
+                        mOptionItem.setColorModeSelected(i);
                     }
 
                     @Override
@@ -164,7 +170,7 @@ public class ConfigPrinterDialogFragment extends DialogFragment {
                     }
                 });
 
-                spinner_duplex_mode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                mSpinnerDuplexMode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
@@ -176,36 +182,37 @@ public class ConfigPrinterDialogFragment extends DialogFragment {
                     }
                 });
 
-                spinner_media_size.setSelection(optionItem.getMediaSizeSelected());
-                spinner_color_mode.setSelection(optionItem.getColorModeSelected());
+                mSpinnerMediaSize.setSelection(mOptionItem.getMediaSizeSelected());
+                mSpinnerColorMode.setSelection(mOptionItem.getColorModeSelected());
 
             }
         };
 
-        task.start(item.getNickName());
+        task.start(mItem.getNickName());
     }
 
     /**
-     * 高级设置界面
+     * Enter advaneced options.
      */
     private void tuning() {
         Intent intent = new Intent(getActivity(), AdvancedPrintOptionActivity.class);
+        intent.putExtra(APP.PRINTER_NAME, mItem.getNickName());
         getActivity().startActivity(intent);
-        // TODO: 2016/5/31 intent高级设置传参
 
         dismissNoUpdate();
     }
 
     /**
-     * 打印测试页
+     * Print a test page.
      */
-    private void test_page() {
+    private void testPage() {
         PrintTask<Void> task = new PrintTask<Void>() {
             @Override
             protected void onPostExecute(String jobId) {
-                if(jobId == null){
-                    Toast.makeText(getActivity(), getResources().getString(R.string.print_error) + " " + ERROR, Toast.LENGTH_SHORT).show();
-                }else{
+                if (jobId == null) {
+                    Toast.makeText(getActivity(), getResources().getString(R.string.print_error)
+                            + " " + ERROR, Toast.LENGTH_SHORT).show();
+                } else {
                     Toast.makeText(getActivity(), R.string.printing, Toast.LENGTH_SHORT).show();
                 }
 
@@ -213,7 +220,7 @@ public class ConfigPrinterDialogFragment extends DialogFragment {
         };
 
         Map<String, String> map = new HashMap<>();
-        map.put(PrintTask.LP_PRINTER, item.getNickName());
+        map.put(PrintTask.LP_PRINTER, mItem.getNickName());
         //map.put(PrintTask.LP_FILE, "/docu3.pdf");
         map.put(PrintTask.LP_FILE, "/usr/share/cups/data/testprint");
 
@@ -222,7 +229,7 @@ public class ConfigPrinterDialogFragment extends DialogFragment {
     }
 
     /**
-     * 删除该打印机
+     * delete the printer
      */
     private void delete() {
 
@@ -238,7 +245,7 @@ public class ConfigPrinterDialogFragment extends DialogFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        if(IS_DELETEING){
+                        if (IS_DELETEING) {
                             Toast.makeText(getActivity(), R.string.deleting, Toast.LENGTH_SHORT).show();
                             return;
                         }
@@ -246,16 +253,18 @@ public class ConfigPrinterDialogFragment extends DialogFragment {
                         DeletePrinterTask<Void> task = new DeletePrinterTask<Void>() {
                             @Override
                             protected void onPostExecute(Boolean aBoolean) {
-                                if(aBoolean){
-                                    Toast.makeText(getActivity(), R.string.deleted_successfully, Toast.LENGTH_SHORT).show();
-                                }else{
-                                    Toast.makeText(getActivity(), R.string.delete_failed, Toast.LENGTH_SHORT).show();
+                                if (aBoolean) {
+                                    Toast.makeText(getActivity(), R.string.deleted_successfully
+                                            , Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(getActivity(), R.string.delete_failed
+                                            , Toast.LENGTH_SHORT).show();
                                 }
                                 IS_DELETEING = false;
                                 dismiss();
                             }
                         };
-                        task.start(item.getNickName());
+                        task.start(mItem.getNickName());
                         IS_DELETEING = true;
 
                     }
@@ -263,12 +272,11 @@ public class ConfigPrinterDialogFragment extends DialogFragment {
                 .create().show();
 
 
-
     }
 
     private void save() {
 
-        if(UPDATING){
+        if (IS_UPDATING) {
             Toast.makeText(getActivity(), R.string.updating, Toast.LENGTH_SHORT).show();
             return;
         }
@@ -278,44 +286,47 @@ public class ConfigPrinterDialogFragment extends DialogFragment {
             @Override
             protected void onPostExecute(Boolean aBoolean) {
 
-                UPDATING = false;
+                IS_UPDATING = false;
 
-                if(aBoolean){
+                if (aBoolean) {
                     Toast.makeText(getActivity(), R.string.update_success, Toast.LENGTH_SHORT).show();
                     dismiss();
-                }else{
-                    Toast.makeText(getActivity(), getString(R.string.update_failed) + " " + ERROR, Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getActivity(), getString(R.string.update_failed) + " "
+                            + ERROR, Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             protected String getPrinter() {
-                return item.getNickName();
+                return mItem.getNickName();
             }
         };
-        task.start(optionItem);
-        UPDATING = true;
+        task.start(mOptionItem);
+        IS_UPDATING = true;
     }
 
     @Override
     public void dismiss() {
-        super.dismissAllowingStateLoss();           //avoid report : Can not perform this action after onSaveInstanceState
+        //avoid report : Can not perform this action after onSaveInstanceState.
+        super.dismissAllowingStateLoss();
         Intent intent = new Intent(getActivity(), ManagementActivity.class);
         intent.putExtra(APP.TASK, APP.TASK_REFRESH_ADDED_PRINTERS);
         getActivity().startActivity(intent);
     }
 
     /**
-     * 关闭界面不更新ManagementActivity
+     * Close the UI without updating ManagementActivity.
      */
-    public void dismissNoUpdate(){
-        super.dismissAllowingStateLoss();           //avoid report : Can not perform this action after onSaveInstanceState
+    public void dismissNoUpdate() {
+        //avoid report : Can not perform this action after onSaveInstanceState.
+        super.dismissAllowingStateLoss();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        item = getArguments().getParcelable(ITEM);
+        mItem = getArguments().getParcelable(ITEM);
         setStyle(DialogFragment.STYLE_NO_TITLE, 0);
 
     }

@@ -7,16 +7,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 恢复所有打印任务 C8
+ * Resume all jobs C8
  * Created by bboxh on 2016/6/5.
  */
 public class JobResumeAllTask<Params, Progress> extends CommandTask<Params, Progress, Boolean> {
-    private final List<JobItem> list;
+    private final List<JobItem> mList;
 
     public JobResumeAllTask(List<JobItem> list) {
         super();
-        this.list = list;
+        mList = list;
     }
+
     @Override
     protected String[] setCmd(Params... params) {
         List<String> command = new ArrayList<String>();
@@ -24,8 +25,8 @@ public class JobResumeAllTask<Params, Progress> extends CommandTask<Params, Prog
         command.add("proot.sh");
         command.add("sh");
         command.add("/hold_release.sh");
-        for (int i = 0; i < list.size(); i++) {
-            JobItem printTask = list.get(i);
+        for (int i = 0; i < mList.size(); i++) {
+            JobItem printTask = mList.get(i);
             command.add(Integer.toString(printTask.getJobId()));
         }
         command.add(String.valueOf(APP.CUPS_PORT));
@@ -43,7 +44,7 @@ public class JobResumeAllTask<Params, Progress> extends CommandTask<Params, Prog
                 continue;
             else if (line.contains("Bad file descriptor")) {
                 if (startCups()) {
-                    runCommandAgain();      //再次运行命令
+                    runCommandAgain();
                     return null;
                 } else {
                     ERROR = "Cups start failed.";
@@ -52,9 +53,7 @@ public class JobResumeAllTask<Params, Progress> extends CommandTask<Params, Prog
             }
         }
 
-        // TODO: 2016/6/5 恢复所有打印任务 C8
-
-        APP.sendRefreshJobsIntent();        //发送更新打印任务信息Intent
+        APP.sendRefreshJobsIntent();
 
         return true;
     }

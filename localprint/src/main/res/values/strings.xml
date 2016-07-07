@@ -1,5 +1,5 @@
 <resources>
-    <!-- TODO: 完善英文翻译 -->
+    <!-- TODO: Perfect English translation -->
     <string name="app_name">LocalPrintService</string>
     <string name="print_manager">printer manager</string>
     <string name="action_system_print_service">system_print_service</string>
@@ -44,7 +44,7 @@
     <string name="print_error">Printing error</string>
     <string name="query_error">Query Error</string>
     <string name="confirm_delete">Confirm delete ?</string>
-    <string name="please_confirm_component">Please confirm the new date file in /sdcard dictionary!</string>
+    <string name="please_confirm_component">Please confirm the date file in /system dictionary and try again!</string>
     <string name="color">Color</string>
     <string name="black_white"><![CDATA[black & white]]></string>
     <string name="update_success">Update successfully.</string>
@@ -80,4 +80,5 @@
     <string name="resume_error">resume error</string>
     <string name="print_info">print info</string>
     <string name="option">option</string>
+    <string name="hello_blank_fragment">hello_blank_fragment</string>
 </resources>
