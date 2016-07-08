@@ -198,10 +198,6 @@ public class OpenthosPrintService extends PrintService {
         //TaskUtils.execute(new DetectPrinterTask(TAG));
     }
 
-    /**
-     * 显示有新打印机插入的dialog提示
-     * remix等部分系统下不能自动弹出
-     */
     private void showAddPrinterDialog() {
 
         AlertDialog.Builder builder
@@ -213,7 +209,7 @@ public class OpenthosPrintService extends PrintService {
                     public void onClick(DialogInterface dialog, int which) {
                         Intent intent
                                 = new Intent(OpenthosPrintService.this, ManagementActivity.class);
-                        //对于非activity栈中的context必须要此标志才能启动activity
+                        //Context is not in the activity stack need the flag
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         intent.putExtra(APP.TASK, APP.TASK_ADD_NEW_PRINTER);
                         APP.getApplicatioContext().startActivity(intent);

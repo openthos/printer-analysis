@@ -38,8 +38,6 @@ public class PrintDiscoverySession extends PrinterDiscoverySession {
         LogUtils.d(TAG, "onStartPrinterDiscovery()");
         final List<PrinterInfo> printers = this.getPrinters();
 
-        // 2016/5/10 发出寻找打印机的任务，查询已添加打印机
-
         ListAddedTask<Void, Void> task = new ListAddedTask<Void, Void>() {
             @Override
             protected void onPostExecute(List<PrinterItem> list) {

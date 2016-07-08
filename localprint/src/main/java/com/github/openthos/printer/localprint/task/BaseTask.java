@@ -7,7 +7,7 @@ import android.os.AsyncTask;
  * Created by bboxh on 2016/5/14.
  */
 public abstract class BaseTask<Params, Progress, Result> extends AsyncTask<Params, Progress, Result> {
-    
+
     protected String TAG = "BaseTask";
 
     public BaseTask() {
@@ -26,8 +26,7 @@ public abstract class BaseTask<Params, Progress, Result> extends AsyncTask<Param
     protected abstract String bindTAG();
 
     /**
-     * 执行任务
-     * 并发执行
+     * Concurrent execution.
      *
      * @param params parameters
      * @return itself
