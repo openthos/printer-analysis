@@ -84,6 +84,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </TableRow>
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/checkbox_shareprinter"
+                android:layout_below="@+id/scrollView"
+                android:textColor="@color/material_blue_grey_800"
+                android:text="@string/share_printer"
+                android:checked="false" />
         </TableLayout>
 
     </ScrollView>

@@ -15,6 +15,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,6 +52,7 @@ public class ConfigPrinterDialogFragment extends DialogFragment {
     private Spinner mSpinnerMediaSize;
     private Spinner mSpinnerColorMode;
     private Spinner mSpinnerDuplexMode;
+    private CheckBox mCheckboxSharePrinter;
 
     @Nullable
     @Override
@@ -102,6 +105,14 @@ public class ConfigPrinterDialogFragment extends DialogFragment {
          * Have not handle it temporarily.
          */
         mSpinnerDuplexMode = (Spinner) v.findViewById(R.id.spinner_duplex_mode);
+        mCheckboxSharePrinter = (CheckBox) v.findViewById(R.id.checkbox_shareprinter);
+        mCheckboxSharePrinter.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                mOptionItem.setmSharePrinter(b);
+            }
+        });
+
 
         initData();
 
@@ -114,6 +125,9 @@ public class ConfigPrinterDialogFragment extends DialogFragment {
             protected void onPostExecute(PrinterOptionItem printerOptionItem) {
 
                 mOptionItem = printerOptionItem;
+
+                mCheckboxSharePrinter.setChecked(mOptionItem.ismSharePrinter());
+                mCheckboxSharePrinter.setClickable(false);
 
                 mMediaSizeAdapter = new ArrayAdapter<String>(getActivity()
                         , android.R.layout.simple_spinner_dropdown_item
@@ -184,6 +198,8 @@ public class ConfigPrinterDialogFragment extends DialogFragment {
 
                 mSpinnerMediaSize.setSelection(mOptionItem.getMediaSizeSelected());
                 mSpinnerColorMode.setSelection(mOptionItem.getColorModeSelected());
+
+
 
             }
         };

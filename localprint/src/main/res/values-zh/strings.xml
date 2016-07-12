@@ -82,4 +82,5 @@
     <string name="canceled">已取消</string>
     <string name="error">错误</string>
     <string name="option">选项</string>
+    <string name="share_printer">分享打印机（网络打印）</string>
 </resources>

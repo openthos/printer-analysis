@@ -81,4 +81,5 @@
     <string name="print_info">print info</string>
     <string name="option">option</string>
     <string name="hello_blank_fragment">hello_blank_fragment</string>
+    <string name="share_printer">share printer</string>
 </resources>

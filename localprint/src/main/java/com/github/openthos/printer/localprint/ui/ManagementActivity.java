@@ -13,6 +13,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -154,6 +156,8 @@ public class ManagementActivity extends BaseActivity {
 
             }
         });
+        final CheckBox cbxSharePrinter = new CheckBox(this);
+        cbxSharePrinter.setText(R.string.share_printer);
 
         layout.addView(tipName);
         layout.addView(name);
@@ -161,6 +165,7 @@ public class ManagementActivity extends BaseActivity {
         layout.addView(brand);
         layout.addView(tipModel);
         layout.addView(model);
+        layout.addView(cbxSharePrinter);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this).setTitle(R.string.add_a_local_printer)
                 .setView(layout)
@@ -189,6 +194,7 @@ public class ManagementActivity extends BaseActivity {
                 p.put("name", name.getText().toString());
                 p.put("model", modelList.get(model.getSelectedItemPosition()).getModel());
                 p.put("url", deviceItem.getPrinteritem().getURL());
+                p.put("isShare",cbxSharePrinter.isChecked()?"true":"false");
 
                 PRESSED = true;
 

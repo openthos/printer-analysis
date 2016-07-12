@@ -24,6 +24,7 @@ public class PrinterOptionItem {
     private int colorModeSelected = -1;
     private List<String> colorModeCupsList = new ArrayList<>();
     private List<Integer> colorModeList = new ArrayList<>();
+    private boolean mSharePrinter;
 
     public PrinterOptionItem() {
 
@@ -176,6 +177,13 @@ public class PrinterOptionItem {
         this.colorModeList = colorModeList;
     }
 
+    public boolean ismSharePrinter() {
+        return mSharePrinter;
+    }
+
+    public void setmSharePrinter(boolean mSharePrinter) {
+        this.mSharePrinter = mSharePrinter;
+    }
 
     /**
      * Convert the mediaSize from Android to CUPS.

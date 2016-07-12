@@ -14,7 +14,7 @@ public class QueryPrinterOptionsTask<Progress> extends CommandTask<String, Progr
 
         String printerName = params[0];
 
-        return new String[]{"sh", "proot.sh", "lpoptions", "-p", params[0], "-l"};
+        return new String[]{"sh", "proot.sh", "sh", "printerquery.sh", params[0]};
     }
 
     @Override
@@ -22,38 +22,49 @@ public class QueryPrinterOptionsTask<Progress> extends CommandTask<String, Progr
 
         PrinterOptionItem item = new PrinterOptionItem();
         for (String line : stdOut) {
-            String[] firstSplit = line.split("/");
+            String[] preSplit = line.split(" ");
 
-            if (firstSplit[0].equals("ColorModel")
-                    || firstSplit[0].equals("Color") || firstSplit[0].equals("ColorMode")) {
-                item.setColorModeName(firstSplit[0]);
-
-                String[] secondSplit = firstSplit[1].split(": ");
-                String[] thirdSplit = secondSplit[1].split(" ");
-                for (int i = 0; i < thirdSplit.length; i++) {
-                    if (thirdSplit[i].startsWith("*")) {
-                        thirdSplit[i] = thirdSplit[i].replace("*", "");
-                        item.addColorModeItem(thirdSplit[i], true);
-                    } else
-                        item.addColorModeItem(thirdSplit[i], false);
+            if (preSplit[2].startsWith("device-uri")){
+                String[] secondSplit = preSplit[14].split("=");
+                if(secondSplit[1].equals("true")){
+                   item.setmSharePrinter(true);
                 }
-            }
-
-
-            if (firstSplit[0].equals("PageSize")) {
-                item.setMediaSizeName(firstSplit[0]);
-
-                String[] secondSplit = firstSplit[1].split(": ");
-                String[] thirdSplit = secondSplit[1].split(" ");
-                for (int i = 0; i < thirdSplit.length; i++) {
-                    if (thirdSplit[i].startsWith("*")) {
-                        thirdSplit[i] = thirdSplit[i].replace("*", "");
-                        item.addMediaSizeItem(thirdSplit[i], true);
-                    } else
-                        item.addMediaSizeItem(thirdSplit[i], false);
+                else if(secondSplit[1].equals("false")){
+                    item.setmSharePrinter(false);
                 }
-            }
+            } else {
+                String[] firstSplit = line.split("/");
 
+                if (firstSplit[0].equals("ColorModel")
+                        || firstSplit[0].equals("Color") || firstSplit[0].equals("ColorMode")) {
+                    item.setColorModeName(firstSplit[0]);
+
+                    String[] secondSplit = firstSplit[1].split(": ");
+                    String[] thirdSplit = secondSplit[1].split(" ");
+                    for (int i = 0; i < thirdSplit.length; i++) {
+                        if (thirdSplit[i].startsWith("*")) {
+                            thirdSplit[i] = thirdSplit[i].replace("*", "");
+                            item.addColorModeItem(thirdSplit[i], true);
+                        } else
+                            item.addColorModeItem(thirdSplit[i], false);
+                    }
+                }
+
+                if (firstSplit[0].equals("PageSize")) {
+                    item.setMediaSizeName(firstSplit[0]);
+
+                    String[] secondSplit = firstSplit[1].split(": ");
+                    String[] thirdSplit = secondSplit[1].split(" ");
+                    for (int i = 0; i < thirdSplit.length; i++) {
+                        if (thirdSplit[i].startsWith("*")) {
+                            thirdSplit[i] = thirdSplit[i].replace("*", "");
+                            item.addMediaSizeItem(thirdSplit[i], true);
+                        } else
+                            item.addMediaSizeItem(thirdSplit[i], false);
+                    }
+                }
+
+            }
         }
 
         //simulated data

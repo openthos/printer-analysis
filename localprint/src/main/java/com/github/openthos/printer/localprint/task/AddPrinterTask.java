@@ -13,7 +13,14 @@ public class AddPrinterTask<Progress> extends CommandTask<Map<String, String>, P
         String name = params[0].get("name");
         String url = params[0].get("url");
         String model = params[0].get("model");
-        return new String[]{"sh", "proot.sh", "lpadmin", "-p", name, "-v", url, "-m", model, "-E"};
+        String isShare = params[0].get("isShare");
+        String share = "";
+        if(isShare.equals("false")){
+            share = "-o printer-is-shared=false";
+        }else if(isShare.equals("true")){
+            share = "-o printer-is-shared=true";
+        }
+        return new String[]{"sh", "proot.sh", "lpadmin", "-p", name, "-v", url, "-m", model, share,"-E"};
     }
 
     @Override
