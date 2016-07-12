@@ -12,19 +12,28 @@
 
 # 支持的打印机型号
 
-打印机支持详细情况请查看：
+打印机支持详细情况请查看：[SUPPORTED_PRINTERS.md](https://github.com/openthos/printer-analysis/blob/master/doc/SUPPORTED_PRINTERS.md)
 
 # 已知问题
 
+| 简述 | 类别 | 备注
+|---|---|---|---|
+|无法双面打印|打印
+|无缺纸提示|打印|CUPS本身不支持，某些驱动可能支持
 
 
 # 开发
 
-加入开发，请按以下步骤依次进行。
+请按以下步骤依次进行。
 
 ## 构建环境 && 安装
 
+请查看：[BUILDING.md](https://github.com/openthos/printer-analysis/blob/master/doc/zh/BUILDING.md)
+
 ## 制作CUPS数据包
+
+请查看：[MAKING_A_CUPS_COMPONENT.md](https://github.com/openthos/printer-analysis/blob/master/doc/zh/MAKING_A_CUPS_COMPONENT.md)
 
 ## 开发打印程序
 
+请查看：[APP.md](https://github.com/openthos/printer-analysis/blob/master/doc/zh/APP.md)
