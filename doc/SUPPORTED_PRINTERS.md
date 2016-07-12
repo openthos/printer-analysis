@@ -2,7 +2,7 @@
 
 Installed | Supported Printers| Driver Name  | Remarks
 ----------- | ------------ | ------------- | ------------ | ------------
-√ | arts of HP laser printers | [foo2zjs](http://foo2zjs.rkkda.com/) |
+√ | Parts of HP laser printers | [foo2zjs](http://foo2zjs.rkkda.com/) |
 √ | Parts of Epson inkjet printer | Epson official old open source driver |
 √ | Most of Pantum printers | Pantum official closed source driver |
  | Parts of inkjet printer | hpcups | TODO
