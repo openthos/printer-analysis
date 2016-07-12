@@ -7,6 +7,8 @@
 * 移植目录 存放开发过程中linux c程序移植的文档
 * report目录 存放开发过程中的工作汇报
 
+To take part in the development, please **read documents in doc** from the beginning.
+
 参与开发**请查看doc目录下的文档**，其他目录的文档为开发过程中的报告，并非正式文档，但可能会有帮助。
 
 ## dev branch
