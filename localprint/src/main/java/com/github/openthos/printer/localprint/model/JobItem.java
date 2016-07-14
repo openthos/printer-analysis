@@ -1,10 +1,13 @@
 package com.github.openthos.printer.localprint.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Printer job item.
  * Created by bboxh on 2016/6/4.
  */
-public class JobItem {
+public class JobItem implements Parcelable {
 
     /**
      * Add more when we found a new state.
@@ -124,4 +127,41 @@ public class JobItem {
                 ", ERROR='" + ERROR + '\'' +
                 '}';
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.fileName);
+        dest.writeString(this.printer);
+        dest.writeInt(this.status);
+        dest.writeString(this.size);
+        dest.writeInt(this.jobId);
+        dest.writeString(this.ERROR);
+    }
+
+    protected JobItem(Parcel in) {
+        this.fileName = in.readString();
+        this.printer = in.readString();
+        this.status = in.readInt();
+        this.size = in.readString();
+        this.jobId = in.readInt();
+        this.ERROR = in.readString();
+    }
+
+    public static final Creator<JobItem> CREATOR = new Creator<JobItem>() {
+        @Override
+        public JobItem createFromParcel(Parcel source) {
+            return new JobItem(source);
+        }
+
+        @Override
+        public JobItem[] newArray(int size) {
+            return new JobItem[size];
+        }
+    };
 }

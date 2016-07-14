@@ -2,8 +2,10 @@ package com.github.openthos.printer.localprint.service;
 
 import android.app.Service;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.Parcelable;
 import android.widget.Toast;
 
 import com.github.openthos.printer.localprint.APP;
@@ -11,6 +13,7 @@ import com.github.openthos.printer.localprint.R;
 import com.github.openthos.printer.localprint.model.JobItem;
 import com.github.openthos.printer.localprint.task.JobQueryTask;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class LocalPrintService extends Service {
@@ -88,8 +91,16 @@ public class LocalPrintService extends Service {
             }
         }
 
+        ArrayList<Parcelable> remoteList = new ArrayList<>();
+
+        for(JobItem item : list) {
+            remoteList.add(item);
+        }
+
         //send broadcast to inform others that jobs info refreshed.
-        sendBroadcast(new Intent(APP.BROADCAST_REFRESH_JOBS));
+        Intent intent = new Intent(APP.BROADCAST_REFRESH_JOBS);
+        intent.putParcelableArrayListExtra("jobs", remoteList);
+        sendBroadcast(intent);
 
     }
 
