@@ -18,8 +18,6 @@ public class JobQueryTask<Params, Progress> extends CommandTask<Params, Progress
 
     @Override
     protected String[] setCmd(Params... params) {
-
-
         return new String[]{"sh", "proot.sh", "sh", "/jobquery.sh"};
     }
 
@@ -28,9 +26,9 @@ public class JobQueryTask<Params, Progress> extends CommandTask<Params, Progress
 
         for (String line : stdErr) {
 
-            if (line.startsWith("WARNING"))
+            if (line.startsWith("WARNING")) {
                 continue;
-            else if (line.contains("Unable to connect to server")) {
+            } else if (line.contains("Unable to connect to server")) {
                 if (startCups()) {
                     runCommandAgain();
                     return null;
@@ -47,14 +45,15 @@ public class JobQueryTask<Params, Progress> extends CommandTask<Params, Progress
         int stat = 0;
         int id = -1;
         for (String line : stdOut) {
-            if (line.equals("no entries") || line.startsWith("Rank"))
+            if (line.equals("no entries") || line.startsWith("Rank")) {
                 continue;
-
+            }
             if (line.endsWith("bytes")) {
                 String[] splitLine = line.split("\\s+");
                 JobItem printTask = new JobItem();
                 printTask.setJobId(Integer.parseInt(splitLine[2]));
-                printTask.setSize(splitLine[splitLine.length - 2] + splitLine[splitLine.length - 1]);
+                printTask.setSize(splitLine[splitLine.length - 2]
+                                  + splitLine[splitLine.length - 1]);
                 StringBuilder sb = new StringBuilder();
                 for (int i = 3; i < (splitLine.length - 2); i++) {
                     sb.append(splitLine[i]);

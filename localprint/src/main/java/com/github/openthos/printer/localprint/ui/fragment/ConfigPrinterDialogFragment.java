@@ -153,16 +153,19 @@ public class ConfigPrinterDialogFragment extends DialogFragment {
                     }
                 };
 
-                mSpinnerDuplexAdapter = new ArrayAdapter<>(getActivity()
-                        , android.R.layout.simple_spinner_dropdown_item, new String[]{getString(R.string.no_double_side)});
+                mSpinnerDuplexAdapter = new ArrayAdapter<>(getActivity(),
+                                                 android.R.layout.simple_spinner_dropdown_item,
+                                                 new String[]{getString(R.string.no_double_side)});
 
                 mSpinnerMediaSize.setAdapter(mMediaSizeAdapter);
                 mSpinnerColorMode.setAdapter(mSpinnerColorAdapter);
                 mSpinnerDuplexMode.setAdapter(mSpinnerDuplexAdapter);
 
-                mSpinnerMediaSize.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                mSpinnerMediaSize.setOnItemSelectedListener(
+                                      new AdapterView.OnItemSelectedListener() {
                     @Override
-                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                    public void onItemSelected(AdapterView<?> adapterView,
+                                               View view, int i, long l) {
                         mOptionItem.setMediaSizeSelected(i);
                     }
 
@@ -172,9 +175,11 @@ public class ConfigPrinterDialogFragment extends DialogFragment {
                     }
                 });
 
-                mSpinnerColorMode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                mSpinnerColorMode.setOnItemSelectedListener(
+                                      new AdapterView.OnItemSelectedListener() {
                     @Override
-                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                    public void onItemSelected(AdapterView<?> adapterView,
+                                               View view, int i, long l) {
                         mOptionItem.setColorModeSelected(i);
                     }
 
@@ -184,9 +189,11 @@ public class ConfigPrinterDialogFragment extends DialogFragment {
                     }
                 });
 
-                mSpinnerDuplexMode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                mSpinnerDuplexMode.setOnItemSelectedListener(
+                                       new AdapterView.OnItemSelectedListener() {
                     @Override
-                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                    public void onItemSelected(AdapterView<?> adapterView,
+                                    View view, int i, long l) {
 
                     }
 
@@ -198,8 +205,6 @@ public class ConfigPrinterDialogFragment extends DialogFragment {
 
                 mSpinnerMediaSize.setSelection(mOptionItem.getMediaSizeSelected());
                 mSpinnerColorMode.setSelection(mOptionItem.getColorModeSelected());
-
-
 
             }
         };
@@ -305,7 +310,8 @@ public class ConfigPrinterDialogFragment extends DialogFragment {
                 IS_UPDATING = false;
 
                 if (aBoolean) {
-                    Toast.makeText(getActivity(), R.string.update_success, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), R.string.update_success,
+                                   Toast.LENGTH_SHORT).show();
                     dismiss();
                 } else {
                     Toast.makeText(getActivity(), getString(R.string.update_failed) + " "

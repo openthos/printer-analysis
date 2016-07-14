@@ -80,8 +80,8 @@ public class OpenthosPrintService extends PrintService {
         map.put(PrintTask.LP_FILE, FileUtils.getDocuFileName(printJob.getId().toString()));
         map.put(PrintTask.LP_MEDIA,
                 PrinterOptionItem.media2cups(printJob.getInfo().getAttributes().getMediaSize()));
-        //map.put(PrintTask.LP_RESOLUTION
-        // , PrinterOptionItem.resulution2cups(printJob.getInfo().getAttributes().getResolution()));
+        //map.put(PrintTask.LP_RESOLUTION,
+        //  PrinterOptionItem.resulution2cups(printJob.getInfo().getAttributes().getResolution()));
         //map.put(PrintTask.LP_COLOR, "");
         //map.put(PrintTask.LP_LANDSCAPE,"");     //System may has handled
         map.put(PrintTask.LP_COPIES, String.valueOf(printJob.getInfo().getCopies()));

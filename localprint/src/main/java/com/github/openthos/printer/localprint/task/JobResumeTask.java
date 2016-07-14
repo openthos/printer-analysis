@@ -36,7 +36,7 @@ public class JobResumeTask<Progress> extends CommandTask<JobItem, Progress, Bool
         }
 
         APP.sendRefreshJobsIntent();
-        
+
         return stat;
     }
 

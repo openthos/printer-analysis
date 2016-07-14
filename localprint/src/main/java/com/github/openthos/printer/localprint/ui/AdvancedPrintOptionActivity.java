@@ -67,8 +67,9 @@ public class AdvancedPrintOptionActivity extends BaseActivity {
             @Override
             protected void onPostExecute(List<PrinterCupsOptionItem> printerOptionItems) {
                 if (printerOptionItems == null) {
-                    Toast.makeText(AdvancedPrintOptionActivity.this
-                            , getResources().getString(R.string.query_error) + " " + ERROR, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AdvancedPrintOptionActivity.this,
+                                   getResources().getString(R.string.query_error) + " " + ERROR,
+                                   Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -94,10 +95,11 @@ public class AdvancedPrintOptionActivity extends BaseActivity {
 
             @Override
             protected void onPostExecute(Boolean flag) {
-                Toast.makeText(AdvancedPrintOptionActivity.this
-                        , R.string.update_success, Toast.LENGTH_SHORT).show();
+                Toast.makeText(AdvancedPrintOptionActivity.this,
+                               R.string.update_success, Toast.LENGTH_SHORT).show();
 
-                Intent intent = new Intent(AdvancedPrintOptionActivity.this, ManagementActivity.class);
+                Intent intent = new Intent(AdvancedPrintOptionActivity.this,
+                                           ManagementActivity.class);
                 intent.putExtra(APP.TASK, APP.TASK_REFRESH_ADDED_PRINTERS);
                 AdvancedPrintOptionActivity.this.startActivity(intent);
 
@@ -128,8 +130,8 @@ public class AdvancedPrintOptionActivity extends BaseActivity {
             textView_option_name.setText(name);
             spinner_option.setTag(item);
 
-            ArrayAdapter<String> adapter
-                    = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, list);
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                                     android.R.layout.simple_spinner_dropdown_item, list);
             spinner_option.setAdapter(adapter);
             spinner_option.setSelection(def);
             spinner_option.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

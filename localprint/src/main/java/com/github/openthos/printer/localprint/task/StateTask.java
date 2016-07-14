@@ -99,8 +99,10 @@ public class StateTask<Progress> extends CommandTask<PrinterId, Progress, Printe
 
                     splitLine[i] = splitLine[i].replace("dpi", "");
                     String[] resolution = splitLine[i].split("x");
-                    r1 = new PrintAttributes.Resolution("R" + i, resolution[0] + "x" + resolution[1]
-                            , Integer.parseInt(resolution[0]), Integer.parseInt(resolution[1]));
+                    r1 = new PrintAttributes.Resolution("R" + i, resolution[0] + "x"
+                                                            + resolution[1],
+                                                        Integer.parseInt(resolution[0]),
+                                                        Integer.parseInt(resolution[1]));
                     state.addResolution(r1, false);
                 }
 
@@ -152,8 +154,8 @@ public class StateTask<Progress> extends CommandTask<PrinterId, Progress, Printe
 
 
         PrinterCapabilitiesInfo capabilities = state.build();
-        PrinterInfo.Builder builder
-                = new PrinterInfo.Builder(mPrinterId, mPrinterId.getLocalId(), PrinterInfo.STATUS_IDLE);
+        PrinterInfo.Builder builder = new PrinterInfo.Builder(mPrinterId,
+                                              mPrinterId.getLocalId(), PrinterInfo.STATUS_IDLE);
         PrinterInfo printer = builder.setCapabilities(capabilities)
                 //.setDescription(item.getManufacturerName())
                 .build();

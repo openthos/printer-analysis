@@ -63,8 +63,10 @@ public class PrintDiscoverySession extends PrinterDiscoverySession {
                     }
                     addPrinters(printers);
                 } else {
-                    Toast.makeText(mOpenthosPrintService, mOpenthosPrintService.getResources().getString(R.string.query_error)
-                            + " " + ERROR, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mOpenthosPrintService,
+                                   mOpenthosPrintService.getResources()
+                                       .getString(R.string.query_error) + " " + ERROR,
+                                   Toast.LENGTH_SHORT).show();
                 }
 
                 removePrinters(old_list);
@@ -108,8 +110,10 @@ public class PrintDiscoverySession extends PrinterDiscoverySession {
             protected void onPostExecute(PrinterInfo printerInfo) {
 
                 if (printerInfo == null) {
-                    Toast.makeText(mOpenthosPrintService
-                            , mOpenthosPrintService.getResources().getString(R.string.query_error) + " " + ERROR, Toast.LENGTH_LONG).show();
+                    Toast.makeText(mOpenthosPrintService,
+                                   mOpenthosPrintService.getResources()
+                                       .getString(R.string.query_error) + " " + ERROR,
+                                   Toast.LENGTH_LONG).show();
                     PrinterInfo.Builder builder =
                             new PrinterInfo.Builder(printerId, printerId.getLocalId()
                                     , PrinterInfo.STATUS_UNAVAILABLE);

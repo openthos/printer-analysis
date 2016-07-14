@@ -14,9 +14,6 @@ import com.github.openthos.printer.localprint.util.LogUtils;
 import java.util.LinkedList;
 import java.util.List;
 
-/**
- * Created by bboxh on 2016/5/10.
- */
 public class APP extends Application {
 
     private static final String TAG = "APP";

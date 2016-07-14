@@ -36,7 +36,7 @@ public class ManagementAdapter extends BaseAdapter {
 
     private int mLocalPrinterPosition = -1;
     private int mNetPrinterPosition = -1;
-    
+
     private List<PrinterItem> mAddedList = new ArrayList<>();
 
     public ManagementAdapter(ManagementActivity context, List<ManagementListItem> listItem) {
@@ -214,7 +214,7 @@ public class ManagementAdapter extends BaseAdapter {
         } else if (!list.isEmpty()) {
             for (PrinterItem printerItem : list) {
                 ManagementListItem item
-                        = new ManagementListItem.Builder(ManagementListItem.TYPE_ADDED_PRINTER).get();
+                      = new ManagementListItem.Builder(ManagementListItem.TYPE_ADDED_PRINTER).get();
                 item.setPrinteritem(printerItem);
                 mListItem.add(mLocalPrinterPosition++ - 1, item);
             }
@@ -238,17 +238,17 @@ public class ManagementAdapter extends BaseAdapter {
 
     public void initList() {
 
-        mListItem.add(new ManagementListItem.Builder(ManagementListItem.TYPE_ADDED_PRINTERS_WORDS).get());
-
+        mListItem.add(new ManagementListItem
+                              .Builder(ManagementListItem.TYPE_ADDED_PRINTERS_WORDS).get());
         refreshAddedPrinters();
 
         /*List<PrinterItem> list = getAddedPrinters();
 
-        if(list == null){
+        if (list == null) {
             mListItem.add(new ManagementListItem.Builder(ManagementListItem.TYPE_LOADING).get());
-        }else if(list.isEmpty()){
+        } else if (list.isEmpty()) {
             mListItem.add(new ManagementListItem.Builder(ManagementListItem.TYPE_EMPTY).get());
-        }else{
+        } else {
             for(PrinterItem printerItem: list) {
                 ManagementListItem item
                     = new ManagementListItem.Builder(ManagementListItem.TYPE_ADDED_PRINTER).get();
@@ -272,10 +272,12 @@ public class ManagementAdapter extends BaseAdapter {
                     , new ManagementListItem.Builder(ManagementListItem.TYPE_LOADING).get());
         } else {
             IS_DECTECTING = true;
-            mListItem.add(new ManagementListItem.Builder(ManagementListItem.TYPE_LOCAL_PRINTER_WORDS).get());
+            mListItem.add(new ManagementListItem
+                                  .Builder(ManagementListItem.TYPE_LOCAL_PRINTER_WORDS).get());
             mLocalPrinterPosition = mListItem.size() - 1;
             mListItem.add(new ManagementListItem.Builder(ManagementListItem.TYPE_LOADING).get());
-            mListItem.add(new ManagementListItem.Builder(ManagementListItem.TYPE_NET_PRINTER_WORDS).get());
+            mListItem.add(new ManagementListItem
+                                  .Builder(ManagementListItem.TYPE_NET_PRINTER_WORDS).get());
             mNetPrinterPosition = mListItem.size() - 1;
             mListItem.add(new ManagementListItem.Builder(ManagementListItem.TYPE_EMPTY).get());
             //mListItem.add(new ManagementListItem.Builder(ManagementListItem.TYPE_LOADING).get());
@@ -302,8 +304,8 @@ public class ManagementAdapter extends BaseAdapter {
 
                 if (printerItems != null) {
                     for (PrinterItem p : printerItems) {
-                        ManagementListItem item
-                                = new ManagementListItem.Builder(ManagementListItem.TYPE_LOCAL_PRINTER).get();
+                        ManagementListItem item = new ManagementListItem
+                                             .Builder(ManagementListItem.TYPE_LOCAL_PRINTER).get();
                         item.setPrinteritem(p);
                         mListItem.add(mNetPrinterPosition++, item);
                     }

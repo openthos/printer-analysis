@@ -48,14 +48,21 @@ public class PrinterItem implements Parcelable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         PrinterItem that = (PrinterItem) o;
 
-        if (NickName != null ? !NickName.equals(that.NickName) : that.NickName != null)
+        if (NickName != null ? !NickName.equals(that.NickName) : that.NickName != null) {
             return false;
-        if (URL != null ? !URL.equals(that.URL) : that.URL != null) return false;
+        }
+        if (URL != null ? !URL.equals(that.URL) : that.URL != null) {
+            return false;
+        }
         return TYPE != null ? TYPE.equals(that.TYPE) : that.TYPE == null;
 
     }

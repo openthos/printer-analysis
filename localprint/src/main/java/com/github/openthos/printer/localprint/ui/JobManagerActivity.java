@@ -89,9 +89,11 @@ public class JobManagerActivity extends BaseActivity {
             @Override
             protected void onPostExecute(Boolean aBoolean) {
                 if (aBoolean) {
-                    Toast.makeText(JobManagerActivity.this, R.string.canceled, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(JobManagerActivity.this,
+                                   R.string.canceled, Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(JobManagerActivity.this, R.string.cancel_error, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(JobManagerActivity.this,
+                                   R.string.cancel_error, Toast.LENGTH_SHORT).show();
                 }
             }
         };
@@ -105,9 +107,11 @@ public class JobManagerActivity extends BaseActivity {
             @Override
             protected void onPostExecute(Boolean aBoolean) {
                 if (aBoolean) {
-                    Toast.makeText(JobManagerActivity.this, R.string.started, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(JobManagerActivity.this,
+                                   R.string.started, Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(JobManagerActivity.this, R.string.start_error, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(JobManagerActivity.this,
+                                   R.string.start_error, Toast.LENGTH_SHORT).show();
                 }
             }
         };
@@ -121,9 +125,11 @@ public class JobManagerActivity extends BaseActivity {
             @Override
             protected void onPostExecute(Boolean aBoolean) {
                 if (aBoolean) {
-                    Toast.makeText(JobManagerActivity.this, R.string.paused, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(JobManagerActivity.this,
+                                   R.string.paused, Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(JobManagerActivity.this, R.string.pause_error, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(JobManagerActivity.this,
+                                   R.string.pause_error, Toast.LENGTH_SHORT).show();
                 }
             }
         };

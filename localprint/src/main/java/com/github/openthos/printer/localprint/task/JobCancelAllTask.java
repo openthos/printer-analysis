@@ -25,7 +25,7 @@ public class JobCancelAllTask<Params, Progress> extends CommandTask<Params, Prog
     @Override
     protected Boolean handleCommand(List<String> stdOut, List<String> stdErr) {
 
-        APP.sendRefreshJobsIntent();        //发送更新打印任务信息Intent
+        APP.sendRefreshJobsIntent();
 
         return true;
     }

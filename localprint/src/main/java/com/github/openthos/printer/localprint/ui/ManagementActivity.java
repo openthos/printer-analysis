@@ -119,16 +119,16 @@ public class ManagementActivity extends BaseActivity {
         tipBrand.setText(R.string.select_brand);
         Spinner brand = new Spinner(this);
         final List<String> brandList = new ArrayList<String>();
-        final ArrayAdapter<String> brandAdapter
-                = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, brandList);
+        final ArrayAdapter<String> brandAdapter = new ArrayAdapter<String>(this,
+                                       android.R.layout.simple_spinner_dropdown_item, brandList);
         brand.setAdapter(brandAdapter);
 
         TextView tipModel = new TextView(this);
         tipModel.setText(R.string.select_model);
         final Spinner model = new Spinner(this);
         final List<PPDItem> modelList = new ArrayList<PPDItem>();
-        final ArrayAdapter<PPDItem> modelAdapter
-                = new ArrayAdapter<PPDItem>(this, android.R.layout.simple_spinner_dropdown_item, modelList);
+        final ArrayAdapter<PPDItem> modelAdapter = new ArrayAdapter<PPDItem>(this,
+                                        android.R.layout.simple_spinner_dropdown_item, modelList);
         model.setAdapter(modelAdapter);
 
         brand.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -226,8 +226,8 @@ public class ManagementActivity extends BaseActivity {
             protected void onPostExecute(ModelsItem modelsItem) {
 
                 if (modelsItem == null) {
-                    Toast.makeText(ManagementActivity.this, getResources().getString(R.string.query_error)
-                            + " " + ERROR, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ManagementActivity.this, getResources()
+                       .getString(R.string.query_error) + " " + ERROR, Toast.LENGTH_SHORT).show();
                     return;
                 }
 

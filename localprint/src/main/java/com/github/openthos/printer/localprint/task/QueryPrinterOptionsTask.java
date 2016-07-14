@@ -8,7 +8,8 @@ import java.util.List;
  * Query a printer's options for the need of Android printing B10
  * Created by bboxh on 2016/5/31.
  */
-public class QueryPrinterOptionsTask<Progress> extends CommandTask<String, Progress, PrinterOptionItem> {
+public class QueryPrinterOptionsTask<Progress>
+                 extends CommandTask<String, Progress, PrinterOptionItem> {
     @Override
     protected String[] setCmd(String... params) {
 

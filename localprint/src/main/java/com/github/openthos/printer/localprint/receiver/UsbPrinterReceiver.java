@@ -32,7 +32,8 @@ public class UsbPrinterReceiver extends BroadcastReceiver {
 
             //Update UI when management activity is on the top,or handled by OpenthosPrintService
             if (APP.IS_MANAGEMENT_ACTIVITY_ON_TOP) {
-                Intent new_intent = new Intent(APP.getApplicatioContext(), ManagementActivity.class);
+                Intent new_intent = new Intent(APP.getApplicatioContext(),
+                                               ManagementActivity.class);
                 new_intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 new_intent.putExtra(APP.TASK, APP.TASK_ADD_NEW_PRINTER);
                 APP.getApplicatioContext().startActivity(new_intent);

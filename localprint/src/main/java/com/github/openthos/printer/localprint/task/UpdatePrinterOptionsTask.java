@@ -42,9 +42,9 @@ public abstract class UpdatePrinterOptionsTask<Progress>
 
         for (String line : stdErr) {
 
-            if (line.startsWith("WARNING"))
+            if (line.startsWith("WARNING")) {
                 continue;
-            else if (line.contains("Bad file descriptor")) {
+            } else if (line.contains("Bad file descriptor")) {
                 if (startCups()) {
                     runCommandAgain();
                     return null;
@@ -55,9 +55,9 @@ public abstract class UpdatePrinterOptionsTask<Progress>
             }
         }
 
-        if (stdOut.isEmpty())
+        if (stdOut.isEmpty()) {
             flag = true;
-
+        }
         return flag;
     }
 

@@ -45,7 +45,7 @@ public class ListAddedTask<Params, Progress> extends CommandTask<Params, Progres
         //example
         //list.add(new PrinterItem("HP LaserJet Professional P1108"
         // , "usb://HP/LaserJet%20Professional%20P1108?serial=000000000Q8D9XVKPR1a","direct"));
-        
+
         return list;
     }
 

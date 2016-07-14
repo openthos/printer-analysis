@@ -43,9 +43,9 @@ public abstract class UpdatePrinterCupsOptionsTask<Progress>
 
         for (String line : stdErr) {
 
-            if (line.startsWith("WARNING"))
+            if (line.startsWith("WARNING")) {
                 continue;
-            else if (line.contains("Bad file descriptor")) {
+            } else if (line.contains("Bad file descriptor")) {
                 if (startCups()) {
                     runCommandAgain();
                     return null;

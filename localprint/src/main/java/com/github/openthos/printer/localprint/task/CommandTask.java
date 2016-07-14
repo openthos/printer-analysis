@@ -291,7 +291,7 @@ public abstract class CommandTask<Params, Progress, Result> extends BaseTask<Par
      */
     protected void killCups() {
         // TODO: 2016/5/15 Shutdown CUPS A3
-        /*if(cupsdProcess != null){
+        /*if (cupsdProcess != null) {
             cupsdProcess.destroy();
         }*/
 
