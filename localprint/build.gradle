@@ -18,6 +18,12 @@ android {
         }
     }
 
+    sourceSets {
+        main {
+            java.srcDirs = ['src/main/src']
+        }
+    }
+
     signingConfigs {
 
         release {
