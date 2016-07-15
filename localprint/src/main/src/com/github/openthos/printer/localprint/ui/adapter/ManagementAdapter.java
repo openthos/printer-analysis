@@ -118,6 +118,16 @@ public class ManagementAdapter extends BaseAdapter {
                             mContext.startActivity(intent);
                         }
                     });
+                    Button button_add_net_printers = (Button)convertView.findViewById(R.id.button_add_net_printers);
+                    button_add_net_printers.setOnClickListener(new View.OnClickListener(){
+
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(mContext, ManagementActivity.class);
+                            intent.putExtra(APP.TASK,APP.TASK_ADD_NEW_NET_PRINTER);
+                            mContext.startActivity(intent);
+                        }
+                    });
                     break;
                 case ManagementListItem.TYPE_LOCAL_PRINTER_WORDS:
                     convertView = inflater.inflate(R.layout.item_local_printer_words, null);

@@ -83,4 +83,9 @@
     <string name="error">错误</string>
     <string name="option">选项</string>
     <string name="share_printer">分享打印机（网络打印）</string>
+    <string name="add_net_printers">添加网络打印机</string>
+    <string name="add_a_network_printer">添加一个新的网络打印机</string>
+    <string name="set_netprinter_url">请填写打印机url地址</string>
+    <string name="hint_windows_netprinter">Windows打印机: \n    smb://Win用户名：密码@WinIP地址/打印机名称</string>
+    <string name="hint_Linux_netprinter">Linux打印机: \n    http://ip地址:631/printers/打印机名称</string>
 </resources>

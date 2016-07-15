@@ -50,7 +50,7 @@ public class APP extends Application {
     public static final int TASK_REFRESH_ADDED_PRINTERS = 1010;
     public static final int TASK_JOB_RESULT = 1011;
     public static final int TASK_REFRESH_JOBS = 1012;
-
+    public static final int TASK_ADD_NEW_NET_PRINTER = 1013;
     /**
      * The print job refresh interval (ms).
      */
@@ -62,6 +62,7 @@ public class APP extends Application {
      * Unit: ms.
      */
     public static final long JOB_REFRESH_WAITING_PRINTER_INTERVAL = 5100;
+
 
     /**
      * The port of cups is used for send commands or browse the web page.
