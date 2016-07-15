@@ -1,7 +1,7 @@
 package com.github.openthos.printer.localprint.task;
 
 import com.github.openthos.printer.localprint.APP;
-import com.github.openthos.printer.localprint.model.JobItem;
+import com.android.systemui.statusbar.phone.PrinterJobStatus;
 
 import java.util.List;
 
@@ -9,11 +9,11 @@ import java.util.List;
  * Resume a printing task C5
  * Created by bboxh on 2016/6/5.
  */
-public class JobResumeTask<Progress> extends CommandTask<JobItem, Progress, Boolean> {
+public class JobResumeTask<Progress> extends CommandTask<PrinterJobStatus, Progress, Boolean> {
     @Override
-    protected String[] setCmd(JobItem... params) {
+    protected String[] setCmd(PrinterJobStatus... params) {
 
-        JobItem item = params[0];
+        PrinterJobStatus item = params[0];
 
         return new String[]{"sh", "proot.sh", "ipptool"
                 , "http://localhost:" + APP.CUPS_PORT + "/jobs", "-d"

@@ -1,4 +1,4 @@
-package com.github.openthos.printer.localprint.model;
+package com.android.systemui.statusbar.phone;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -7,7 +7,7 @@ import android.os.Parcelable;
  * Printer job item.
  * Created by bboxh on 2016/6/4.
  */
-public class JobItem implements Parcelable {
+public class PrinterJobStatus implements Parcelable {
 
     /**
      * Add more when we found a new state.
@@ -30,7 +30,7 @@ public class JobItem implements Parcelable {
     private int jobId;
     private String ERROR = "";
 
-    public JobItem() {
+    public PrinterJobStatus() {
     }
 
     public String getFileName() {
@@ -92,7 +92,7 @@ public class JobItem implements Parcelable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        JobItem jobItem = (JobItem) o;
+        PrinterJobStatus jobItem = (PrinterJobStatus) o;
 
         if (status != jobItem.status) return false;
         if (jobId != jobItem.jobId) return false;
@@ -118,7 +118,7 @@ public class JobItem implements Parcelable {
 
     @Override
     public String toString() {
-        return "JobItem{" +
+        return "PrinterJobStatus{" +
                 "fileName='" + fileName + '\'' +
                 ", printer='" + printer + '\'' +
                 ", status=" + status +
@@ -144,7 +144,7 @@ public class JobItem implements Parcelable {
         dest.writeString(this.ERROR);
     }
 
-    protected JobItem(Parcel in) {
+    protected PrinterJobStatus(Parcel in) {
         this.fileName = in.readString();
         this.printer = in.readString();
         this.status = in.readInt();
@@ -153,15 +153,15 @@ public class JobItem implements Parcelable {
         this.ERROR = in.readString();
     }
 
-    public static final Creator<JobItem> CREATOR = new Creator<JobItem>() {
+    public static final Creator<PrinterJobStatus> CREATOR = new Creator<PrinterJobStatus>() {
         @Override
-        public JobItem createFromParcel(Parcel source) {
-            return new JobItem(source);
+        public PrinterJobStatus createFromParcel(Parcel source) {
+            return new PrinterJobStatus(source);
         }
 
         @Override
-        public JobItem[] newArray(int size) {
-            return new JobItem[size];
+        public PrinterJobStatus[] newArray(int size) {
+            return new PrinterJobStatus[size];
         }
     };
 }

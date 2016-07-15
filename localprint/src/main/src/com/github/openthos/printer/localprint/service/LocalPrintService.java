@@ -8,13 +8,15 @@ import android.os.IBinder;
 import android.os.Parcelable;
 import android.widget.Toast;
 
+import com.android.systemui.statusbar.phone.PrinterJobStatus;
 import com.github.openthos.printer.localprint.APP;
 import com.github.openthos.printer.localprint.R;
-import com.github.openthos.printer.localprint.model.JobItem;
 import com.github.openthos.printer.localprint.task.JobQueryTask;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class LocalPrintService extends Service {
 
@@ -50,7 +52,7 @@ public class LocalPrintService extends Service {
      * refresh jobs info.
      */
     private void refreshJobs() {
-        final List<JobItem> list = APP.getJobList();
+        final List<PrinterJobStatus> list = APP.getJobList();
         new JobQueryTask<Void, Void>(list) {
             @Override
             protected void onPostExecute(Boolean aBoolean) {
@@ -64,12 +66,12 @@ public class LocalPrintService extends Service {
         }.start();
     }
 
-    private void updateJobs(List<JobItem> list) {
+    private void updateJobs(List<PrinterJobStatus> list) {
 
         APP.IS_JOB_WAITING_FOR_PRINTER = false;
 
-        for (JobItem item : list) {
-            if (item.getStatus() == JobItem.STATUS_PRINTING) {
+        for (PrinterJobStatus item : list) {
+            if (item.getStatus() == PrinterJobStatus.STATUS_PRINTING) {
 
                 if (IS_REFRESHING_JOBS) {
                     break;
@@ -85,7 +87,7 @@ public class LocalPrintService extends Service {
                 }, APP.JOB_REFRESH_INTERVAL);
                 IS_REFRESHING_JOBS = true;
                 break;
-            } else if (item.getStatus() == JobItem.STATUS_WAITING_FOR_PRINTER) {
+            } else if (item.getStatus() == PrinterJobStatus.STATUS_WAITING_FOR_PRINTER) {
                 APP.IS_JOB_WAITING_FOR_PRINTER = true;
                 continue;
             }
@@ -93,13 +95,26 @@ public class LocalPrintService extends Service {
 
         ArrayList<Parcelable> remoteList = new ArrayList<>();
 
-        for(JobItem item : list) {
-            remoteList.add(item);
+        Map<String, ArrayList<PrinterJobStatus>> sortMap = new HashMap<>();
+
+        for (PrinterJobStatus item : list) {
+            ArrayList<PrinterJobStatus> nameSortedList = sortMap.get(item.getPrinter());
+            if(nameSortedList == null){
+                nameSortedList = new ArrayList<>();
+                sortMap.put(item.getPrinter(),nameSortedList);
+            }
+            nameSortedList.add(item);
         }
 
-        //send broadcast to inform others that jobs info refreshed.
+        for(ArrayList<PrinterJobStatus> nameSortedList: sortMap.values()){
+            remoteList.addAll(nameSortedList);
+        }
+
+        //send broadcast to inform others that jobs info has been refreshed.
         Intent intent = new Intent(APP.BROADCAST_REFRESH_JOBS);
-        intent.putParcelableArrayListExtra("jobs", remoteList);
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList("jobs", remoteList);
+        intent.putExtra("jobs", bundle);
         sendBroadcast(intent);
 
     }

@@ -1,7 +1,7 @@
 package com.github.openthos.printer.localprint.task;
 
+import com.android.systemui.statusbar.phone.PrinterJobStatus;
 import com.github.openthos.printer.localprint.APP;
-import com.github.openthos.printer.localprint.model.JobItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,9 +11,9 @@ import java.util.List;
  * Created by bboxh on 2016/6/5.
  */
 public class JobPauseAllTask<Params, Progress> extends CommandTask<Params, Progress, Boolean> {
-    private final List<JobItem> mList;
+    private final List<PrinterJobStatus> mList;
 
-    public JobPauseAllTask(List<JobItem> list) {
+    public JobPauseAllTask(List<PrinterJobStatus> list) {
         super();
         mList = list;
     }
@@ -26,7 +26,7 @@ public class JobPauseAllTask<Params, Progress> extends CommandTask<Params, Progr
         command.add("sh");
         command.add("/hold_release.sh");
         for (int i = 0; i < mList.size(); i++) {
-            JobItem printTask = mList.get(i);
+            PrinterJobStatus printTask = mList.get(i);
             command.add(Integer.toString(printTask.getJobId()));
         }
         command.add(String.valueOf(APP.CUPS_PORT));

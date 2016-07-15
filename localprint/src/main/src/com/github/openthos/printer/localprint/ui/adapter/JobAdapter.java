@@ -9,8 +9,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.systemui.statusbar.phone.PrinterJobStatus;
 import com.github.openthos.printer.localprint.R;
-import com.github.openthos.printer.localprint.model.JobItem;
 import com.github.openthos.printer.localprint.task.JobCancelTask;
 import com.github.openthos.printer.localprint.task.JobPauseTask;
 import com.github.openthos.printer.localprint.task.JobResumeTask;
@@ -23,9 +23,9 @@ import java.util.List;
  */
 public class JobAdapter extends BaseAdapter {
     private final Context mContext;
-    private final List<JobItem> mList;
+    private final List<PrinterJobStatus> mList;
 
-    public JobAdapter(Context context, List<JobItem> list) {
+    public JobAdapter(Context context, List<PrinterJobStatus> list) {
         mContext = context;
         mList = list;
     }
@@ -49,7 +49,7 @@ public class JobAdapter extends BaseAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
 
         Holder holder;
-        final JobItem item = mList.get(position);
+        final PrinterJobStatus item = mList.get(position);
 
         if (convertView == null) {
 
@@ -76,20 +76,20 @@ public class JobAdapter extends BaseAdapter {
 
         int status = item.getStatus();
         switch (status) {
-            case JobItem.STATUS_ERROR:
+            case PrinterJobStatus.STATUS_ERROR:
                 holder.textview_status.setText(mContext.getResources().getString(R.string.error)
                         + " " + mList.get(position).getERROR());
                 break;
-            case JobItem.STATUS_HOLDING:
+            case PrinterJobStatus.STATUS_HOLDING:
                 holder.textview_status.setText(R.string.pause);
                 break;
-            case JobItem.STATUS_PRINTING:
+            case PrinterJobStatus.STATUS_PRINTING:
                 holder.textview_status.setText(R.string.printing);
                 break;
-            case JobItem.STATUS_READY:
+            case PrinterJobStatus.STATUS_READY:
                 holder.textview_status.setText(R.string.ready);
                 break;
-            case JobItem.STATUS_WAITING_FOR_PRINTER:
+            case PrinterJobStatus.STATUS_WAITING_FOR_PRINTER:
                 holder.textview_status.setText(R.string.waiting_for_printer);
                 break;
             default:
@@ -98,7 +98,7 @@ public class JobAdapter extends BaseAdapter {
         }
 
         //判断状态
-        if (item.getStatus() == JobItem.STATUS_HOLDING) {
+        if (item.getStatus() == PrinterJobStatus.STATUS_HOLDING) {
             holder.button_pause.setText(R.string.resume);
         } else {
             holder.button_pause.setText(R.string.pause);
@@ -107,7 +107,7 @@ public class JobAdapter extends BaseAdapter {
         holder.button_pause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (item.getStatus() == JobItem.STATUS_HOLDING) {
+                if (item.getStatus() == PrinterJobStatus.STATUS_HOLDING) {
                     resumeJob(item, v);
                 } else {
                     pauseJob(item, v);
@@ -127,13 +127,13 @@ public class JobAdapter extends BaseAdapter {
 
     }
 
-    private void resumeJob(final JobItem jobItem, final View v) {
+    private void resumeJob(final PrinterJobStatus jobItem, final View v) {
         JobResumeTask<Void> task = new JobResumeTask<Void>() {
             @Override
             protected void onPostExecute(Boolean aBoolean) {
                 if (aBoolean) {
                     //Toast.makeText(mContext, R.string.resumed, Toast.LENGTH_SHORT).show();
-                    jobItem.setStatus(JobItem.STATUS_READY);
+                    jobItem.setStatus(PrinterJobStatus.STATUS_READY);
                     Button button = (Button) v;
                     button.setText(R.string.pause);
                 } else {
@@ -144,7 +144,7 @@ public class JobAdapter extends BaseAdapter {
         task.start(jobItem);
     }
 
-    private void removeJob(JobItem jobItem) {
+    private void removeJob(PrinterJobStatus jobItem) {
         JobCancelTask<Void> task = new JobCancelTask<Void>() {
             @Override
             protected void onPostExecute(Boolean aBoolean) {
@@ -158,13 +158,13 @@ public class JobAdapter extends BaseAdapter {
         task.start(jobItem);
     }
 
-    private void pauseJob(final JobItem jobItem, final View v) {
+    private void pauseJob(final PrinterJobStatus jobItem, final View v) {
         JobPauseTask<Void> task = new JobPauseTask<Void>() {
             @Override
             protected void onPostExecute(Boolean aBoolean) {
                 if (aBoolean) {
                     //Toast.makeText(mContext, R.string.paused, Toast.LENGTH_SHORT).show();
-                    jobItem.setStatus(JobItem.STATUS_HOLDING);
+                    jobItem.setStatus(PrinterJobStatus.STATUS_HOLDING);
                     Button button = (Button) v;
                     button.setText(R.string.resume);
                 } else {

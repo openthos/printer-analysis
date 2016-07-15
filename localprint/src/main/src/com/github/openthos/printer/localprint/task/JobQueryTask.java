@@ -1,6 +1,6 @@
 package com.github.openthos.printer.localprint.task;
 
-import com.github.openthos.printer.localprint.model.JobItem;
+import com.android.systemui.statusbar.phone.PrinterJobStatus;
 
 import java.util.List;
 
@@ -9,9 +9,9 @@ import java.util.List;
  * Created by bboxh on 2016/6/5.
  */
 public class JobQueryTask<Params, Progress> extends CommandTask<Params, Progress, Boolean> {
-    private final List<JobItem> mList;
+    private final List<PrinterJobStatus> mList;
 
-    public JobQueryTask(List<JobItem> list) {
+    public JobQueryTask(List<PrinterJobStatus> list) {
         super();
         mList = list;
     }
@@ -50,7 +50,7 @@ public class JobQueryTask<Params, Progress> extends CommandTask<Params, Progress
             }
             if (line.endsWith("bytes")) {
                 String[] splitLine = line.split("\\s+");
-                JobItem printTask = new JobItem();
+                PrinterJobStatus printTask = new PrinterJobStatus();
                 printTask.setJobId(Integer.parseInt(splitLine[2]));
                 printTask.setSize(splitLine[splitLine.length - 2]
                                   + splitLine[splitLine.length - 1]);
@@ -72,20 +72,20 @@ public class JobQueryTask<Params, Progress> extends CommandTask<Params, Progress
 
                 String[] splitLine = line.split(":");
                 if (splitLine[1].contains("none") && statusLine.equals("")) {
-                    stat = JobItem.STATUS_READY;
+                    stat = PrinterJobStatus.STATUS_READY;
                 } else if (splitLine[1].contains("job-hold-until-specified")) {
-                    stat = JobItem.STATUS_HOLDING;
+                    stat = PrinterJobStatus.STATUS_HOLDING;
                 } else if (splitLine[1].contains("none")
                         || splitLine[1].contains("job-printing")
                         || splitLine[1].contains("printer-stopped")) {
                     if (statusLine.endsWith("failed")) {
-                        stat = JobItem.STATUS_ERROR;
+                        stat = PrinterJobStatus.STATUS_ERROR;
                     } else if (statusLine.endsWith("Waiting for printer to become available.")) {
-                        stat = JobItem.STATUS_WAITING_FOR_PRINTER;
+                        stat = PrinterJobStatus.STATUS_WAITING_FOR_PRINTER;
                     } else if (statusLine.contains("ing")) {
-                        stat = JobItem.STATUS_PRINTING;
+                        stat = PrinterJobStatus.STATUS_PRINTING;
                     } else {
-                        stat = JobItem.STATUS_READY;
+                        stat = PrinterJobStatus.STATUS_READY;
                     }
                 }
                 continue;
@@ -96,13 +96,13 @@ public class JobQueryTask<Params, Progress> extends CommandTask<Params, Progress
                 String[] splitLine = line.split("\\s+");
                 for (int i = 0; i < mList.size(); i++) {
 
-                    JobItem printTask = mList.get(i);
+                    PrinterJobStatus printTask = mList.get(i);
                     if (printTask.getJobId() == id) {
                         printTask.setPrinter(splitLine[3]);
                         printTask.setStatus(stat);
                         switch (stat) {
-                            case JobItem.STATUS_ERROR:
-                            case JobItem.STATUS_PRINTING:
+                            case PrinterJobStatus.STATUS_ERROR:
+                            case PrinterJobStatus.STATUS_PRINTING:
                                 printTask.setERROR(statusLine);
                                 break;
                             default:

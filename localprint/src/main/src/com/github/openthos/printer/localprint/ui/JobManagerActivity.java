@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import com.github.openthos.printer.localprint.APP;
 import com.github.openthos.printer.localprint.R;
-import com.github.openthos.printer.localprint.model.JobItem;
+import com.android.systemui.statusbar.phone.PrinterJobStatus;
 import com.github.openthos.printer.localprint.task.JobCancelAllTask;
 import com.github.openthos.printer.localprint.task.JobPauseAllTask;
 import com.github.openthos.printer.localprint.task.JobResumeAllTask;
@@ -23,7 +23,7 @@ import java.util.List;
 public class JobManagerActivity extends BaseActivity {
 
     private ListView mListviewJob;
-    private List<JobItem> mList;
+    private List<PrinterJobStatus> mList;
     private JobAdapter mJobAdapter;
 
     private BroadcastReceiver jobReceiver = new BroadcastReceiver() {

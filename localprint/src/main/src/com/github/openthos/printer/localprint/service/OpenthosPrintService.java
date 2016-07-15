@@ -10,7 +10,7 @@ import android.view.WindowManager;
 
 import com.github.openthos.printer.localprint.APP;
 import com.github.openthos.printer.localprint.R;
-import com.github.openthos.printer.localprint.model.JobItem;
+import com.android.systemui.statusbar.phone.PrinterJobStatus;
 import com.github.openthos.printer.localprint.model.PrinterOptionItem;
 import com.github.openthos.printer.localprint.task.JobCancelTask;
 import com.github.openthos.printer.localprint.task.PrintTask;
@@ -57,7 +57,7 @@ public class OpenthosPrintService extends PrintService {
         if (jobId == null) {
             printJob.cancel();
         } else {
-            JobItem item = new JobItem();
+            PrinterJobStatus item = new PrinterJobStatus();
             item.setJobId(Integer.parseInt(jobId));
             task.start(item);
         }

@@ -1,7 +1,7 @@
 package com.github.openthos.printer.localprint.task;
 
+import com.android.systemui.statusbar.phone.PrinterJobStatus;
 import com.github.openthos.printer.localprint.APP;
-import com.github.openthos.printer.localprint.model.JobItem;
 
 import java.util.List;
 
@@ -10,9 +10,9 @@ import java.util.List;
  * Created by bboxh on 2016/6/5.
  */
 public class JobCancelAllTask<Params, Progress> extends CommandTask<Params, Progress, Boolean> {
-    private final List<JobItem> mList;
+    private final List<PrinterJobStatus> mList;
 
-    public JobCancelAllTask(List<JobItem> list) {
+    public JobCancelAllTask(List<PrinterJobStatus> list) {
         super();
         mList = list;
     }

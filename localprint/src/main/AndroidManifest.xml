@@ -67,7 +67,12 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".ui.JobManagerActivity" />
+        <activity android:name=".ui.JobManagerActivity">
+            <intent-filter>
+                <action android:name="com.github.openthos.printer.localprint.jobmanager" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
 
         <service
             android:name=".service.LocalPrintService"

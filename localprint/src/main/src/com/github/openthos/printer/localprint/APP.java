@@ -7,7 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Looper;
 
-import com.github.openthos.printer.localprint.model.JobItem;
+import com.android.systemui.statusbar.phone.PrinterJobStatus;
 import com.github.openthos.printer.localprint.service.LocalPrintService;
 import com.github.openthos.printer.localprint.util.LogUtils;
 
@@ -35,7 +35,7 @@ public class APP extends Application {
     /**
      * The cups executable file folder name && The name of cups data packet.
      */
-    public static final String COMPONENT_PATH = "/component_23";
+    public static final String COMPONENT_PATH = "/component_25";
 
     /**
      * The data packet position.
@@ -86,7 +86,7 @@ public class APP extends Application {
      */
     public static Process cupsdProcess;
 
-    private static List<JobItem> jobList = new LinkedList<JobItem>();
+    private static List<PrinterJobStatus> jobList = new LinkedList<PrinterJobStatus>();
     private static Context context;
 
     @Override
@@ -135,12 +135,12 @@ public class APP extends Application {
     }
 
     /**
-     * Get JobItem list.
+     * Get PrinterJobStatus list.
      * Forbid invoking JobList not in the main thread.
      *
      * @return Job List
      */
-    public static List<JobItem> getJobList() {
+    public static List<PrinterJobStatus> getJobList() {
 
         //Judge current execution whether in the main thread
         if (Looper.getMainLooper() != Looper.myLooper()) {
