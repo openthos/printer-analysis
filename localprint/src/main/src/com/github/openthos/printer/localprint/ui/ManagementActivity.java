@@ -107,22 +107,22 @@ public class ManagementActivity extends BaseActivity {
      */
     private void showAddLocalDialog(final ManagementListItem deviceItem) {
 
-        final Map<String, List<PPDItem>> models = new HashMap<>();//字符串与PPD包列表的一对一map，即一个品牌对应多个PPD文件，即多个驱动
+        final Map<String, List<PPDItem>> models = new HashMap<>();
 
         LinearLayout layout = new LinearLayout(this);
         layout.setOrientation(LinearLayout.VERTICAL);
-        layout.setPadding(16, 16, 16, 16);//开辟一块区域用于显示
-        TextView textViewTipName = new TextView(this);//
+        layout.setPadding(16, 16, 16, 16);
+        TextView textViewTipName = new TextView(this);
         textViewTipName.setText(R.string.set_name);
-        final EditText editTextName = new EditText(this);//填写打印机名称的区域，只能赋一次值？
-        editTextName.setText(deviceItem.getPrinteritem().getNickName());//填入默认名称
+        final EditText editTextName = new EditText(this);
+        editTextName.setText(deviceItem.getPrinteritem().getNickName());
         TextView textViewTipBrand = new TextView(this);
         textViewTipBrand.setText(R.string.select_brand);
-        Spinner spinnerBrand = new Spinner(this);//下拉菜单
-        final List<String> brandList = new ArrayList<String>(); //字符串列表？用于获取所有的制造商名称？
+        Spinner spinnerBrand = new Spinner(this);
+        final List<String> brandList = new ArrayList<String>();
         final ArrayAdapter<String> brandAdapter = new ArrayAdapter<String>(this,
                                        android.R.layout.simple_spinner_dropdown_item, brandList);
-        spinnerBrand.setAdapter(brandAdapter);//填入一个默认的制造商？
+        spinnerBrand.setAdapter(brandAdapter);
 
         TextView textViewTipModel = new TextView(this);
         textViewTipModel.setText(R.string.select_model);
@@ -132,7 +132,7 @@ public class ManagementActivity extends BaseActivity {
                                         android.R.layout.simple_spinner_dropdown_item, modelList);
         spinnerModel.setAdapter(modelAdapter);
 
-        spinnerBrand.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {//制造商品牌监听？根据品牌选择具体的驱动
+        spinnerBrand.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 modelList.clear();
@@ -141,12 +141,12 @@ public class ManagementActivity extends BaseActivity {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {//<>里面?啥意思
+            public void onNothingSelected(AdapterView<?> parent) {
 
             }
         });
 
-        spinnerModel.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {//监听什么？Item是驱动？
+        spinnerModel.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
@@ -160,7 +160,7 @@ public class ManagementActivity extends BaseActivity {
         final CheckBox cbxSharePrinter = new CheckBox(this);
         cbxSharePrinter.setText(R.string.share_printer);
 
-        layout.addView(textViewTipName);//在layout上添加各种定义控件
+        layout.addView(textViewTipName);
         layout.addView(editTextName);
         layout.addView(textViewTipBrand);
         layout.addView(spinnerBrand);
@@ -168,7 +168,8 @@ public class ManagementActivity extends BaseActivity {
         layout.addView(spinnerModel);
         layout.addView(cbxSharePrinter);
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this).setTitle(R.string.add_a_local_printer)
+        AlertDialog.Builder builder
+                = new AlertDialog.Builder(this).setTitle(R.string.add_a_local_printer)
                 .setView(layout)
                 .setPositiveButton(R.string.ok, null)
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -181,12 +182,13 @@ public class ManagementActivity extends BaseActivity {
         dialog.show();
 
         //Manually set the listener, aim to click dialog does not disappear
-        dialog.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {//简单对话框？这是点击出现对话框的那部分吗？
-            private boolean PRESSED = false;//PRESSED是什么值？鼠标点击？
+        dialog.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener
+                (new View.OnClickListener() {
+            private boolean PRESSED = false;
 
             @Override
             public void onClick(View v) {
-                if (PRESSED) {//点击以后出现一个框显示添加中
+                if (PRESSED) {
                     Toast.makeText(ManagementActivity.this, R.string.adding, Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -199,13 +201,12 @@ public class ManagementActivity extends BaseActivity {
 
                 PRESSED = true;
 
-                AddPrinterTask<Void> task = new AddPrinterTask<Void>() {//new后面的{}里面什么时候用？
+                AddPrinterTask<Void> task = new AddPrinterTask<Void>() {
                     @Override
                     protected void onPostExecute(Boolean aBoolean) {
                         if (aBoolean) {
                             Toast.makeText(ManagementActivity.this
-                                    , R.string.add_success, Toast.LENGTH_SHORT).show();//R是什么？
-                            mAdapter.refreshAddedPrinters();
+                                    , R.string.add_success, Toast.LENGTH_SHORT).show();
                             dialog.dismiss();
                         } else {
                             Toast.makeText(ManagementActivity.this
@@ -215,7 +216,7 @@ public class ManagementActivity extends BaseActivity {
                     }
                 };
 
-                task.start(p);//任务开始？
+                task.start(p);
 
             }
 
@@ -295,14 +296,16 @@ public class ManagementActivity extends BaseActivity {
         textViewTipURL.setTextColor(Color.BLACK);
         final EditText editTextUrl = new EditText(this);
         TextView textViewHintUrl = new TextView(this);
-        textViewHintUrl.setText(getString(R.string.hint_windows_netprinter)+"\n"+getString(R.string.hint_Linux_netprinter));
+        textViewHintUrl.setText(getString(R.string.hint_windows_netprinter)+ "\n"
+                +getString(R.string.hint_Linux_netprinter));
 
         TextView textViewTipBrand = new TextView(this);
         textViewTipBrand.setText(R.string.select_brand);
         textViewTipBrand.setTextColor(Color.BLACK);
         Spinner spinnerBrand = new Spinner(this);
         final List<String> brandList = new ArrayList<String>();
-        final ArrayAdapter<String> brandAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item,brandList);
+        final ArrayAdapter<String> brandAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_dropdown_item,brandList);
         spinnerBrand.setAdapter(brandAdapter);
 
         TextView textViewTipModel = new TextView(this);
@@ -310,7 +313,8 @@ public class ManagementActivity extends BaseActivity {
         textViewTipModel.setTextColor(Color.BLACK);
         final Spinner spinnerModel = new Spinner(this);
         final List<PPDItem> modelList = new ArrayList<PPDItem>();
-        final ArrayAdapter<PPDItem> modelAdapter = new ArrayAdapter<PPDItem>(this,android.R.layout.simple_spinner_dropdown_item,modelList);
+        final ArrayAdapter<PPDItem> modelAdapter = new ArrayAdapter<PPDItem>(this,
+                android.R.layout.simple_spinner_dropdown_item,modelList);
         spinnerModel.setAdapter(modelAdapter);
 
         spinnerBrand.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
@@ -352,7 +356,8 @@ public class ManagementActivity extends BaseActivity {
         layout.addView(spinnerModel);
         layout.addView(cbxSharePrinter);
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this).setTitle(R.string.add_a_network_printer)
+        AlertDialog.Builder builder
+                = new AlertDialog.Builder(this).setTitle(R.string.add_a_network_printer)
                 .setView(layout)
                 .setPositiveButton(R.string.ok,null)
                 .setNegativeButton(R.string.cancel,new DialogInterface.OnClickListener(){
@@ -364,7 +369,8 @@ public class ManagementActivity extends BaseActivity {
 
         dialog.show();
 
-        dialog.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener(){
+        dialog.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener
+                (new View.OnClickListener(){
             private boolean CLICKED =false;
 
             @Override
@@ -386,11 +392,13 @@ public class ManagementActivity extends BaseActivity {
                     @Override
                     protected void onPostExecute(Boolean aBoolean) {
                         if (aBoolean) {
-                            Toast.makeText(ManagementActivity.this, R.string.add_success, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ManagementActivity.this, R.string.add_success,
+                                    Toast.LENGTH_SHORT).show();
                             mAdapter.refreshAddedPrinters();
                             dialog.dismiss();
                         } else {
-                            Toast.makeText(ManagementActivity.this, R.string.add_fail, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ManagementActivity.this, R.string.add_fail,
+                                    Toast.LENGTH_SHORT).show();
                         }
                         CLICKED = false;
                     }
@@ -403,7 +411,8 @@ public class ManagementActivity extends BaseActivity {
             @Override
             protected void onPostExecute(ModelsItem modelsItem){
                 if(modelsItem == null){
-                    Toast.makeText(ManagementActivity.this,R.string.query_error + " " + ERROR, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ManagementActivity.this,R.string.query_error + " " + ERROR,
+                            Toast.LENGTH_SHORT).show();
                     return;
                 }
 
