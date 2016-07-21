@@ -129,16 +129,11 @@ public class StateTask<Progress> extends CommandTask<PrinterId, Progress, Printe
                 }
 
                 if (color)
-                    state.setColorModes(PrintAttributes.COLOR_MODE_COLOR, setDefault);
+                    state.setColorModes(setDefault, setDefault);
                 else
-                    state.setColorModes(PrintAttributes.COLOR_MODE_MONOCHROME, setDefault);
+                    state.setColorModes(PrintAttributes.COLOR_MODE_MONOCHROME, PrintAttributes.COLOR_MODE_MONOCHROME);
 
                 colorMode = 1;
-
-                /**
-                 * state.setColorModes(PrintAttributes.COLOR_MODE_MONOCHROME
-                 *  | PrintAttributes.COLOR_MODE_COLOR, PrintAttributes.COLOR_MODE_MONOCHROME);
-                 */
 
             }
 
@@ -151,7 +146,6 @@ public class StateTask<Progress> extends CommandTask<PrinterId, Progress, Printe
             state.setColorModes(PrintAttributes.COLOR_MODE_MONOCHROME
                     , PrintAttributes.COLOR_MODE_MONOCHROME);
         }
-
 
         PrinterCapabilitiesInfo capabilities = state.build();
         PrinterInfo.Builder builder = new PrinterInfo.Builder(mPrinterId,
