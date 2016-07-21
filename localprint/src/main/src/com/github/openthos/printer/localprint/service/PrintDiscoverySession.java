@@ -41,8 +41,6 @@ public class PrintDiscoverySession extends PrinterDiscoverySession {
         ListAddedTask<Void, Void> task = new ListAddedTask<Void, Void>() {
             @Override
             protected void onPostExecute(List<PrinterItem> list) {
-                List<PrinterId> old_list = new ArrayList<>();
-                old_list.addAll(priorityList);
 
                 if (list != null) {
                     for (PrinterItem printerItem : list) {
@@ -51,8 +49,7 @@ public class PrintDiscoverySession extends PrinterDiscoverySession {
                                 .generatePrinterId(String.valueOf(printerItem.getNickName()));
 
                         if (priorityList.contains(id)) {
-                            old_list.remove(id);
-                            continue;
+                            priorityList.remove(id);
                         }
 
                         PrinterInfo.Builder builder = new PrinterInfo.Builder(id
@@ -69,7 +66,7 @@ public class PrintDiscoverySession extends PrinterDiscoverySession {
                                    Toast.LENGTH_SHORT).show();
                 }
 
-                removePrinters(old_list);
+                removePrinters(priorityList);
             }
         };
 

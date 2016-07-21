@@ -3,9 +3,11 @@ package com.github.openthos.printer.localprint.service;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.print.PageRange;
 import android.printservice.PrintJob;
 import android.printservice.PrintService;
 import android.printservice.PrinterDiscoverySession;
+import android.util.Log;
 import android.view.WindowManager;
 
 import com.github.openthos.printer.localprint.APP;
@@ -86,6 +88,33 @@ public class OpenthosPrintService extends PrintService {
         //map.put(PrintTask.LP_LANDSCAPE,"");     //System may has handled
         map.put(PrintTask.LP_COPIES, String.valueOf(printJob.getInfo().getCopies()));
         map.put(PrintTask.LP_LABEL, printJob.getDocument().getInfo().getName());
+
+        PageRange[] ranges = printJob.getInfo().getPages();
+        StringBuilder rangeStr = new StringBuilder();
+        if (ranges != null && ranges.length > 0) {
+            for (PageRange range : ranges) {
+
+                if (range.getStart() == 0 && range.getEnd() == Integer.MAX_VALUE) {
+                    break;
+                }
+
+                if (rangeStr.length() > 0) {
+                    rangeStr.append(",");
+                }
+
+                rangeStr.append(range.getStart() + 1);
+
+                if (range.getStart() == range.getEnd()) {
+                    continue;
+                }
+                rangeStr.append("-").append(range.getEnd() + 1);
+
+            }
+            Log.d(TAG, "rangeStr=> " + rangeStr.toString());
+            if (rangeStr.length() > 0) {
+                map.put(PrintTask.LP_RANGES, rangeStr.toString());
+            }
+        }
 
         //Send a printing job.
 

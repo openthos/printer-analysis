@@ -22,6 +22,7 @@ public class PrintTask<Progress> extends CommandTask<Map<String, String>, Progre
     public static final String LP_LABEL = "label";
     public static final String LP_COPIES = "cpoies";
     public static final String LP_COLOR = "color";
+    public static final String LP_RANGES = "ranges";
 
     protected int JOB_ID = -1;
 
@@ -35,6 +36,7 @@ public class PrintTask<Progress> extends CommandTask<Map<String, String>, Progre
         String landscape = map.get(LP_LANDSCAPE);
         String label = map.get(LP_LABEL);
         String copies = map.get(LP_COPIES);
+        String ranges = map.get(LP_RANGES);
 
         // TODO: 2016/5/16 Printing parameters need to be improved C1
 
@@ -70,7 +72,10 @@ public class PrintTask<Progress> extends CommandTask<Map<String, String>, Progre
             list.add("-n");
             list.add(copies);
         }
-
+        if(ranges != null){
+            list.add("-P");
+            list.add(ranges);
+        }
         list.add("-o");
         list.add("fit-to-page");
 
