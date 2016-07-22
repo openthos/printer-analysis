@@ -25,7 +25,7 @@ To see the details, Please visit:[SUPPORTED_PRINTERS.md](https://github.com/open
 
 Please follow the next steps.
 
-## Building the environment && Installing
+## Building && Installing
 
 Please visit:[BUILDING.md](https://github.com/openthos/printer-analysis/blob/master/doc/BUILDING.md)
 

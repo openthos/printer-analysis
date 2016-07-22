@@ -25,7 +25,7 @@
 
 请按以下步骤依次进行。
 
-## 构建环境 && 安装
+## 构建 && 安装
 
 请查看：[BUILDING.md](https://github.com/openthos/printer-analysis/blob/master/doc/zh/BUILDING.md)
 
