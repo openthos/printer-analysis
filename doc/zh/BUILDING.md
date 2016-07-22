@@ -10,8 +10,11 @@
 ## 1.2 程序
 
 打印程序负责整个打印工作。这个程序需要使用platform签名编译，否则无法使用上一步添加的自定义权限ACCESS_USB_DEVICE。
-程序位于 https://github.com/openthos/printer-analysis.git 项目的dev-app分支。需要使用的程序是其中的 localprint 模块，这是一个app。
-程序详细地址： https://github.com/openthos/printer-analysis/tree/dev-app/localprint
+
+使用Android studio开发的程序位于 https://github.com/openthos/printer-analysis.git 项目的dev-app分支。需要使用的程序是其中的 localprint 模块，这是一个app。
+
+可直接集成到系统中的程序地址：https://github.com/openthos/oto_packages_apps_Printer
+
 这个程序需要使用platform签名编译，否则无法使用上一步添加的自定义权限ACCESS_USB_DEVICE。
 
 ## 1.3 程序额外数据包
@@ -56,6 +59,8 @@
 
 这里把程序作为系统程序作为一个模块加入，放入源码目录 packages/apps 里，比如新建 packages/apps/Printer 文件夹。
 在源码中编译，需要编写Android.mk、CleanSpec.mk等文件。
+
+或者使用更改好的Printer代码：https://github.com/openthos/oto_packages_apps_Printer
 
 Android.mk文件示例：
 ``` makefile
