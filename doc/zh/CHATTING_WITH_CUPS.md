@@ -48,7 +48,7 @@ CUPS交流接口描述了CUPS程序与APP上层交互的方式。
 ||查询打印任务| jobquery.sh里的命令如下：lpq -a && lpstat -l -o
 |C3|JobCancelTask|sh proot.sh cancel jobId
 ||取消打印任务|
-|C4||JobPauseTask|shproot.sh ipptool http://localhost:CUPS_PORT/jobs -d job-id=JobId hold-job.test
+|C4|JobPauseTask|shproot.sh ipptool http://localhost:CUPS_PORT/jobs -d job-id=JobId hold-job.test
 ||暂停打印任务|hold-job.test文件内为ipp命令内容
 |C5|JobResumeTask|sh proot.sh ipptool http://localhostCUPS_PORT/jobs -d job-id=JobId release-job.test
 ||恢复打印任务|release-job.test文件内为ipp命令内容
@@ -56,7 +56,7 @@ CUPS交流接口描述了CUPS程序与APP上层交互的方式。
 ||取消所有打印任务
 |C7|JobPauseAllTask|sh proot.sh sh hold_release.sh jobId1 jobId2 ... hold
 ||暂停所有打印任务|参考 C4 调用ipptool发送命令，详见数据包里的hold_release.sh
-|C8||JobResumeAllTask|sh proot.sh sh hold_release.sh jobId1 jobId2 ... release
+|C8|JobResumeAllTask|sh proot.sh sh hold_release.sh jobId1 jobId2 ... release
 ||恢复所有打印任务|参考 C5 调用ipptool发送命令，详见数据包里的hold_release.sh
 
 # 其他
