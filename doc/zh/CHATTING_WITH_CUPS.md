@@ -1,7 +1,9 @@
 # 简介
 
 CUPS交流接口描述了CUPS程序与APP上层交互的方式。
+
 在打印应用中，APP上层接收到用户的指令。应用在JAVA层面调用命令行发出命令，将命令传递给CUPS程序，实现打印相关操作。
+
 为了完成命令的传送，我们整理了所有与打印相关的操作，并且称之为CUPS交流接口。
 
 # 分类
@@ -30,7 +32,7 @@ CUPS交流接口描述了CUPS程序与APP上层交互的方式。
 ||删除打印机|
 |B5| UpdatePrinterCupsOptionsTask|sh proot.sh lpoptions -p printerName [-o optionName=optionsVaule]...|
 ||修改打印机高级配置|
-|B6| StateTask||sh proot.sh lpoptions -p printerName -l
+|B6| StateTask|sh proot.sh lpoptions -p printerName -l
 ||查询打印机状态和配置|
 |B7| |
 ||设置默认打印机|暂时可以不用
