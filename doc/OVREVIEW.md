@@ -19,7 +19,7 @@ To see the details, Please visit:[SUPPORTED_PRINTERS.md](https://github.com/open
 | Intro | Category | remarks
 |---|---|---|---|
 |Duplex printing unsupported|print||
-|Lack of the out of paper promote|print|CUPS unsupport this fecture but some extra drivers may support|
+|Lack of the out of paper promote|print|CUPS unsupport this feature but some extra drivers may support|
 
 # How to develop
 
