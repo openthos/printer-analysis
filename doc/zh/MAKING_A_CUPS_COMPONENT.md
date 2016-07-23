@@ -200,4 +200,4 @@ strace -f cupsd -f &> logPrint
 
 ## CUPS相关项目介绍
 
-
+请查看：https://github.com/openthos/printer-analysis/blob/master/doc/RELATED_PROJECTS.md
