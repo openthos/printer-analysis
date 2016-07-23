@@ -98,6 +98,8 @@ make install                                      安装到当前系统
 
 注意：屏蔽cups-files.conf.中的SystemGroup行，否则在Android中由于用户组问题无法运行cups。
 
+由于Openthos中的tar命令问题，会导致解压后部分权限丢失。cups网页文件的权限必须是所有用户都有读权限的，所以我们编写了[chang_mode.sh](https://github.com/openthos/printer-analysis/blob/dev/shell/chang_mode.sh)脚本自动修复网页文件的权限。网页文件位于`/usr/share/cups`文件夹，连同cups文件夹都进行修复。
+
 ### ghostscript-9.18
 
 参考命令:
@@ -151,6 +153,8 @@ Pantum的驱动是闭源的，会解压出 deb 文件，使用i386版本。
 使用`ar`命令解压deb，如：`ar -x Pantum-M6500-Series-3.0.i386.deb`。
 
 解压 data.tar.gz 文件，按照解压出的目录结构，将文件都复制进数据包目录（包含PPD和filter两种文件）。
+
+注意：奔图的PPD文件有空格，需要全部去除，否则打印程序解析会出错，我们这里将空格替换为`_`。
 
 ## Eposn官方开源驱动
 
