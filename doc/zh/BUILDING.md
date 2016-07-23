@@ -5,11 +5,11 @@
 ## 1.1 添加自定义权限
 
 打印程序使用USB打印机，需要直接接触USB文件：`/dev/bus/usb/*/*`，在Android系统中这些usb文件应用程序只能通过Java层申请权限才能在JAVA层间接使用。
-可喜的是这些文件属于 USB用户组 ，所以我们只需要把程序加入 USB用户组 即可。
+可喜的是这些文件属于 USB用户组 ，所以我们只需要把程序加入 USB用户组 即可。但是在Android中默认没有 USB用户组 对应的权限，需要添加自定义权限。
 
 ## 1.2 程序
 
-打印程序负责整个打印工作。这个程序需要使用platform签名编译，否则无法使用上一步添加的自定义权限ACCESS_USB_DEVICE。
+打印程序负责整个打印工作。
 
 使用Android studio开发的程序位于 https://github.com/openthos/printer-analysis.git 项目的dev-app分支。需要使用的程序是其中的 localprint 模块，这是一个app。
 
@@ -109,11 +109,12 @@ Android.mk  AndroidManifest.xml  CleanSpec.mk  res  src
 程序位于 https://github.com/openthos/printer-analysis.git 项目的dev-app分支。
 需要使用的程序是其中的 localprint 模块，这是一个app。
 程序详细地址： https://github.com/openthos/printer-analysis/tree/dev-app/localprint
+
 Android Studio可以直接导入该项目。
 
 ### 2.2.2 编译
 
-在Android中使用platform签名编译，可以借助[keytool-importkeypair](https://github.com/getfatday/keytool-importkeypair) 工具将系统签名转换成Android Studio可以使用的签名文件。
+在Android Studio中使用platform签名编译，可以借助[keytool-importkeypair](https://github.com/getfatday/keytool-importkeypair) 工具将系统签名转换成Android Studio可以使用的签名文件。
 
 1 首先下载好上述脚本，并拷贝系统源码 build/target/product/security 里的 platform.pk8 platform.x509.pem 文件到脚本目录，执行转换命令。
 命令示例：
