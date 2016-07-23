@@ -43,7 +43,7 @@ PRoot是一种chroot的用户态开源实现工具。（PRoot项目地址: https
 
 创建好一个文件夹用于制作数据包，这里取名为component。将编译好的proot可执行文件加入，这里取名proot-x86-2，放入根目录。
 
-我将每次执行的命令写入了脚本，命名为proot.sh放入根目录。
+我将每次执行的命令写入了脚本，命名为[proot.sh](https://github.com/openthos/printer-analysis/blob/dev/shell/proot.sh)放入根目录。
 ``` shell
 #!/system/bin/sh
 
@@ -67,7 +67,7 @@ export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin
 
 1. 进入数据包跟目录，执行sh proot.sh进入自定义环境。在根目录创建 /bin /sbin ，再分别创建/usr/bin usr/local/bin 到 /bin 以及 /usr/sbin /usr/local/sbin 软连接到/bin /sbin。制作软连接而不是创建文件夹的原因是，很多程序读取命令是指定绝对地址，而这个命令很可能没有被放在指定的bin里，软连接就可避免这种情况。**注意：一定要进入proot环境之后操作，否则软连接的绝对地址有误**。
 2. 这里将busybox静态编译的可执行程序命名为busybox-i686放入。在proot环境中执行`./busybox-i686 --install`，该命令自动在各个bin sbin里创建命令硬链接。
-3. 由于硬链接在打包的时候会重复占用空间，所有需要替换成软连接。我们编写了`buildcommand.sh`脚本（在数据包根目录）用于自动化替换替换busybox生成的硬链接到软连接。
+3. 由于硬链接在打包的时候会重复占用空间，所有需要替换成软连接。我们编写了[buildcommand.sh](https://github.com/openthos/printer-analysis/blob/dev/shell/buildcommand.sh)脚本（在数据包根目录）用于自动化替换替换busybox生成的硬链接到软连接。
 4. 将静态编译（也可以动态编译，需要放入依赖文件）的bash放入 bin 目录，删除busybox创建的 sh 命令，创建sh软连接到bash。
 
 ## 安装CUPS等程序
@@ -171,7 +171,7 @@ epson-inkjet-printer-201401w缺少库libjpeg62，下载编译好的 libjpeg62-62
 
 ## 复制依赖
 
-如果所需的程序都加入了，最后需要补全程序缺少的依赖，因此我们编译了`share_lib2.sh`脚本来递归遍历所有动态链接程序的依赖，包括so库文件的so库依赖。
+如果所需的程序都加入了，最后需要补全程序缺少的依赖，因此我们编译了[share_lib2.sh](https://github.com/openthos/printer-analysis/blob/dev/shell/share_lib2.sh)脚本来递归遍历所有动态链接程序的依赖，包括so库文件的so库依赖。
 
 原理是依次调用`ldd`命令解析依赖并复制。
 
