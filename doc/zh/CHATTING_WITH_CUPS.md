@@ -41,13 +41,13 @@ CUPS交流接口描述了CUPS程序与APP上层交互的方式。
 |B9| QueryPrinterCupsOptonsTask|sh proot.sh lpoptions -p printerName -l|
 ||查询打印机高级设置|查询CUPS所有可用的设置
 |B10|QueryPrinterOptonsTask|sh proot.sh sh printerquery.sh printerName
-||查询打印机设置|查询安卓打印直接相关的参数，printerquery.sh里的命令如下：lpoptions -p $1 && lpoptions -p $1 -l
+||查询打印机设置|查询安卓打印直接相关的参数，[printerquery.sh](https://github.com/openthos/printer-analysis/blob/dev/shell/printerquery.sh)里的命令如下：lpoptions -p $1 && lpoptions -p $1 -l
 |B11|UpdatePrinterOptonsTask|sh proot.sh lpoptions -p printerName -o MediaSizeName=mediaSizeValue -o ColorModeName=colorModeValue
 ||修改打印机设置|
 |C1|PrintTask|sh proot.sh lp -d printerName fileName -o media=mediaSize [-o Resolution=resolution] [-o landscape] -t label -n copies -P ranges [-o fit-o-page]|
 ||打印|中括号为可选参数
 |C2|JobQueryTask|sh proot.sh sh /jobquery.sh |
-||查询打印任务| jobquery.sh里的命令如下：lpq -a && lpstat -l -o
+||查询打印任务| [jobquery.sh](https://github.com/openthos/printer-analysis/blob/dev/shell/jobquery.sh)里的命令如下：lpq -a && lpstat -l -o
 |C3|JobCancelTask|sh proot.sh cancel jobId
 ||取消打印任务|
 |C4|JobPauseTask|shproot.sh ipptool http://localhost:CUPS_PORT/jobs -d job-id=JobId hold-job.test
@@ -57,9 +57,9 @@ CUPS交流接口描述了CUPS程序与APP上层交互的方式。
 |C6|JobCancelAllTask|sh proot.sh cancel -a
 ||取消所有打印任务
 |C7|JobPauseAllTask|sh proot.sh sh hold_release.sh jobId1 jobId2 ... hold
-||暂停所有打印任务|参考 C4 调用ipptool发送命令，详见数据包里的hold_release.sh
+||暂停所有打印任务|参考 C4 调用ipptool发送命令，详见数据包里的[hold_release.sh](https://github.com/openthos/printer-analysis/blob/dev/shell/hold_release.sh)
 |C8|JobResumeAllTask|sh proot.sh sh hold_release.sh jobId1 jobId2 ... release
-||恢复所有打印任务|参考 C5 调用ipptool发送命令，详见数据包里的hold_release.sh
+||恢复所有打印任务|参考 C5 调用ipptool发送命令，详见数据包里的[hold_release.sh](https://github.com/openthos/printer-analysis/blob/dev/shell/hold_release.sh)
 
 # 其他
 
