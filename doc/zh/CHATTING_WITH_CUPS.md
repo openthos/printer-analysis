@@ -51,9 +51,9 @@ CUPS交流接口描述了CUPS程序与APP上层交互的方式。
 |C3|JobCancelTask|sh proot.sh cancel jobId
 ||取消打印任务|
 |C4|JobPauseTask|shproot.sh ipptool http://localhost:CUPS_PORT/jobs -d job-id=JobId hold-job.test
-||暂停打印任务|hold-job.test文件内为ipp命令内容
+||暂停打印任务|[hold-job.test](https://github.com/openthos/printer-analysis/blob/dev/shell/hold-job.test)文件内为ipp命令内容
 |C5|JobResumeTask|sh proot.sh ipptool http://localhostCUPS_PORT/jobs -d job-id=JobId release-job.test
-||恢复打印任务|release-job.test文件内为ipp命令内容
+||恢复打印任务|[release-job.test](https://github.com/openthos/printer-analysis/blob/dev/shell/release-job.test)文件内为ipp命令内容
 |C6|JobCancelAllTask|sh proot.sh cancel -a
 ||取消所有打印任务
 |C7|JobPauseAllTask|sh proot.sh sh hold_release.sh jobId1 jobId2 ... hold
