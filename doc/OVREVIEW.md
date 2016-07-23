@@ -1,6 +1,6 @@
 # Intro
 
-This project belongs to openthos project, providing local printers' and net printers' support.
+This project belongs to [Openthos](https://github.com/openthos/openthos/wiki) project, providing local printers' and net printers' support.
 
 # Feature
 
