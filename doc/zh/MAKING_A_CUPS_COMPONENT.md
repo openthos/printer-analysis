@@ -169,13 +169,34 @@ epson-inkjet-printer-201401w缺少库libjpeg62，下载编译好的 libjpeg62-62
 
 **注意：该程序是 Linux Standard Base (LSB) 程序，使用的是 /lib/ld-lsb.so.3 链接器**，因此执行`ln -s  /lib/ld-linux.so.2 /lib/ld-lsb.so.3`链接到 ld-linux.so 。
 
-## 安装
+## 复制依赖
+
+如果所需的程序都加入了，最后需要补全程序缺少的依赖，因此我们编译了`share_lib2.sh`脚本来递归遍历所有动态链接程序的依赖，包括so库文件的so库依赖。
+
+原理是依次调用`ldd`命令解析依赖并复制。
+
+## 打包
+
+```
+tar -zvcf component_10.tar.gz component_10
+```
+
+我们在开发中，通常会用数字命名数据包，以区分不同的版本，防止混淆。最后放入系统时再统一名称。
 
 # 其他
 
 ## 调试
 
-## 历史
+为了便于调试数据包里程序的问题，除了cups的日志外，可使用strace程序记录系统调用。因此，我们还放入一个静态编译的strace在数据包中。
+
+通常，先在ArchLinux中调试通过，再放入Openthos中测试。
+
+示例：
+```
+sh proot.sh
+strace -f cupsd -f &> logPrint
+```
+这样就能记录所有的系统到logPrint文件中，一定要加上`-f`参数追踪子进程的系统调用。
 
 ## CUPS相关项目介绍
 
