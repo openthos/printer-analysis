@@ -1,6 +1,6 @@
 # 简介
 
-本项目属于openthos项目的一部分，提供openthos系统本地打印机以及网络打印机支持。
+本项目属于openthos项目的一部分，提供 [Openthos](https://github.com/openthos/openthos/wiki) 系统本地打印机以及网络打印机支持。
 
 ## 功能
 
