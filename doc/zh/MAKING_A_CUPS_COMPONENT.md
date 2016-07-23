@@ -31,7 +31,9 @@ PRoot是一种chroot的用户态开源实现工具。（PRoot项目地址: https
 
 本节介绍制作一个包含CUPS的独立运行环境的步骤。
 
-为了方便制作，这里选择使用32位的ArchLinux系统，该系统可定制性强，可只安装必须的程序包。并且编译要加入的程序时，直接编译即可，因为直接编译就是x86构架的程序，在基于x86或者amd64构架的Openthos系统是兼容，无需交叉编译。
+为了方便制作，这里选择使用32位的ArchLinux最简系统，该系统可定制性强，可只安装必须的程序包。并且编译要加入的程序时，直接编译即可，因为直接编译就是x86构架的程序，在基于x86或者amd64构架的Openthos系统是兼容，无需交叉编译。
+
+在这里尽可能的给出编译时所需的依赖，但肯定会有很多遗漏需要自行解决。
 
 ## 基础环境
 
@@ -53,8 +55,6 @@ export PROOT_TMP_DIR=$PROOT_TMPDIR
 export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin
 
 `pwd`/proot-x86-2 -w / -r `pwd` -b /dev -b /sys -b /proc "$@"
-
-#/usr/sbin/cupsd -f
 ```
 
 ### 加入bash 和 busybox
@@ -65,12 +65,109 @@ export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin
 
 步骤：
 
-1. 进入数据包跟目录，执行sh proot.sh进入自定义环境。在根目录创建 bin sbin ，再分别创建usr/bin usr/sbin 软连接到bin sbin。制作软连接而不是创建文件夹的原因是，很多程序读取命令是指定绝对地址，而这个命令很可能没有被放在指定的bin里，软连接就可避免这种情况。**注意：一定要进入proot环境之后操作，否则软连接的绝对地址有误**。
+1. 进入数据包跟目录，执行sh proot.sh进入自定义环境。在根目录创建 /bin /sbin ，再分别创建/usr/bin usr/local/bin 到 /bin 以及 /usr/sbin /usr/local/sbin 软连接到/bin /sbin。制作软连接而不是创建文件夹的原因是，很多程序读取命令是指定绝对地址，而这个命令很可能没有被放在指定的bin里，软连接就可避免这种情况。**注意：一定要进入proot环境之后操作，否则软连接的绝对地址有误**。
 2. 这里将busybox静态编译的可执行程序命名为busybox-i686放入。在proot环境中执行`./busybox-i686 --install`，该命令自动在各个bin sbin里创建命令硬链接。
 3. 由于硬链接在打包的时候会重复占用空间，所有需要替换成软连接。我们编写了`buildcommand.sh`脚本（在数据包根目录）用于自动化替换替换busybox生成的硬链接到软连接。
 4. 将静态编译（也可以动态编译，需要放入依赖文件）的bash放入 bin 目录，删除busybox创建的 sh 命令，创建sh软连接到bash。
 
 ## 安装CUPS等程序
+
+编译安装这些程序时，先动态编译，之后再使用脚本把依赖复制过来。这些程序的介绍请看最后 CUPS相关项目介绍 。
+
+## libusb-1.0.9
+
+编译安装libusb到系统以替换其自带libusb是因为Archlinux自带的libusb可能加入了一些特性，导致cups无法在Android环境下成功读写usb端口。
+
+```
+./confgiure
+make
+make install
+```
+
+### cups-2.1.2
+
+参考命令:
+```
+make distclean                                    若是第二次编译清除上次结果
+./configure --disable-gnutls --disable-gssapi --disable-dbus --disable-dnssd -disable-launchd
+make
+make BUILDROOT=/home/deep/component_10 install    安装到数据包里
+make install                                      安装到当前系统
+```
+同时安装到当前系统的目的是为了接下来安装其他程序方便，因为有一些依赖要用到。
+
+注意：屏蔽cups-files.conf.中的SystemGroup行，否则在Android中由于用户组问题无法运行cups。
+
+### ghostscript-9.18
+
+参考命令:
+```
+make distclean
+./configure --disable-sse2 --disable-dbus --disable-freetype --disable-fontconfig --disable-gtk --disable-bswap32 --disable-byteswap-h
+make
+DESTDIR=/home/deep/component_10  make install
+make install
+```
+
+### cups-filters-1.8.2
+
+先到ghostscript的ijs目录，单独编译ijs，执行：
+```
+sudo autoreconf -ivf
+./configure
+make
+sudo make install
+```
+从 pacman （ArchLinux的包管理器）安装python glib2 poppler依赖。
+
+到cups-filters-1.8.2源码根目录执行：
+```
+IJS_CFLAGS=-L/usr/local/lib IJS_LIBS=-lijs ./configure --enable-static --disable-avahi --disable-ldap --disable-dbus --disable-imagefilters --without-jpeg --without-png --without-tiff
+make
+DESTDIR=/home/deep/component_10  make install
+make install
+```
+
+## foo2zjs
+
+foo2zjs可以支持一些激光打印机，比如HP的。由于未能找到foo2zjs的版本号，所以请到官网下载最新版。
+
+执行`sudo pacman -S bc`安装bc软件包。
+```
+make
+DESTDIR=/home/deep/component_10  make install
+make install
+```
+
+## Pantum官方闭源驱动
+
+从官网搜集下载P和M两个系列的打印机Linux驱动：
+
+1. 20150901-Pantum-P2200-P2500-Series-Linux-Driver-V1.80-2
+2. Pantum-M6200-M6500-M6550-M6600-MS6000-Series-LINUX-Driver-V1-4-0-tar
+
+Pantum的驱动是闭源的，会解压出 deb 文件，使用i386版本。
+
+使用`ar`命令解压deb，如：`ar -x Pantum-M6500-Series-3.0.i386.deb`。
+
+解压 data.tar.gz 文件，按照解压出的目录结构，将文件都复制进数据包目录（包含PPD和filter两种文件）。
+
+## Eposn官方开源驱动
+
+由于最新的Epson驱动是以守护进程的形式运行，无法找到任何PPD文件。我们不希望额外的程序一直运行在后台，所以决定先使用其旧版驱动。
+
+从Arch的程序库中找到了两个驱动
+
+1. epson-inkjet-printer-escpr：https://aur.archlinux.org/packages/epson-inkjet-printer-escpr/
+2. epson-inkjet-printer-201401w：https://aur.archlinux.org/packages/epson-inkjet-printer-201401w/
+
+epson-inkjet-printer-escpr正常编译安装即可。
+
+epson-inkjet-printer-201401w缺少库libjpeg62，下载编译好的 libjpeg62-62.1.0-30.5.1.i586.rpm ，解压出来cpio。
+执行`cpio -idmv < libjpeg62-62.1.0-30.5.1.i586.cpio`,进入usr/lib/，`cp * ~/component_10/usr/lib/`。
+编译好后不用改变目录结构，就是要放在/opt下面。
+
+**注意：该程序是 Linux Standard Base (LSB) 程序，使用的是 /lib/ld-lsb.so.3 链接器**，因此执行`ln -s  /lib/ld-linux.so.2 /lib/ld-lsb.so.3`链接到 ld-linux.so 。
 
 ## 安装
 
