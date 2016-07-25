@@ -91,4 +91,5 @@
     <string name="hint_other_printer">Other: \n    lpd://ip/queue</string>
     <string name="name_error_with_space">Printer name cannot contain space</string>
     <string name="url_error_with_null">Printer url cannot be null</string>
+    <string name="name_error_with_null">Printer name cannot be null</string>
 </resources>

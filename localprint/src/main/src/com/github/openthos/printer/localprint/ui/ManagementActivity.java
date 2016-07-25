@@ -193,6 +193,11 @@ public class ManagementActivity extends BaseActivity {
                     return;
                 }
 
+                if(editTextName.getText().toString().isEmpty()){
+                    Toast.makeText(ManagementActivity.this,R.string.name_error_with_null,Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 if(editTextName.getText().toString().contains(" ")){
                     Toast.makeText(ManagementActivity.this,R.string.name_error_with_space,Toast.LENGTH_SHORT).show();
                     return;
@@ -385,6 +390,11 @@ public class ManagementActivity extends BaseActivity {
             public void onClick(View v) {
                 if (CLICKED) {
                     Toast.makeText(ManagementActivity.this, R.string.adding, Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if(editTextName.getText().toString().isEmpty()){
+                    Toast.makeText(ManagementActivity.this,R.string.name_error_with_null,Toast.LENGTH_SHORT).show();
                     return;
                 }
 

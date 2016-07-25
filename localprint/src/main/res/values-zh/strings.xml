@@ -92,4 +92,5 @@
     <string name="hint_other_printer">其他: \n    lpd://ip地址/queue名称</string>
     <string name="name_error_with_space">打印机名称不能带有空格</string>
     <string name="url_error_with_null">打印机url地址不能为空</string>
+    <string name="name_error_with_null">打印机名称不能为空</string>
 </resources>
