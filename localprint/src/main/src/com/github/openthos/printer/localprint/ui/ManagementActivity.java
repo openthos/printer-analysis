@@ -193,13 +193,18 @@ public class ManagementActivity extends BaseActivity {
                     return;
                 }
 
+                if(editTextName.getText().toString().contains(" ")){
+                    Toast.makeText(ManagementActivity.this,R.string.name_error_with_space,Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                PRESSED = true;
+
                 Map<String, String> p = new HashMap<>();
                 p.put("name", editTextName.getText().toString());
                 p.put("model", modelList.get(spinnerModel.getSelectedItemPosition()).getModel());
                 p.put("url", deviceItem.getPrinteritem().getURL());
                 p.put("isShare",cbxSharePrinter.isChecked()?"true":"false");
-
-                PRESSED = true;
 
                 AddPrinterTask<Void> task = new AddPrinterTask<Void>() {
                     @Override
@@ -299,7 +304,8 @@ public class ManagementActivity extends BaseActivity {
         TextView textViewHintUrl = new TextView(this);
         textViewHintUrl.setText(getString(R.string.hint_windows_netprinter)+ "\n"
                 +getString(R.string.hint_Linux_netprinter)+"\n"
-                +getString(R.string.hint_built_in_net_printer));
+                +getString(R.string.hint_built_in_net_printer)+"\n"
+                +getString(R.string.hint_other_printer));
 
         TextView textViewTipBrand = new TextView(this);
         textViewTipBrand.setText(R.string.select_brand);
@@ -382,13 +388,23 @@ public class ManagementActivity extends BaseActivity {
                     return;
                 }
 
+                if(editTextName.getText().toString().contains(" ")){
+                    Toast.makeText(ManagementActivity.this,R.string.name_error_with_space,Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if(editTextUrl.getText().toString().isEmpty()){
+                    Toast.makeText(ManagementActivity.this,R.string.url_error_with_null,Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                CLICKED = true;
+
                 Map<String, String> p = new HashMap<>();
                 p.put("name", editTextName.getText().toString());
                 p.put("model", modelList.get(spinnerModel.getSelectedItemPosition()).getModel());
                 p.put("url", editTextUrl.getText().toString());
                 p.put("isShare", cbxSharePrinter.isChecked() ? "true" : "false");
-
-                CLICKED = true;
 
                 AddPrinterTask<Void> task = new AddPrinterTask<Void>() {
                     @Override
