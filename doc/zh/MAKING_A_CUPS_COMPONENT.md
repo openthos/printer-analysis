@@ -96,7 +96,11 @@ make install                                      安装到当前系统
 ```
 同时安装到当前系统的目的是为了接下来安装其他程序方便，因为有一些依赖要用到。
 
-注意：屏蔽cups-files.conf.中的SystemGroup行，否则在Android中由于用户组问题无法运行cups。
+**注意：**
+
+屏蔽 cupsd.conf 中的`AuthType`和`Require`行，并且修改`Allow @LOCAL`为`Allow all`，否则由于用户权限问题无法操作cups。
+
+屏蔽 cups-files.conf .中的SystemGroup行，否则在Android中由于用户组问题无法运行cups。
 
 由于Openthos中的tar命令问题，会导致解压后部分权限丢失。cups网页文件的权限必须是所有用户都有读权限的，所以我们编写了[chang_mode.sh](https://github.com/openthos/printer-analysis/blob/dev/shell/chang_mode.sh)脚本自动修复网页文件的权限。网页文件位于`/usr/share/cups`文件夹，连同cups文件夹都进行修复。
 
