@@ -24,16 +24,26 @@ public class QueryPrinterOptionsTask<Progress>
         PrinterOptionItem item = new PrinterOptionItem();
         for (String line : stdOut) {
             String[] preSplit = line.split(" ");
-
-            if (preSplit[2].startsWith("device-uri")){
-                String[] secondSplit = preSplit[14].split("=");
-                if(secondSplit[1].equals("true")){
-                   item.setmSharePrinter(true);
+            boolean isPrinterOptionsLine = false;
+            for (int x = 0; x < preSplit.length; x++) {
+                if (preSplit[x].startsWith("device-uri")) {
+                    isPrinterOptionsLine = true;
+                    break;
                 }
-                else if(secondSplit[1].equals("false")){
-                    item.setmSharePrinter(false);
+            }
+            if (isPrinterOptionsLine){
+                for (int i = 0; i < preSplit.length; i++) {
+                    if (preSplit[i].startsWith("printer-is-shared")) {
+                        String[] secondSplit = preSplit[i].split("=");
+                        if (secondSplit[1].equals("true")) {
+                            item.setmSharePrinter(true);
+                        } else if (secondSplit[1].equals("false")) {
+                            item.setmSharePrinter(false);
+                        }
+                        break;
+                    }
                 }
-            } else {
+            }else{
                 String[] firstSplit = line.split("/");
 
                 if (firstSplit[0].equals("ColorModel")
@@ -60,13 +70,14 @@ public class QueryPrinterOptionsTask<Progress>
                         if (thirdSplit[i].startsWith("*")) {
                             thirdSplit[i] = thirdSplit[i].replace("*", "");
                             item.addMediaSizeItem(thirdSplit[i], true);
-                        } else
+                        } else {
                             item.addMediaSizeItem(thirdSplit[i], false);
+                        }
                     }
                 }
-
             }
         }
+
 
         //simulated data
         /*

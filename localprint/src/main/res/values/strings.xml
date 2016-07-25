@@ -86,5 +86,6 @@
     <string name="add_a_network_printer">add a network printer</string>
     <string name="set_netprinter_url">Please set a url</string>
     <string name="hint_windows_netprinter">Windows printers: \n    smb://Win_admin：passwd@WinIP/printer_name</string>
-    <string name="hint_Linux_netprinter">Linux printers: \n    http://ip:631/printers/printers_name</string>
+    <string name="hint_Linux_netprinter">Linux printers: \n    ipp://ip:631/printers/printers_name</string>
+    <string name="hint_built_in_netprinter">Printer with network function: \n    socket://ip</string>
 </resources>

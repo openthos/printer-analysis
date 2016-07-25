@@ -298,7 +298,8 @@ public class ManagementActivity extends BaseActivity {
         final EditText editTextUrl = new EditText(this);
         TextView textViewHintUrl = new TextView(this);
         textViewHintUrl.setText(getString(R.string.hint_windows_netprinter)+ "\n"
-                +getString(R.string.hint_Linux_netprinter));
+                +getString(R.string.hint_Linux_netprinter)+"\n"
+                +getString(R.string.hint_built_in_net_printer));
 
         TextView textViewTipBrand = new TextView(this);
         textViewTipBrand.setText(R.string.select_brand);
