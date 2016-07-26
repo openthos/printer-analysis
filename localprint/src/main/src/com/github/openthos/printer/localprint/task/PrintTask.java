@@ -72,7 +72,7 @@ public class PrintTask<Progress> extends CommandTask<Map<String, String>, Progre
             list.add("-n");
             list.add(copies);
         }
-        if(ranges != null){
+        if (ranges != null) {
             list.add("-P");
             list.add(ranges);
         }

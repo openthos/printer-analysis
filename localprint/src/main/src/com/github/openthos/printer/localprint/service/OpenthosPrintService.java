@@ -110,7 +110,6 @@ public class OpenthosPrintService extends PrintService {
                 rangeStr.append("-").append(range.getEnd() + 1);
 
             }
-            Log.d(TAG, "rangeStr=> " + rangeStr.toString());
             if (rangeStr.length() > 0) {
                 map.put(PrintTask.LP_RANGES, rangeStr.toString());
             }
