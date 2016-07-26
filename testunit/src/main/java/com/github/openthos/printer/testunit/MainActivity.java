@@ -8,6 +8,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,6 +28,14 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        EditText text = (EditText) findViewById(R.id.editText);
+        text.setError("setContentView(R.layout.activity_main);\n" +
+                "        Button button1 = (Button)findViewById(R.id.button1);");
+        text.setFocusable(true);
+        text.setClickable(true);
+        text.setFocusableInTouchMode(true);
+
     }
 
     @Override
