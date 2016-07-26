@@ -131,7 +131,8 @@ public class StateTask<Progress> extends CommandTask<PrinterId, Progress, Printe
                 if (color)
                     state.setColorModes(setDefault, setDefault);
                 else
-                    state.setColorModes(PrintAttributes.COLOR_MODE_MONOCHROME, PrintAttributes.COLOR_MODE_MONOCHROME);
+                    state.setColorModes(PrintAttributes.COLOR_MODE_MONOCHROME,
+                                        PrintAttributes.COLOR_MODE_MONOCHROME);
 
                 colorMode = 1;
 

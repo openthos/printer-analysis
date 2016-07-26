@@ -106,7 +106,8 @@ public class ConfigPrinterDialogFragment extends DialogFragment {
          */
         mSpinnerDuplexMode = (Spinner) v.findViewById(R.id.spinner_duplex_mode);
         mCheckboxSharePrinter = (CheckBox) v.findViewById(R.id.checkbox_shareprinter);
-        mCheckboxSharePrinter.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        mCheckboxSharePrinter.setOnCheckedChangeListener(
+                                  new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 mOptionItem.setmSharePrinter(b);

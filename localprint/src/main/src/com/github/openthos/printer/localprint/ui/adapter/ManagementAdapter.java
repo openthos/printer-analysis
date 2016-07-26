@@ -118,8 +118,9 @@ public class ManagementAdapter extends BaseAdapter {
                             mContext.startActivity(intent);
                         }
                     });
-                    Button button_add_net_printers = (Button)convertView.findViewById(R.id.button_add_net_printers);
-                    button_add_net_printers.setOnClickListener(new View.OnClickListener(){
+                    Button button_add_net_printers = (Button)convertView.findViewById(
+                                                                 R.id.button_add_net_printers);
+                    button_add_net_printers.setOnClickListener(new View.OnClickListener() {
 
                         @Override
                         public void onClick(View view) {

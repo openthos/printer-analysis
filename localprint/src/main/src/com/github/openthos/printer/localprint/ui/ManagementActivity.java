@@ -189,17 +189,22 @@ public class ManagementActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 if (PRESSED) {
-                    Toast.makeText(ManagementActivity.this, R.string.adding, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ManagementActivity.this, R.string.adding, Toast.LENGTH_SHORT)
+				.show();
                     return;
                 }
 
                 if(editTextName.getText().toString().isEmpty()){
-                    Toast.makeText(ManagementActivity.this,R.string.name_error_with_null,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ManagementActivity.this,
+					R.string.name_error_with_null,
+					Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 if(editTextName.getText().toString().contains(" ")){
-                    Toast.makeText(ManagementActivity.this,R.string.name_error_with_space,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ManagementActivity.this,
+					R.string.name_error_with_space,
+					Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -307,10 +312,10 @@ public class ManagementActivity extends BaseActivity {
         textViewTipURL.setTextColor(Color.BLACK);
         final EditText editTextUrl = new EditText(this);
         TextView textViewHintUrl = new TextView(this);
-        textViewHintUrl.setText(getString(R.string.hint_windows_netprinter)+ "\n"
-                +getString(R.string.hint_Linux_netprinter)+"\n"
-                +getString(R.string.hint_built_in_net_printer)+"\n"
-                +getString(R.string.hint_other_printer));
+        textViewHintUrl.setText(getString(R.string.hint_windows_netprinter) + "\n"
+                + getString(R.string.hint_Linux_netprinter)+"\n"
+                + getString(R.string.hint_built_in_net_printer)+"\n"
+                + getString(R.string.hint_other_printer));
 
         TextView textViewTipBrand = new TextView(this);
         textViewTipBrand.setText(R.string.select_brand);
@@ -330,27 +335,27 @@ public class ManagementActivity extends BaseActivity {
                 android.R.layout.simple_spinner_dropdown_item,modelList);
         spinnerModel.setAdapter(modelAdapter);
 
-        spinnerBrand.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+        spinnerBrand.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             @Override
-            public void onItemSelected(AdapterView<?>parent,View view,int position,long id){
+            public void onItemSelected(AdapterView<?>parent,View view,int position,long id) {
                 modelList.clear();
                 modelList.addAll(models.get(brandList.get(position)));
                 modelAdapter.notifyDataSetChanged();
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent){}
+            public void onNothingSelected(AdapterView<?> parent) {}
         });
 
-        spinnerModel.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+        spinnerModel.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id){
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent){
+            public void onNothingSelected(AdapterView<?> parent) {
 
             }
         });
@@ -373,9 +378,9 @@ public class ManagementActivity extends BaseActivity {
                 = new AlertDialog.Builder(this).setTitle(R.string.add_a_network_printer)
                 .setView(layout)
                 .setPositiveButton(R.string.ok,null)
-                .setNegativeButton(R.string.cancel,new DialogInterface.OnClickListener(){
-                   @Override
-                    public void onClick(DialogInterface dialog,int which){
+                .setNegativeButton(R.string.cancel,new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog,int which) {
                    }
                 });
         final AlertDialog dialog = builder.create();
@@ -383,28 +388,32 @@ public class ManagementActivity extends BaseActivity {
         dialog.show();
 
         dialog.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener
-                (new View.OnClickListener(){
+                (new View.OnClickListener() {
             private boolean CLICKED =false;
 
             @Override
             public void onClick(View v) {
                 if (CLICKED) {
-                    Toast.makeText(ManagementActivity.this, R.string.adding, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ManagementActivity.this, R.string.adding,
+                                   Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                if(editTextName.getText().toString().isEmpty()){
-                    Toast.makeText(ManagementActivity.this,R.string.name_error_with_null,Toast.LENGTH_SHORT).show();
+                if(editTextName.getText().toString().isEmpty()) {
+                    Toast.makeText(ManagementActivity.this,
+		                   R.string.name_error_with_null, Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                if(editTextName.getText().toString().contains(" ")){
-                    Toast.makeText(ManagementActivity.this,R.string.name_error_with_space,Toast.LENGTH_SHORT).show();
+                if(editTextName.getText().toString().contains(" ")) {
+                    Toast.makeText(ManagementActivity.this,
+		                   R.string.name_error_with_space, Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                if(editTextUrl.getText().toString().isEmpty()){
-                    Toast.makeText(ManagementActivity.this,R.string.url_error_with_null,Toast.LENGTH_SHORT).show();
+                if(editTextUrl.getText().toString().isEmpty()) {
+                    Toast.makeText(ManagementActivity.this,
+		                   R.string.url_error_with_null, Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -435,10 +444,10 @@ public class ManagementActivity extends BaseActivity {
             }
         });
 
-        new SearchModelsTask<Void,Void>(){
+        new SearchModelsTask<Void,Void>() {
             @Override
-            protected void onPostExecute(ModelsItem modelsItem){
-                if(modelsItem == null){
+            protected void onPostExecute(ModelsItem modelsItem) {
+                if (modelsItem == null) {
                     Toast.makeText(ManagementActivity.this,R.string.query_error + " " + ERROR,
                             Toast.LENGTH_SHORT).show();
                     return;

@@ -99,14 +99,14 @@ public class LocalPrintService extends Service {
 
         for (PrinterJobStatus item : list) {
             ArrayList<PrinterJobStatus> nameSortedList = sortMap.get(item.getPrinter());
-            if(nameSortedList == null){
+            if (nameSortedList == null) {
                 nameSortedList = new ArrayList<>();
                 sortMap.put(item.getPrinter(),nameSortedList);
             }
             nameSortedList.add(item);
         }
 
-        for(ArrayList<PrinterJobStatus> nameSortedList: sortMap.values()){
+        for (ArrayList<PrinterJobStatus> nameSortedList: sortMap.values()) {
             remoteList.addAll(nameSortedList);
         }
 

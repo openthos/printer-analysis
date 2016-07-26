@@ -31,7 +31,7 @@ public class QueryPrinterOptionsTask<Progress>
                     break;
                 }
             }
-            if (isPrinterOptionsLine){
+            if (isPrinterOptionsLine) {
                 for (int i = 0; i < preSplit.length; i++) {
                     if (preSplit[i].startsWith("printer-is-shared")) {
                         String[] secondSplit = preSplit[i].split("=");
@@ -43,7 +43,7 @@ public class QueryPrinterOptionsTask<Progress>
                         break;
                     }
                 }
-            }else{
+            } else {
                 String[] firstSplit = line.split("/");
 
                 if (firstSplit[0].equals("ColorModel")
