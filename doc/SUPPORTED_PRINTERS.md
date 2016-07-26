@@ -5,7 +5,7 @@ Installed | Supported Printers| Driver Name  | Remarks
 √ | Parts of HP laser printers | [foo2zjs](http://foo2zjs.rkkda.com/) |
 √ | Parts of Epson inkjet printer | Epson official old open source driver |
 √ | Most of Pantum printers | Pantum official closed source driver |
- | Parts of inkjet printer | hpcups | TODO
+√ | Most of HP printers | [hpcups && hplip plugin](http://hplipopensource.com/hplip-web/index.html) | Official drivers and plugin is closed source
  | Parts of Epson printer | [gutenprint](http://gimp-print.sourceforge.net/) | TODO
 
 # Supported Printers List
