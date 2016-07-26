@@ -310,12 +310,14 @@ public class ManagementActivity extends BaseActivity {
         TextView textViewTipURL = new TextView(this);
         textViewTipURL.setText(R.string.set_netprinter_url);
         textViewTipURL.setTextColor(Color.BLACK);
-        final EditText editTextUrl = new EditText(this);
-        TextView textViewHintUrl = new TextView(this);
-        textViewHintUrl.setText(getString(R.string.hint_windows_netprinter) + "\n"
+        textViewTipURL.setError(getString(R.string.hint_windows_netprinter) + "\n"
                 + getString(R.string.hint_Linux_netprinter)+"\n"
-                + getString(R.string.hint_built_in_net_printer)+"\n"
+                + getString(R.string.hint_built_in_netprinter)+"\n"
                 + getString(R.string.hint_other_printer));
+        textViewTipURL.setFocusable(true);
+        textViewTipURL.setClickable(true);
+        textViewTipURL.setFocusableInTouchMode(true);
+        final EditText editTextUrl = new EditText(this);
 
         TextView textViewTipBrand = new TextView(this);
         textViewTipBrand.setText(R.string.select_brand);
@@ -367,7 +369,6 @@ public class ManagementActivity extends BaseActivity {
         layout.addView(editTextName);
         layout.addView(textViewTipURL);
         layout.addView(editTextUrl);
-        layout.addView(textViewHintUrl);
         layout.addView(textViewTipBrand);
         layout.addView(spinnerBrand);
         layout.addView(textViewTipModel);

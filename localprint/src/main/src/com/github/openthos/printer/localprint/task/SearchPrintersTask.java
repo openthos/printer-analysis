@@ -48,7 +48,7 @@ public class SearchPrintersTask<Params, Progress> extends CommandTask<Params, Pr
         List<PrinterItem> list = new ArrayList<>();
 
         for (String line : stdOut) {
-            if (line.startsWith("direct")) {
+            if (line.startsWith("direct usb")) {
                 String[] splitLine = line.split(" ");
                 //String deviceURL = splitLine[1];
                 String deviceName = splitLine[1]
