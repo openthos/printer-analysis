@@ -63,7 +63,7 @@ public class ConfigPrinterDialogFragment extends DialogFragment {
         //getDialog().setTitle(mItem.getNickName());
         Toolbar toolbar = (Toolbar) v.findViewById(R.id.toolbar);
         //toolbar.setTitle(R.string.printer_setting);
-        toolbar.setTitle("");
+        toolbar.setTitle(mItem.getNickName());
         toolbar.inflateMenu(R.menu.menu_config_printer_dialog);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
@@ -79,9 +79,6 @@ public class ConfigPrinterDialogFragment extends DialogFragment {
                 return true;
             }
         });
-
-        TextView textView_printer_name = (TextView) v.findViewById(R.id.textView_printer_name);
-        textView_printer_name.setText(mItem.getNickName());
 
         mButtonCancel = (Button) v.findViewById(R.id.button_cancel);
         mButtonOk = (Button) v.findViewById(R.id.button_ok);

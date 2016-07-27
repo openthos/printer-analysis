@@ -116,7 +116,7 @@ public class ManagementActivity extends BaseActivity {
         Spinner spinnerBrand = new Spinner(this);
         final List<String> brandList = new ArrayList<String>();
         final ArrayAdapter<String> brandAdapter = new ArrayAdapter<String>(this,
-                                       android.R.layout.simple_spinner_dropdown_item, brandList);
+                android.R.layout.simple_spinner_dropdown_item, brandList);
         spinnerBrand.setAdapter(brandAdapter);
 
         TextView textViewTipModel = new TextView(this);
@@ -124,7 +124,7 @@ public class ManagementActivity extends BaseActivity {
         final Spinner spinnerModel = new Spinner(this);
         final List<PPDItem> modelList = new ArrayList<PPDItem>();
         final ArrayAdapter<PPDItem> modelAdapter = new ArrayAdapter<PPDItem>(this,
-                                        android.R.layout.simple_spinner_dropdown_item, modelList);
+                android.R.layout.simple_spinner_dropdown_item, modelList);
         spinnerModel.setAdapter(modelAdapter);
 
         spinnerBrand.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -175,64 +175,67 @@ public class ManagementActivity extends BaseActivity {
         final AlertDialog dialog = builder.create();
         dialog.show();
         dialog.getWindow().setBackgroundDrawableResource(R.drawable.dialog_frame_shadow);
+        dialog.getButton(DialogInterface.BUTTON_NEGATIVE)
+                .setTextColor(getResources().getColor(R.color.primary_text_dark));
         //Manually set the listener, aim to click dialog does not disappear
         final Button buttonPositive = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
         buttonPositive.setEnabled(false);
+        buttonPositive.setTextColor(getResources().getColor(R.color.primary_button_light));
         buttonPositive.setOnClickListener
                 (new View.OnClickListener() {
-            private boolean PRESSED = false;
+                    private boolean PRESSED = false;
 
-            @Override
-            public void onClick(View v) {
-                if (PRESSED) {
-                    Toast.makeText(ManagementActivity.this, R.string.adding, Toast.LENGTH_SHORT)
-				.show();
-                    return;
-                }
-
-                if(editTextName.getText().toString().isEmpty()){
-                    Toast.makeText(ManagementActivity.this,
-					R.string.name_error_with_null,
-					Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                if(editTextName.getText().toString().contains(" ")){
-                    Toast.makeText(ManagementActivity.this,
-					R.string.name_error_with_space,
-					Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                PRESSED = true;
-
-                Map<String, String> p = new HashMap<>();
-                p.put("name", editTextName.getText().toString());
-                p.put("model", modelList.get(spinnerModel.getSelectedItemPosition()).getModel());
-                p.put("url", deviceItem.getPrinteritem().getURL());
-                p.put("isShare",cbxSharePrinter.isChecked()?"true":"false");
-
-                AddPrinterTask<Void> task = new AddPrinterTask<Void>() {
                     @Override
-                    protected void onPostExecute(Boolean aBoolean) {
-                        if (aBoolean) {
-                            Toast.makeText(ManagementActivity.this
-                                    , R.string.add_success, Toast.LENGTH_SHORT).show();
-                            mAdapter.refreshAddedPrinters();
-                            dialog.dismiss();
-                        } else {
-                            Toast.makeText(ManagementActivity.this
-                                    , R.string.add_fail, Toast.LENGTH_SHORT).show();
+                    public void onClick(View v) {
+                        if (PRESSED) {
+                            Toast.makeText(ManagementActivity.this, R.string.adding, Toast.LENGTH_SHORT)
+                                    .show();
+                            return;
                         }
-                        PRESSED = false;
+
+                        if (editTextName.getText().toString().isEmpty()) {
+                            Toast.makeText(ManagementActivity.this,
+                                    R.string.name_error_with_null,
+                                    Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+
+                        if (editTextName.getText().toString().contains(" ")) {
+                            Toast.makeText(ManagementActivity.this,
+                                    R.string.name_error_with_space,
+                                    Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+
+                        PRESSED = true;
+
+                        Map<String, String> p = new HashMap<>();
+                        p.put("name", editTextName.getText().toString());
+                        p.put("model", modelList.get(spinnerModel.getSelectedItemPosition()).getModel());
+                        p.put("url", deviceItem.getPrinteritem().getURL());
+                        p.put("isShare", cbxSharePrinter.isChecked() ? "true" : "false");
+
+                        AddPrinterTask<Void> task = new AddPrinterTask<Void>() {
+                            @Override
+                            protected void onPostExecute(Boolean aBoolean) {
+                                if (aBoolean) {
+                                    Toast.makeText(ManagementActivity.this
+                                            , R.string.add_success, Toast.LENGTH_SHORT).show();
+                                    mAdapter.refreshAddedPrinters();
+                                    dialog.dismiss();
+                                } else {
+                                    Toast.makeText(ManagementActivity.this
+                                            , R.string.add_fail, Toast.LENGTH_SHORT).show();
+                                }
+                                PRESSED = false;
+                            }
+                        };
+
+                        task.start(p);
+
                     }
-                };
 
-                task.start(p);
-
-            }
-
-        });
+                });
 
         new SearchModelsTask<Void, Void>() {
             @Override
@@ -240,7 +243,7 @@ public class ManagementActivity extends BaseActivity {
 
                 if (modelsItem == null) {
                     Toast.makeText(ManagementActivity.this, getResources()
-                       .getString(R.string.query_error) + " " + ERROR, Toast.LENGTH_SHORT).show();
+                            .getString(R.string.query_error) + " " + ERROR, Toast.LENGTH_SHORT).show();
                     return;
                 }
                 buttonPositive.setEnabled(true);
@@ -289,7 +292,7 @@ public class ManagementActivity extends BaseActivity {
     }
 
     private void addNetPrinter() {
-        final Map<String,List<PPDItem>> models = new HashMap<>();
+        final Map<String, List<PPDItem>> models = new HashMap<>();
 
         LinearLayout layout = new LinearLayout(this);
         layout.setOrientation(LinearLayout.VERTICAL);
@@ -305,8 +308,8 @@ public class ManagementActivity extends BaseActivity {
         textViewTipURL.setText(R.string.set_netprinter_url);
         textViewTipURL.setTextColor(Color.BLACK);
         textViewTipURL.setError(getString(R.string.hint_windows_netprinter) + "\n"
-                + getString(R.string.hint_Linux_netprinter)+"\n"
-                + getString(R.string.hint_built_in_netprinter)+"\n"
+                + getString(R.string.hint_Linux_netprinter) + "\n"
+                + getString(R.string.hint_built_in_netprinter) + "\n"
                 + getString(R.string.hint_other_printer));
         textViewTipURL.setFocusable(true);
         textViewTipURL.setClickable(true);
@@ -319,7 +322,7 @@ public class ManagementActivity extends BaseActivity {
         Spinner spinnerBrand = new Spinner(this);
         final List<String> brandList = new ArrayList<String>();
         final ArrayAdapter<String> brandAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_dropdown_item,brandList);
+                android.R.layout.simple_spinner_dropdown_item, brandList);
         spinnerBrand.setAdapter(brandAdapter);
 
         TextView textViewTipModel = new TextView(this);
@@ -328,20 +331,21 @@ public class ManagementActivity extends BaseActivity {
         final Spinner spinnerModel = new Spinner(this);
         final List<PPDItem> modelList = new ArrayList<PPDItem>();
         final ArrayAdapter<PPDItem> modelAdapter = new ArrayAdapter<PPDItem>(this,
-                android.R.layout.simple_spinner_dropdown_item,modelList);
+                android.R.layout.simple_spinner_dropdown_item, modelList);
         spinnerModel.setAdapter(modelAdapter);
 
         spinnerBrand.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             @Override
-            public void onItemSelected(AdapterView<?>parent,View view,int position,long id) {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 modelList.clear();
                 modelList.addAll(models.get(brandList.get(position)));
                 modelAdapter.notifyDataSetChanged();
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
         });
 
         spinnerModel.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -372,45 +376,47 @@ public class ManagementActivity extends BaseActivity {
         AlertDialog.Builder builder
                 = new AlertDialog.Builder(this).setTitle(R.string.add_a_network_printer)
                 .setView(layout)
-                .setPositiveButton(R.string.ok,null)
-                .setNegativeButton(R.string.cancel,new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.ok, null)
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog,int which) {
-                   }
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
                 });
         final AlertDialog dialog = builder.create();
 
         dialog.show();
         dialog.getWindow().setBackgroundDrawableResource(R.drawable.dialog_frame_shadow);
+        dialog.getButton(DialogInterface.BUTTON_NEGATIVE)
+                .setTextColor(getResources().getColor(R.color.primary_text_dark));
         final Button buttonPositive = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
         buttonPositive.setEnabled(false);
-        buttonPositive.setOnClickListener
-                (new View.OnClickListener() {
-            private boolean CLICKED =false;
+        buttonPositive.setTextColor(getResources().getColor(R.color.primary_button_light));
+        buttonPositive.setOnClickListener(new View.OnClickListener() {
+            private boolean CLICKED = false;
 
             @Override
             public void onClick(View v) {
                 if (CLICKED) {
                     Toast.makeText(ManagementActivity.this, R.string.adding,
-                                   Toast.LENGTH_SHORT).show();
+                            Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                if(editTextName.getText().toString().isEmpty()) {
+                if (editTextName.getText().toString().isEmpty()) {
                     Toast.makeText(ManagementActivity.this,
-		                   R.string.name_error_with_null, Toast.LENGTH_SHORT).show();
+                            R.string.name_error_with_null, Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                if(editTextName.getText().toString().contains(" ")) {
+                if (editTextName.getText().toString().contains(" ")) {
                     Toast.makeText(ManagementActivity.this,
-		                   R.string.name_error_with_space, Toast.LENGTH_SHORT).show();
+                            R.string.name_error_with_space, Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                if(editTextUrl.getText().toString().isEmpty()) {
+                if (editTextUrl.getText().toString().isEmpty()) {
                     Toast.makeText(ManagementActivity.this,
-		                   R.string.url_error_with_null, Toast.LENGTH_SHORT).show();
+                            R.string.url_error_with_null, Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -441,11 +447,11 @@ public class ManagementActivity extends BaseActivity {
             }
         });
 
-        new SearchModelsTask<Void,Void>() {
+        new SearchModelsTask<Void, Void>() {
             @Override
             protected void onPostExecute(ModelsItem modelsItem) {
                 if (modelsItem == null) {
-                    Toast.makeText(ManagementActivity.this,R.string.query_error + " " + ERROR,
+                    Toast.makeText(ManagementActivity.this, R.string.query_error + " " + ERROR,
                             Toast.LENGTH_SHORT).show();
                     return;
                 }

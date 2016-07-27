@@ -14,27 +14,17 @@
 
     </android.support.v7.widget.Toolbar>
 
-    <TextView
-        android:id="@+id/textView_printer_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbar"
-        android:layout_marginLeft="32dp"
-        android:layout_marginRight="32dp"
-        android:text="@string/device"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="wrap_content"
 
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView_printer_name">
+        android:layout_below="@+id/toolbar">
 
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="32dp"
+            android:padding="16dp"
             android:stretchColumns="*">
 
             <TableRow
@@ -45,7 +35,8 @@
                     android:id="@+id/textView5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/paper_size" />
+                    android:text="@string/paper_size"
+                    android:textColor="@color/primary_material_dark" />
 
                 <Spinner
                     android:id="@+id/spinner_media_size"
@@ -61,7 +52,8 @@
                     android:id="@+id/textView7"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/color_mode" />
+                    android:text="@string/color_mode"
+                    android:textColor="@color/primary_material_dark" />
 
                 <Spinner
                     android:id="@+id/spinner_color_mode"
@@ -77,7 +69,8 @@
                     android:id="@+id/textView8"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/duplx_mode" />
+                    android:text="@string/duplx_mode"
+                    android:textColor="@color/primary_material_dark" />
 
                 <Spinner
                     android:id="@+id/spinner_duplex_mode"
@@ -92,7 +85,7 @@
                 android:layout_below="@+id/scrollView"
                 android:checked="false"
                 android:text="@string/share_printer"
-                android:textColor="@color/material_blue_grey_800" />
+                android:textColor="@color/primary_material_dark" />
         </TableLayout>
 
     </ScrollView>
@@ -112,14 +105,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="8dp"
-            android:text="@string/cancel" />
+            android:text="@string/cancel"
+            android:textColor="@color/primary_text_dark" />
 
         <Button
             android:id="@+id/button_ok"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/ok" />
+            android:text="@string/ok"
+            android:textColor="@color/primary_button_light" />
     </LinearLayout>
 
 </RelativeLayout>
