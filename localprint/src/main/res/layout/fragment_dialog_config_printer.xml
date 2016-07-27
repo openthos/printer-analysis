@@ -86,42 +86,39 @@
             </TableRow>
 
             <CheckBox
+                android:id="@+id/checkbox_shareprinter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/checkbox_shareprinter"
                 android:layout_below="@+id/scrollView"
-                android:textColor="@color/material_blue_grey_800"
+                android:checked="false"
                 android:text="@string/share_printer"
-                android:checked="false" />
+                android:textColor="@color/material_blue_grey_800" />
         </TableLayout>
 
     </ScrollView>
 
     <LinearLayout
         android:id="@+id/linearLayout2"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
         android:layout_below="@+id/scrollView"
-        android:layout_centerHorizontal="true">
+        android:layout_margin="8dp"
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/button_cancel"
             style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_toStartOf="@+id/button_ok"
-            android:layout_weight="1"
+            android:layout_marginRight="8dp"
             android:text="@string/cancel" />
 
         <Button
             android:id="@+id/button_ok"
             style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_weight="1"
             android:text="@string/ok" />
     </LinearLayout>
 

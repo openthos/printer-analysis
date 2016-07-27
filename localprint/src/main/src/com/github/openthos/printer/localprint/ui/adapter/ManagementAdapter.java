@@ -34,10 +34,8 @@ public class ManagementAdapter extends BaseAdapter {
     private boolean IS_DECTECTING = false;
     private boolean IS_DECTECTING_ADDED = false;
 
-    private int mLocalPrinterPosition = -1;
-    private int mNetPrinterPosition = -1;
-
     private List<PrinterItem> mAddedList = new ArrayList<>();
+    private List<PrinterItem> mDetectedList = new ArrayList<>();
 
     public ManagementAdapter(ManagementActivity context, List<ManagementListItem> listItem) {
         mContext = context;
@@ -106,7 +104,9 @@ public class ManagementAdapter extends BaseAdapter {
                     break;
                 case ManagementListItem.TYPE_ADDED_ENDLINE:
                     convertView = inflater.inflate(R.layout.item_added_endline, null);
-                    //ADDED_ENDLINE holder3 = (ADDED_ENDLINE) item.getViewHolder();
+                    break;
+                case ManagementListItem.TYPE_LOCAL_PRINTER_WORDS:
+                    convertView = inflater.inflate(R.layout.item_local_printer_words, null);
                     Button button_add_printers
                             = (Button) convertView.findViewById(R.id.button_add_printers);
                     //add listener for scanning new printers
@@ -118,20 +118,17 @@ public class ManagementAdapter extends BaseAdapter {
                             mContext.startActivity(intent);
                         }
                     });
-                    Button button_add_net_printers = (Button)convertView.findViewById(
-                                                                 R.id.button_add_net_printers);
+                    Button button_add_net_printers = (Button) convertView.findViewById(
+                            R.id.button_add_net_printers);
                     button_add_net_printers.setOnClickListener(new View.OnClickListener() {
 
                         @Override
                         public void onClick(View view) {
                             Intent intent = new Intent(mContext, ManagementActivity.class);
-                            intent.putExtra(APP.TASK,APP.TASK_ADD_NEW_NET_PRINTER);
+                            intent.putExtra(APP.TASK, APP.TASK_ADD_NEW_NET_PRINTER);
                             mContext.startActivity(intent);
                         }
                     });
-                    break;
-                case ManagementListItem.TYPE_LOCAL_PRINTER_WORDS:
-                    convertView = inflater.inflate(R.layout.item_local_printer_words, null);
                     break;
                 case ManagementListItem.TYPE_NET_PRINTER_WORDS:
                     convertView = inflater.inflate(R.layout.item_net_printer_words, null);
@@ -192,6 +189,55 @@ public class ManagementAdapter extends BaseAdapter {
         return convertView;
     }
 
+    public void initList() {
+        refreshAddedPrinters();
+        startDetecting();
+    }
+
+    private void showList() {
+
+        List<ManagementListItem> list = mListItem;
+        List<PrinterItem> addedList = mAddedList;
+        List<PrinterItem> detectedList = mDetectedList;
+        list.clear();
+
+        list.add(new ManagementListItem
+                .Builder(ManagementListItem.TYPE_ADDED_PRINTERS_WORDS).get());
+        if (IS_DECTECTING_ADDED) {
+            list.add(new ManagementListItem.Builder(ManagementListItem.TYPE_LOADING).get());
+        } else if (!addedList.isEmpty()) {
+            for (PrinterItem printerItem : addedList) {
+                ManagementListItem item
+                        = new ManagementListItem.Builder(ManagementListItem.TYPE_ADDED_PRINTER).get();
+                item.setPrinteritem(printerItem);
+                list.add(item);
+            }
+        } else {
+            list.add(new ManagementListItem.Builder(ManagementListItem.TYPE_EMPTY).get());
+        }
+
+        list.add(new ManagementListItem.Builder(ManagementListItem.TYPE_ADDED_ENDLINE).get());
+        mListItem.add(new ManagementListItem
+                .Builder(ManagementListItem.TYPE_LOCAL_PRINTER_WORDS).get());
+
+        if (IS_DECTECTING) {
+            list.add(new ManagementListItem.Builder(ManagementListItem.TYPE_LOADING).get());
+        } else if (!detectedList.isEmpty()) {
+            for (PrinterItem printerItem : detectedList) {
+                ManagementListItem item
+                        = new ManagementListItem.Builder(ManagementListItem.TYPE_LOCAL_PRINTER).get();
+                item.setPrinteritem(printerItem);
+                list.add(item);
+            }
+        } else {
+            list.add(new ManagementListItem.Builder(ManagementListItem.TYPE_EMPTY).get());
+        }
+
+        notifyDataSetChanged();
+
+    }
+
+
     public void refreshAddedPrinters() {
 
         if (IS_DECTECTING_ADDED) {
@@ -203,149 +249,43 @@ public class ManagementAdapter extends BaseAdapter {
         new ListAddedTask<Void, Void>() {
             @Override
             protected void onPostExecute(List<PrinterItem> printerItems) {
+
                 mAddedList.clear();
                 mAddedList.addAll(printerItems);
-                setAddedPrinters(mAddedList);
+
                 IS_DECTECTING_ADDED = false;
+                showList();
             }
         }.start();
 
-        setAddedPrinters(null);
+        showList();
 
     }
 
-    private void setAddedPrinters(List<PrinterItem> list) {
-        removeSub(mListItem, 1, mLocalPrinterPosition - 1);
-        mLocalPrinterPosition = 2;
-
-        //null represent searching event is being executed
-        if (list == null) {
-            mListItem.add(mLocalPrinterPosition++ - 1
-                    , new ManagementListItem.Builder(ManagementListItem.TYPE_LOADING).get());
-        } else if (!list.isEmpty()) {
-            for (PrinterItem printerItem : list) {
-                ManagementListItem item
-                      = new ManagementListItem.Builder(ManagementListItem.TYPE_ADDED_PRINTER).get();
-                item.setPrinteritem(printerItem);
-                mListItem.add(mLocalPrinterPosition++ - 1, item);
-            }
-        } else {
-            mListItem.add(mLocalPrinterPosition++ - 1
-                    , new ManagementListItem.Builder(ManagementListItem.TYPE_EMPTY).get());
-        }
-
-        notifyDataSetChanged();
-    }
-
-    /**
-     * Get added printers
-     *
-     * @return null represent this time is in retrieving process
-     */
-    private List<PrinterItem> getAddedPrinters() {
-
-        return null;
-    }
-
-    public void initList() {
-
-        mListItem.add(new ManagementListItem
-                              .Builder(ManagementListItem.TYPE_ADDED_PRINTERS_WORDS).get());
-        refreshAddedPrinters();
-
-        /*List<PrinterItem> list = getAddedPrinters();
-
-        if (list == null) {
-            mListItem.add(new ManagementListItem.Builder(ManagementListItem.TYPE_LOADING).get());
-        } else if (list.isEmpty()) {
-            mListItem.add(new ManagementListItem.Builder(ManagementListItem.TYPE_EMPTY).get());
-        } else {
-            for(PrinterItem printerItem: list) {
-                ManagementListItem item
-                    = new ManagementListItem.Builder(ManagementListItem.TYPE_ADDED_PRINTER).get();
-                item.setPrinteritem(printerItem);
-                mListItem.add(item);
-            }
-        }*/
-
-        mListItem.add(new ManagementListItem.Builder(ManagementListItem.TYPE_ADDED_ENDLINE).get());
-    }
-
-    /**
-     * show the detecting progress
-     */
     public void startDetecting() {
 
         if (IS_DECTECTING) {
-            removeSub(mListItem, mLocalPrinterPosition + 1, mNetPrinterPosition);
-            mNetPrinterPosition = mLocalPrinterPosition + 1;
-            mListItem.add(mNetPrinterPosition++
-                    , new ManagementListItem.Builder(ManagementListItem.TYPE_LOADING).get());
-        } else {
-            IS_DECTECTING = true;
-            mListItem.add(new ManagementListItem
-                                  .Builder(ManagementListItem.TYPE_LOCAL_PRINTER_WORDS).get());
-            mLocalPrinterPosition = mListItem.size() - 1;
-            mListItem.add(new ManagementListItem.Builder(ManagementListItem.TYPE_LOADING).get());
-            mListItem.add(new ManagementListItem
-                                  .Builder(ManagementListItem.TYPE_NET_PRINTER_WORDS).get());
-            mNetPrinterPosition = mListItem.size() - 1;
-            mListItem.add(new ManagementListItem.Builder(ManagementListItem.TYPE_EMPTY).get());
-            //mListItem.add(new ManagementListItem.Builder(ManagementListItem.TYPE_LOADING).get());
+            Toast.makeText(mContext, R.string.searching, Toast.LENGTH_SHORT).show();
+            return;
         }
-
-        addLocalPrinter();
-
-        LogUtils.d(TAG, "mLocalPrinterPosition -> " + mLocalPrinterPosition
-                + " mNetPrinterPosition -> " + mNetPrinterPosition);
-
-        this.notifyDataSetChanged();
-
-    }
-
-    public void addLocalPrinter() {
-
 
         SearchPrintersTask<Void, Void> task = new SearchPrintersTask<Void, Void>() {
             @Override
             protected void onPostExecute(List<PrinterItem> printerItems) {
 
-                removeSub(mListItem, mLocalPrinterPosition + 1, mNetPrinterPosition);
-                mNetPrinterPosition = mLocalPrinterPosition + 1;
+                mDetectedList.clear();
+                mDetectedList.addAll(printerItems);
 
-                if (printerItems != null) {
-                    for (PrinterItem p : printerItems) {
-                        ManagementListItem item = new ManagementListItem
-                                             .Builder(ManagementListItem.TYPE_LOCAL_PRINTER).get();
-                        item.setPrinteritem(p);
-                        mListItem.add(mNetPrinterPosition++, item);
-                    }
-                }
-
-                if (mNetPrinterPosition == mLocalPrinterPosition + 1) {
-                    mListItem.add(mNetPrinterPosition++
-                            , new ManagementListItem.Builder(ManagementListItem.TYPE_EMPTY).get());
-                }
-
-                //Close the detecting flag
-                mContext.setIS_DETECTING(false);
-                notifyDataSetChanged();
+                IS_DECTECTING = false;
+                showList();
                 Toast.makeText(mContext, R.string.search_finished, Toast.LENGTH_SHORT).show();
             }
         };
+
         task.start();
-
+        IS_DECTECTING = true;
+        showList();
 
     }
-
-    public void removeSub(List<?> listItem, int i, int j) {
-
-        LogUtils.d(TAG, "removeSub() i -> " + i + " j -> " + j);
-
-        for (j--; i <= j; j--) {
-            listItem.remove(j);
-        }
-    }
-
 
 }

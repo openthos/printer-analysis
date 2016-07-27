@@ -6,7 +6,7 @@
     <string name="action_settings">设置</string>
     <string name="action_system_print_service">系统打印服务</string>
     <string name="add_a_local_printer">添加一个新的本地打印机</string>
-    <string name="add_new_printers">添加新打印机</string>
+    <string name="add_new_printers">扫描本地打印机</string>
     <string name="add_success">添加成功</string>
     <string name="added_device">已添加设备</string>
     <string name="cancel">取消</string>

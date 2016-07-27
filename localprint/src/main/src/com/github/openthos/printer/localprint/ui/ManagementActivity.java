@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -44,11 +45,6 @@ public class ManagementActivity extends BaseActivity {
 
     private static final String TAG = "ManagementActivity";
 
-    /**
-     * Whether is detecting new printers.
-     */
-    private boolean IS_DETECTING = false;
-
     private final List<ManagementListItem> mListItem = new LinkedList<>();
 
     private ListView mListview;
@@ -63,7 +59,6 @@ public class ManagementActivity extends BaseActivity {
     }
 
     private void init() {
-
 
         setContentView(R.layout.activity_management);
         mListview = (ListView) findViewById(R.id.listView);
@@ -178,11 +173,12 @@ public class ManagementActivity extends BaseActivity {
                     }
                 });
         final AlertDialog dialog = builder.create();
-
         dialog.show();
-
+        dialog.getWindow().setBackgroundDrawableResource(R.drawable.dialog_frame_shadow);
         //Manually set the listener, aim to click dialog does not disappear
-        dialog.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener
+        final Button buttonPositive = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
+        buttonPositive.setEnabled(false);
+        buttonPositive.setOnClickListener
                 (new View.OnClickListener() {
             private boolean PRESSED = false;
 
@@ -238,7 +234,6 @@ public class ManagementActivity extends BaseActivity {
 
         });
 
-
         new SearchModelsTask<Void, Void>() {
             @Override
             protected void onPostExecute(ModelsItem modelsItem) {
@@ -248,13 +243,12 @@ public class ManagementActivity extends BaseActivity {
                        .getString(R.string.query_error) + " " + ERROR, Toast.LENGTH_SHORT).show();
                     return;
                 }
-
+                buttonPositive.setEnabled(true);
                 brandList.addAll(modelsItem.getBrand());
                 models.putAll(modelsItem.getModels());
                 brandAdapter.notifyDataSetChanged();
             }
         }.start();
-
 
     }
 
@@ -387,8 +381,10 @@ public class ManagementActivity extends BaseActivity {
         final AlertDialog dialog = builder.create();
 
         dialog.show();
-
-        dialog.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener
+        dialog.getWindow().setBackgroundDrawableResource(R.drawable.dialog_frame_shadow);
+        final Button buttonPositive = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
+        buttonPositive.setEnabled(false);
+        buttonPositive.setOnClickListener
                 (new View.OnClickListener() {
             private boolean CLICKED =false;
 
@@ -453,36 +449,19 @@ public class ManagementActivity extends BaseActivity {
                             Toast.LENGTH_SHORT).show();
                     return;
                 }
-
+                buttonPositive.setEnabled(true);
                 brandList.addAll(modelsItem.getBrand());
                 models.putAll(modelsItem.getModels());
                 brandAdapter.notifyDataSetChanged();
             }
         }.start();
 
-
     }
 
     private void detectPrinters() {
 
-        if (IS_DETECTING) {
-            Toast.makeText(ManagementActivity.this, R.string.searching, Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        IS_DETECTING = true;
-
         mAdapter.startDetecting();
 
-    }
-
-    /**
-     * Set the flag about whether is detecting new printers.
-     *
-     * @param IS_DETECTING boolean
-     */
-    public void setIS_DETECTING(boolean IS_DETECTING) {
-        this.IS_DETECTING = IS_DETECTING;
     }
 
     @Override

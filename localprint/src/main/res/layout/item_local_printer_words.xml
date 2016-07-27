@@ -1,13 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="8dp">
+    android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/secondary_layout_height"
+        android:gravity="center"
         android:text="@string/local_printers"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-</LinearLayout>
+        android:textColor="@color/primary_text_light"
+        android:textSize="@dimen/secondary_text_size" />
+
+    <Button
+        android:id="@+id/button_add_printers"
+        style="?android:attr/buttonBarButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/secondary_layout_height"
+        android:layout_toStartOf="@+id/button_add_net_printers"
+        android:text="@string/add_new_printers"
+        android:textColor="@color/primary_button_light"
+        android:textSize="@dimen/secondary_button_size" />
+
+    <Button
+        android:id="@+id/button_add_net_printers"
+        style="?android:attr/buttonBarButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/secondary_layout_height"
+        android:layout_alignParentEnd="true"
+        android:text="@string/add_net_printers"
+        android:textColor="@color/primary_button_light"
+        android:textSize="@dimen/secondary_button_size" />
+
+</RelativeLayout>

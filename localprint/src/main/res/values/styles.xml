@@ -20,4 +20,8 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="AppTheme.Dialog" parent="Theme.AppCompat.Light.Dialog" >
+        <item name="android:windowBackground">@drawable/dialog_frame_shadow</item>
+    </style>
+
 </resources>

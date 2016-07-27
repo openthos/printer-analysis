@@ -15,7 +15,7 @@
     <string name="new_printer__notification">New device detected</string>
     <string name="whether_add_new_printer">Add a new printer now?</string>
     <string name="added_device">added devices</string>
-    <string name="add_new_printers">add new printers</string>
+    <string name="add_new_printers">search local printers</string>
     <string name="local_printers">local printers</string>
     <string name="network_printers">network printers</string>
     <string name="add_a_local_printer">Add a new local printer</string>

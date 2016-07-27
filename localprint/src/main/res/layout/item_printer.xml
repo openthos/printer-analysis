@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="16dp"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp">
+    android:layout_height="56dp">
 
     <TextView
         android:id="@+id/textView_printer_name"
@@ -13,7 +10,8 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:text="@string/device"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textColor="@color/primary_text_dark"
+        android:textSize="@dimen/primary_text_size" />
 
     <TextView
         android:id="@+id/textView_printer_info"
@@ -21,5 +19,16 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/textView_printer_name"
-        android:text="@string/print_info" />
+        android:text="@string/print_info"
+        android:textColor="@color/primary_text_light"
+        android:textSize="@dimen/secondary_text_size" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/textView_printer_info"
+        android:layout_marginTop="4dp"
+        android:background="@color/divider_light" />
+
 </RelativeLayout>
