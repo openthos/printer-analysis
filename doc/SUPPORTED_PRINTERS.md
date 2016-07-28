@@ -7,7 +7,6 @@ Installed | Supported Printers| Driver Name  | Remarks
 √ | Most of Pantum printers | Pantum official closed source driver |
 √ | Most of HP printers | [hpcups && hplip plugin](http://hplipopensource.com/hplip-web/index.html) | Official drivers
 √ | SecuSoft printers |SecuSoft official driver |
- | Parts of Epson printer | [gutenprint](http://gimp-print.sourceforge.net/) | TODO
 
 # Tested Printers List
 
