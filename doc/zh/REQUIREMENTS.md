@@ -32,3 +32,4 @@
 √ | 修改CUPSD进程位置，解决后台不运行问题
 √ | 把数据包里busybox的文件全部换成软连接，减少体积
 √ | 解决gs调用错误
+ | 存在打印任务不及时更新 | https://dev.openthos.org/zentao/zentao/bug-view-195.html
