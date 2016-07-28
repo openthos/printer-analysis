@@ -25,11 +25,13 @@
 --- | --- | --- |
 √ | 打印任务状态显示unknown
 √ | 打印任务从暂停状态恢复失败
+√ | 解决gs调用错误
 √ | 修复tar解压数据包部分文件权限丢失
 √ | 去除奔图ppd文件名中的空格，解决解析问题
 √ | 修复打印管理界面偶尔错乱BUG
 √ | 添加本地/网络打印机字段为空判断（也不能有空格）
 √ | 修改CUPSD进程位置，解决后台不运行问题
 √ | 把数据包里busybox的文件全部换成软连接，减少体积
-√ | 解决gs调用错误
  | 存在打印任务不及时更新 | https://dev.openthos.org/zentao/zentao/bug-view-195.html
+ | 打印机调整配置页面点击确定后打印服务崩溃 | https://dev.openthos.org/zentao/zentao/bug-view-197.html
+ | 缺少部分纸张大小参数MediaSize对应项 | https://dev.openthos.org/zentao/zentao/bug-view-198.html
