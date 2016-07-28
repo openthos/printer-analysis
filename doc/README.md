@@ -4,7 +4,7 @@ Please read OVREVIEW.md.
 
 English version:
 
-[OVERVIEW.md](https://github.com/openthos/printer-analysis/blob/master/doc/OVREVIEW.md)
+~~[OVERVIEW.md](https://github.com/openthos/printer-analysis/blob/master/doc/OVREVIEW.md) TODO~~
 
 中文版:
 
