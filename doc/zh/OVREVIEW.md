@@ -22,6 +22,8 @@
 |√| 打印任务管理（暂停、恢复、取消）
 |√| 在系统通知栏实现打印状态区
 
+详细情况见：[REQUIREMENTS.md](https://github.com/openthos/printer-analysis/blob/master/doc/zh/REQUIREMENTS.md)
+
 ## 支持的打印机型号
 
 打印机支持详细情况请查看：[SUPPORTED_PRINTERS.md](https://github.com/openthos/printer-analysis/blob/master/doc/SUPPORTED_PRINTERS.md)
