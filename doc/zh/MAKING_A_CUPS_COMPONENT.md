@@ -177,6 +177,14 @@ epson-inkjet-printer-201401w缺少库libjpeg62，下载编译好的 libjpeg62-62
 
 **注意：该程序是 Linux Standard Base (LSB) 程序，使用的是 /lib/ld-lsb.so.3 链接器**，因此执行`ln -s  /lib/ld-linux.so.2 /lib/ld-lsb.so.3`链接到 ld-linux.so 。
 
+## Hpcups && Hplip plugin
+
+...
+
+## samba
+
+...
+
 ## 复制依赖
 
 如果所需的程序都加入了，最后需要补全程序缺少的依赖，因此我们编译了[share_lib2.sh](https://github.com/openthos/printer-analysis/blob/dev/shell/share_lib2.sh)脚本来递归遍历所有动态链接程序的依赖，包括so库文件的so库依赖。
