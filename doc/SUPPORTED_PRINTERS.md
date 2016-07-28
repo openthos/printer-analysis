@@ -12,8 +12,8 @@ Installed | Supported Printers| Driver Name  | Remarks
 
 Supported | Tested | Printer Model | Drivers | Remarks
 ----------- | ----------- | ------------ | ------------- | ------------
-√ | √ | HP LaserJet P1108 | foo2zjs/hplip | use HP CP1025nw model in foo2zjs
-√ | √ | HP LaserJet P2015dn | cups-filter/hplip |use HP LaserJet Series PCL 6 model in cups-filter
+√ | √ | HP LaserJet P1108 | foo2zjs/hplip | Select HP CP1025nw model when use foo2zjs
+√ | √ | HP LaserJet P2015dn | cups-filter/hplip |Select HP LaserJet Series PCL 6 model when use cups-filter
 √ | √ | Pantum P2500W | Pantum official driver |
 √ | √ | SecuSoft SFL 2000 | SecuSoft official driver
 
