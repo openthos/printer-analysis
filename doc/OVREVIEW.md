@@ -5,7 +5,7 @@ This project belongs to [Openthos](https://github.com/openthos/openthos/wiki) pr
 # Feature
 
 * Support usb printers.
-* Support net pritners.
+* Support net pritners (http ipp smb lpd beh).
 * Access to the android system print service and provide print function.
 * Support print jobs' management(Hold, release/resume).
 * Support printer's setting(within the drivers support).
