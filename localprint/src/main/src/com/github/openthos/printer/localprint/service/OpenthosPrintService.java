@@ -176,12 +176,6 @@ public class OpenthosPrintService extends PrintService {
         LogUtils.d(TAG, "task -> " + task);
 
         switch (task) {
-            case APP.TASK_DETECT_USB_PRINTER:
-                detectPrinter();
-                break;
-            case APP.TASK_ADD_NEW_PRINTER:
-                showAddPrinterDialog();
-                break;
             case APP.TASK_JOB_RESULT:
                 handleJobResult(intent.getBooleanExtra(APP.RESULT, false)
                         , intent.getStringExtra(APP.JOBID), intent.getStringExtra(APP.MESSAGE));
@@ -220,37 +214,4 @@ public class OpenthosPrintService extends PrintService {
         }
 
     }
-
-    // TODO: 2016/5/10 send task to check whether there has new printer pulgged in with Android API.
-    private void detectPrinter() {
-        //TaskUtils.execute(new DetectPrinterTask(TAG));
-    }
-
-    private void showAddPrinterDialog() {
-
-        AlertDialog.Builder builder
-                = new AlertDialog.Builder(this, android.R.style.Theme_DeviceDefault_Light_Dialog)
-                .setTitle(R.string.new_printer__notification)
-                .setMessage(R.string.whether_add_new_printer)
-                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Intent intent
-                                = new Intent(OpenthosPrintService.this, ManagementActivity.class);
-                        //Context is not in the activity stack need the flag
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        intent.putExtra(APP.TASK, APP.TASK_ADD_NEW_PRINTER);
-                        APP.getApplicatioContext().startActivity(intent);
-                    }
-                })
-                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                    }
-                });
-        AlertDialog alert = builder.create();
-        alert.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
-        alert.show();
-    }
-
 }

@@ -138,6 +138,12 @@ public class JobManagerActivity extends BaseActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        APP.sendRefreshJobsIntent();
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(jobReceiver);

@@ -83,9 +83,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/scrollView"
-                android:checked="false"
-                android:text="@string/share_printer"
-                android:textColor="@color/primary_material_dark" />
+                android:enabled="false"
+                android:text="@string/share_printer" />
         </TableLayout>
 
     </ScrollView>

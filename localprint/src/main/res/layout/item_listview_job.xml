@@ -10,12 +10,14 @@
         android:layout_height="wrap_content"
         android:layout_weight="2"
         android:gravity="center"
+        android:textColor="@color/primary_text_light"
+        android:textSize="@dimen/secondary_text_size"
         android:text="@string/document_name" />
 
     <View
         android:layout_width="1dp"
         android:layout_height="match_parent"
-        android:background="@color/colorPrimary" />
+        android:background="@color/divider_light" />
 
     <TextView
         android:id="@+id/textview_device"
@@ -23,53 +25,63 @@
         android:layout_height="wrap_content"
         android:layout_weight="3"
         android:gravity="center"
+        android:textColor="@color/primary_text_light"
+        android:textSize="@dimen/secondary_text_size"
         android:text="@string/device" />
 
     <View
         android:layout_width="1dp"
         android:layout_height="match_parent"
-        android:background="@color/colorPrimary" />
+        android:background="@color/divider_light" />
 
     <TextView
         android:id="@+id/textview_status"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="2"
+        android:textColor="@color/primary_text_light"
+        android:textSize="@dimen/secondary_text_size"
         android:gravity="center"
         android:text="@string/status" />
 
     <View
         android:layout_width="1dp"
         android:layout_height="match_parent"
-        android:background="@color/colorPrimary" />
+        android:background="@color/divider_light" />
 
     <TextView
         android:id="@+id/textview_size"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_weight="2"
         android:gravity="center"
+        android:textColor="@color/primary_text_light"
+        android:textSize="@dimen/secondary_text_size"
         android:text="@string/size" />
 
     <View
         android:layout_width="1dp"
         android:layout_height="match_parent"
-        android:background="@color/colorPrimary" />
+        android:background="@color/divider_light" />
 
     <Button
         android:id="@+id/button_pause"
-        style="?android:attr/buttonStyleSmall"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:textColor="@color/primary_button_light"
+        android:textSize="@dimen/secondary_text_size"
+        style="?android:attr/buttonBarButtonStyle"
         android:text="@string/pause" />
 
     <Button
         android:id="@+id/button_remove"
-        style="?android:attr/buttonStyleSmall"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:textColor="@color/primary_button_light"
+        android:textSize="@dimen/secondary_text_size"
+        style="?android:attr/buttonBarButtonStyle"
         android:text="@string/remove" />
 
 </LinearLayout>

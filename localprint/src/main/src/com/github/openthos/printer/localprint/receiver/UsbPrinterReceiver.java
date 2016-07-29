@@ -7,6 +7,7 @@ import android.hardware.usb.UsbManager;
 import android.os.Handler;
 
 import com.github.openthos.printer.localprint.APP;
+import com.github.openthos.printer.localprint.service.LocalPrintService;
 import com.github.openthos.printer.localprint.service.OpenthosPrintService;
 import com.github.openthos.printer.localprint.ui.ManagementActivity;
 import com.github.openthos.printer.localprint.util.LogUtils;
@@ -39,7 +40,7 @@ public class UsbPrinterReceiver extends BroadcastReceiver {
                 APP.getApplicatioContext().startActivity(new_intent);
             } else {
                 Intent new_intent
-                        = new Intent(APP.getApplicatioContext(), OpenthosPrintService.class);
+                        = new Intent(APP.getApplicatioContext(), LocalPrintService.class);
                 new_intent.putExtra(APP.TASK, APP.TASK_DETECT_USB_PRINTER);
                 APP.getApplicatioContext().startService(new_intent);
             }

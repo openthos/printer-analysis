@@ -63,7 +63,6 @@ public class APP extends Application {
      */
     public static final long JOB_REFRESH_WAITING_PRINTER_INTERVAL = 5100;
 
-
     /**
      * The port of cups is used for send commands or browse the web page.
      * The port value must be same with the cups configuration file.
@@ -80,6 +79,7 @@ public class APP extends Application {
      * Whether there has jobs waiting for printers becoming available.
      */
     public static boolean IS_JOB_WAITING_FOR_PRINTER = false;
+    public static boolean STATUS_READY = false;
 
     /**
      * Bind cupsd process to the variate.
