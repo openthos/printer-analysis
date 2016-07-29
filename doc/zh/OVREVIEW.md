@@ -28,6 +28,10 @@
 
 打印机支持详细情况请查看：[SUPPORTED_PRINTERS.md](https://github.com/openthos/printer-analysis/blob/master/doc/SUPPORTED_PRINTERS.md)
 
+## 网络打印相关
+
+操作方法等具体情况详见：[NET_PRINTERS.md](https://github.com/openthos/printer-analysis/blob/master/doc/zh/NET_PRINTERS.md)
+
 # 存在问题
 
 | 简述 | 类别 | 备注
