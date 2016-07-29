@@ -193,9 +193,9 @@ epson-inkjet-printer-201401w缺少库libjpeg62，下载编译好的 libjpeg62-62
 
 2、将samba执行所需要的配置文件拷贝至相应目录下，执行```cp /etc/samba/smb.conf componet_10/etc/samba/smb.conf``` 
 
-3、建立Cups后台可执行文件与smbspool的软连接，从而让Cups可以去调用其进行与Windows连接，执行```ln -s `which smbspool` /usr/lib/cups/backend/smb```
+3、建立Cups后台可执行文件与```smbspool```的软连接，从而让Cups可以去调用其进行与Windows连接，执行```ln -s `which smbspool` /usr/lib/cups/backend/smb```
 
-4、使用[cmdldcopy.sh](https://github.com/openthos/printer-analysis/blob/dev/shell/cmdldcopy.sh)脚本将smbspool执行所需要依赖的动态库进行拷贝，执行```./cmdldcopy.sh /usr/bin/smbspool ./componet_10/```
+4、使用[cmdldcopy.sh](https://github.com/openthos/printer-analysis/blob/dev/shell/cmdldcopy.sh)脚本将```smbspool```执行所需要依赖的动态库进行拷贝，执行```./cmdldcopy.sh /usr/bin/smbspool ./componet_10/```
 
 ## 复制依赖
 
