@@ -77,3 +77,8 @@ CUPS交流接口（调用命令）参考：[CHATTING_WITH_CUPS.md](https://githu
 对于存在就绪态任务，会延时刷新一次。因为有时虽然打印机插上，还是会短暂的处于就绪态。
 
 # 代码位置
+
+目前代码存放有两个地点。
+
+1. 使用Android studio开发的程序位于 https://github.com/openthos/printer-analysis.git 项目的dev-app分支。需要使用的程序是其中的 localprint 模块，这是一个app。
+2. 可直接集成到系统中的程序地址：https://github.com/openthos/oto_packages_apps_Printer。（更新可能较慢）
