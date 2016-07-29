@@ -183,7 +183,19 @@ epson-inkjet-printer-201401w缺少库libjpeg62，下载编译好的 libjpeg62-62
 
 ## samba
 
-...
+添加samba是为了能够与Windows进行网络打印，Linux与Windows上打印系统的实现各不相同，因此想要实现两者通信，samba是必须的。
+
+这里我们并不将samba服务器完全加入，而只加入我们需要用到的一部分。
+
+步骤：
+
+1、将所需要的samba可执行文件```smbspool```拷贝至数据包的可执行文件目录中，执行```cp /usr/bin/smbspool componet_10/usr/bin/```
+
+2、将samba执行所需要的配置文件拷贝至相应目录下，执行```cp /etc/samba/smb.conf componet_10/etc/samba/smb.conf``` 
+
+3、建立Cups后台可执行文件与smbspool的软连接，从而让Cups可以去调用其进行与Windows连接，执行```ln -s `which smbspool` /usr/lib/cups/backend/smb```
+
+4、使用[cmdldcopy.sh](https://github.com/openthos/printer-analysis/blob/dev/shell/cmdldcopy.sh)脚本将smbspool执行所需要依赖的动态库进行拷贝，执行```./cmdldcopy.sh /usr/bin/smbspool ./componet_10/```
 
 ## 复制依赖
 
