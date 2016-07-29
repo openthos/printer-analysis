@@ -21,7 +21,7 @@ CUPS交流接口描述了CUPS程序与APP上层交互的方式。
 |A2| CommandTask|sh proot.sh /usr/sbin/cupsd -f|
 ||启动CUPS||
 |A3| CommandTask|
-||关闭cups|
+||关闭cups|未编写，实际通过`kill pid`即可正常关闭cups。注意不要kill -9 pid，这会强行关闭cups。
 |B1| SearchModelsTask|sh proot.sh lpinfo -m|
 ||查询可用打印机驱动|会将所有PPD信息输出
 |B2| AddPrinterTask|sh proot.sh lpadmin -p name -v url -m model -o printer-is-shared=false -E|
