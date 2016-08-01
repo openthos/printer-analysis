@@ -1,4 +1,4 @@
-# 简介
+# 交流接口简介
 
 CUPS交流接口描述了CUPS程序与APP上层交互的方式。
 
@@ -6,13 +6,13 @@ CUPS交流接口描述了CUPS程序与APP上层交互的方式。
 
 为了完成命令的传送，我们整理了所有与打印相关的操作，并且称之为CUPS交流接口。
 
-# 分类
+## 分类
 
 * A cups管理
 * B 打印机管理
 * C 打印任务管理
 
-# 详细列表
+## 详细列表
 
 | 编号 | 类名/简介 | 具体命令/备注 |
 |---|---|---|
@@ -61,6 +61,26 @@ CUPS交流接口描述了CUPS程序与APP上层交互的方式。
 |C8|JobResumeAllTask|sh proot.sh sh hold_release.sh jobId1 jobId2 ... release
 ||恢复所有打印任务|参考 C5 调用ipptool发送命令，详见数据包里的[hold_release.sh](https://github.com/openthos/printer-analysis/blob/dev/shell/hold_release.sh)
 
-# 其他
+## 注意
 
 由于使用`Runtime.getRuntime().exec(cmd, null, file);`函数执行命令，一次只能执行一条命令，所以需要多条命令时，将命令放入一个脚本文件里执行。
+
+# 颜色对应表
+
+在CUPS中打印机支持的打印色彩并不统一，根据打印机驱动的不同表示名称也不同。在Android中打印色彩只有两种`COLOR_MODE_MONOCHROME`和`COLOR_MODE_COLOR`，分别代表黑白和彩色。
+
+|驱动名|PPD名|颜色键名|MONOCHROME对应项|COLOR对应项
+|---|---|---|---|---
+|Epson官方驱动||Color|Grayscale|Color
+|foo2zjs||ColorMode|Monochrome|ICM
+|hpcups|HP Color LaserJet 3000 pcl3, hpcups 3.14.3|ColorModel|Gray|RGB
+|奔图||无|无|无
+||HP Color LaserJet 3000 Postscript|ColorModel|Gray|CMYK
+
+# 纸张尺寸对应表
+
+本表尽可能的收集能够相互对应的尺寸列表。
+
+|CUPS中的尺寸名|CUPS中的值|Android中的尺寸名|Android中的值
+|---|---|---|---
+|A4||ISO_A4|210mm x 297mm (8.27" x 11.69")
