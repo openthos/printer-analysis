@@ -84,3 +84,62 @@ CUPS交流接口描述了CUPS程序与APP上层交互的方式。
 |CUPS中的尺寸名|CUPS中的值|Android中的尺寸名|Android中的值
 |---|---|---|---
 |A4||ISO_A4|210mm x 297mm (8.27" x 11.69")
+
+# 打印状态记录表
+
+这是任务 C2 解析的字段示例，根据这些字段就能够判断该任务当前的状态。
+
+```
+等待打印机
+HP_LaserJet_Professional_P1108-45 unknown           1024   Tue Jul  5 13:38:01 2016
+Status: Waiting for printer to become available.
+Alerts: printer-stopped
+queued for HP_LaserJet_Professional_P1108
+
+等待打印机
+HP_LaserJet_Professional_P1108-45 unknown           1024   Tue Jul  5 13:38:01 2016
+Status: Waiting for printer to become available.
+Alerts: none
+queued for HP_LaserJet_Professional_P1108
+
+等待打印机
+HP_LaserJet_Professional_P1108-2​0 anonymous 1024 Sun May 22 16:48:45 2016
+Status: Waiting for printer to become available.
+Alerts: job-printing
+queued for HP_LaserJet_Professional_P1108
+
+失败
+HP_LaserJet_Professional_P1108-2​0 deep 410624 Mon May 16 11:01:12 2016
+Status: /usr/lib/cups/filter/pdftops failed
+Alerts: job-printing
+queued for HP_LaserJet_Professional_P1108
+
+失败
+HP_LaserJet_Professional_P1108-41 unknown           1024   Tue Jul  5 11:51:51 2016
+Status: Filter failed
+Alerts: job-hold-until-specified
+queued for HP_LaserJet_Professional_P1108
+
+就绪
+HP_LaserJet_Professional_P1108-2​1 deep 410624 Mon May 16 11:01:18 2016
+Alerts: none
+queued for HP_LaserJet_Professional_P1108
+
+暂停
+HP_LaserJet_Professional_P1108-2​0 anonymous 1024 Sun May 22 16:48:45 2016
+Status:
+Alerts: job-hold-until-specified
+queued for HP_LaserJet_Professional_P1108
+
+渲染中
+HP_LaserJet_Professional_P1108-2​1 anonymous 1024 Sun May 22 23:34:05 2016
+Status: Printing page 1, 0% complete...
+Alerts: job-printing
+queued for HP_LaserJet_Professional_P1108
+
+渲染中
+HP_LaserJet_Professional_P1108-2​1 anonymous 1024 Sun May 22 23:34:05 2016
+Status: Processing page 2...
+Alerts: job-printing
+queued for HP_LaserJet_Professional_P1108
+```
