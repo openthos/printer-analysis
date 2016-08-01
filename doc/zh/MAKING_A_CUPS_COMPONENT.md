@@ -224,7 +224,7 @@ tar -zvcf component_10.tar.gz component_10
 sh proot.sh
 strace -f cupsd -f &> logPrint
 ```
-这样就能记录所有的系统到logPrint文件中，一定要加上`-f`参数追踪子进程的系统调用。
+这样就能记录所有的系统调用到logPrint文件中，一定要加上`-f`参数追踪子进程的系统调用。
 
 ## CUPS相关项目介绍
 
