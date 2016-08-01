@@ -208,7 +208,7 @@ public class ManagementAdapter extends BaseAdapter {
         } else if (!addedList.isEmpty()) {
             for (PrinterItem printerItem : addedList) {
                 ManagementListItem item
-                        = new ManagementListItem.Builder(ManagementListItem.TYPE_ADDED_PRINTER).get();
+                      = new ManagementListItem.Builder(ManagementListItem.TYPE_ADDED_PRINTER).get();
                 item.setPrinteritem(printerItem);
                 list.add(item);
             }
@@ -225,7 +225,7 @@ public class ManagementAdapter extends BaseAdapter {
         } else if (!detectedList.isEmpty()) {
             for (PrinterItem printerItem : detectedList) {
                 ManagementListItem item
-                        = new ManagementListItem.Builder(ManagementListItem.TYPE_LOCAL_PRINTER).get();
+                      = new ManagementListItem.Builder(ManagementListItem.TYPE_LOCAL_PRINTER).get();
                 item.setPrinteritem(printerItem);
                 list.add(item);
             }

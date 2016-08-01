@@ -116,7 +116,7 @@ public class ManagementActivity extends BaseActivity {
         Spinner spinnerBrand = new Spinner(this);
         final List<String> brandList = new ArrayList<String>();
         final ArrayAdapter<String> brandAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_dropdown_item, brandList);
+                                       android.R.layout.simple_spinner_dropdown_item, brandList);
         spinnerBrand.setAdapter(brandAdapter);
 
         TextView textViewTipModel = new TextView(this);
@@ -124,7 +124,7 @@ public class ManagementActivity extends BaseActivity {
         final Spinner spinnerModel = new Spinner(this);
         final List<PPDItem> modelList = new ArrayList<PPDItem>();
         final ArrayAdapter<PPDItem> modelAdapter = new ArrayAdapter<PPDItem>(this,
-                android.R.layout.simple_spinner_dropdown_item, modelList);
+                                        android.R.layout.simple_spinner_dropdown_item, modelList);
         spinnerModel.setAdapter(modelAdapter);
 
         spinnerBrand.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -181,69 +181,70 @@ public class ManagementActivity extends BaseActivity {
         final Button buttonPositive = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
         buttonPositive.setEnabled(false);
         buttonPositive.setTextColor(getResources().getColor(R.color.primary_button_light));
-        buttonPositive.setOnClickListener
-                (new View.OnClickListener() {
-                    private boolean PRESSED = false;
+        buttonPositive.setOnClickListener(new View.OnClickListener() {
+            private boolean PRESSED = false;
 
+            @Override
+            public void onClick(View v) {
+                if (PRESSED) {
+                    Toast.makeText(ManagementActivity.this,R.string.adding,
+                                   Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (editTextName.getText().toString().isEmpty()) {
+                    Toast.makeText(ManagementActivity.this,
+                                   R.string.name_error_with_null,
+                                   Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (editTextName.getText().toString().contains(" ")) {
+                    Toast.makeText(ManagementActivity.this,
+                                   R.string.name_error_with_space,
+                                   Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                PRESSED = true;
+
+                Map<String, String> p = new HashMap<>();
+                p.put("name", editTextName.getText().toString());
+                p.put("model",
+                        modelList.get(spinnerModel.getSelectedItemPosition()).getModel());
+                p.put("url", deviceItem.getPrinteritem().getURL());
+                p.put("isShare", cbxSharePrinter.isChecked() ? "true" : "false");
+
+                AddPrinterTask<Void> task = new AddPrinterTask<Void>() {
                     @Override
-                    public void onClick(View v) {
-                        if (PRESSED) {
-                            Toast.makeText(ManagementActivity.this, R.string.adding, Toast.LENGTH_SHORT)
-                                    .show();
-                            return;
-                        }
-
-                        if (editTextName.getText().toString().isEmpty()) {
+                    protected void onPostExecute(Boolean aBoolean) {
+                        if (aBoolean) {
                             Toast.makeText(ManagementActivity.this,
-                                    R.string.name_error_with_null,
-                                    Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-
-                        if (editTextName.getText().toString().contains(" ")) {
+                                           R.string.add_success, Toast.LENGTH_SHORT).show();
+                            mAdapter.refreshAddedPrinters();
+                            dialog.dismiss();
+                        } else {
                             Toast.makeText(ManagementActivity.this,
-                                    R.string.name_error_with_space,
-                                    Toast.LENGTH_SHORT).show();
-                            return;
+                                           R.string.add_fail, Toast.LENGTH_SHORT).show();
                         }
-
-                        PRESSED = true;
-
-                        Map<String, String> p = new HashMap<>();
-                        p.put("name", editTextName.getText().toString());
-                        p.put("model", modelList.get(spinnerModel.getSelectedItemPosition()).getModel());
-                        p.put("url", deviceItem.getPrinteritem().getURL());
-                        p.put("isShare", cbxSharePrinter.isChecked() ? "true" : "false");
-
-                        AddPrinterTask<Void> task = new AddPrinterTask<Void>() {
-                            @Override
-                            protected void onPostExecute(Boolean aBoolean) {
-                                if (aBoolean) {
-                                    Toast.makeText(ManagementActivity.this
-                                            , R.string.add_success, Toast.LENGTH_SHORT).show();
-                                    mAdapter.refreshAddedPrinters();
-                                    dialog.dismiss();
-                                } else {
-                                    Toast.makeText(ManagementActivity.this
-                                            , R.string.add_fail, Toast.LENGTH_SHORT).show();
-                                }
-                                PRESSED = false;
-                            }
-                        };
-
-                        task.start(p);
-
+                        PRESSED = false;
                     }
+                };
 
-                });
+                task.start(p);
+
+            }
+
+        });
 
         new SearchModelsTask<Void, Void>() {
             @Override
             protected void onPostExecute(ModelsItem modelsItem) {
 
                 if (modelsItem == null) {
-                    Toast.makeText(ManagementActivity.this, getResources()
-                            .getString(R.string.query_error) + " " + ERROR, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ManagementActivity.this,
+                                   getResources().getString(R.string.query_error)
+                                   + " " + ERROR, Toast.LENGTH_SHORT).show();
                     return;
                 }
                 buttonPositive.setEnabled(true);
@@ -308,9 +309,9 @@ public class ManagementActivity extends BaseActivity {
         textViewTipURL.setText(R.string.set_netprinter_url);
         textViewTipURL.setTextColor(Color.BLACK);
         textViewTipURL.setError(getString(R.string.hint_windows_netprinter) + "\n"
-                + getString(R.string.hint_Linux_netprinter) + "\n"
-                + getString(R.string.hint_built_in_netprinter) + "\n"
-                + getString(R.string.hint_other_printer));
+                                + getString(R.string.hint_Linux_netprinter) + "\n"
+                                + getString(R.string.hint_built_in_netprinter) + "\n"
+                                + getString(R.string.hint_other_printer));
         textViewTipURL.setFocusable(true);
         textViewTipURL.setClickable(true);
         textViewTipURL.setFocusableInTouchMode(true);
@@ -398,25 +399,25 @@ public class ManagementActivity extends BaseActivity {
             public void onClick(View v) {
                 if (CLICKED) {
                     Toast.makeText(ManagementActivity.this, R.string.adding,
-                            Toast.LENGTH_SHORT).show();
+                                   Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 if (editTextName.getText().toString().isEmpty()) {
                     Toast.makeText(ManagementActivity.this,
-                            R.string.name_error_with_null, Toast.LENGTH_SHORT).show();
+                                   R.string.name_error_with_null, Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 if (editTextName.getText().toString().contains(" ")) {
                     Toast.makeText(ManagementActivity.this,
-                            R.string.name_error_with_space, Toast.LENGTH_SHORT).show();
+                                   R.string.name_error_with_space, Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 if (editTextUrl.getText().toString().isEmpty()) {
                     Toast.makeText(ManagementActivity.this,
-                            R.string.url_error_with_null, Toast.LENGTH_SHORT).show();
+                                   R.string.url_error_with_null, Toast.LENGTH_SHORT).show();
                     return;
                 }
 

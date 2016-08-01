@@ -128,7 +128,6 @@ public class PrinterJobStatus implements Parcelable {
                 '}';
     }
 
-
     @Override
     public int describeContents() {
         return 0;

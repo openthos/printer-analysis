@@ -154,9 +154,9 @@ public class LocalPrintService extends Service {
 
         AlertDialog.Builder builder
                 = new AlertDialog.Builder(this, android.R.style.Theme_DeviceDefault_Light_Dialog)
-                .setTitle(R.string.new_printer__notification)
-                .setMessage(R.string.whether_add_new_printer)
-                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                       .setTitle(R.string.new_printer__notification)
+                       .setMessage(R.string.whether_add_new_printer)
+                       .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Intent intent

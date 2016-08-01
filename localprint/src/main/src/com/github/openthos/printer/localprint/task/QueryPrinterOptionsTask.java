@@ -78,7 +78,6 @@ public class QueryPrinterOptionsTask<Progress>
             }
         }
 
-
         //simulated data
         /*
         item.setColorModeName("ColorMode");

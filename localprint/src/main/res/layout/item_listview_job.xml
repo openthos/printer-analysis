@@ -10,9 +10,9 @@
         android:layout_height="wrap_content"
         android:layout_weight="2"
         android:gravity="center"
+        android:text="@string/document_name"
         android:textColor="@color/primary_text_light"
-        android:textSize="@dimen/secondary_text_size"
-        android:text="@string/document_name" />
+        android:textSize="@dimen/secondary_text_size" />
 
     <View
         android:layout_width="1dp"
@@ -25,9 +25,9 @@
         android:layout_height="wrap_content"
         android:layout_weight="3"
         android:gravity="center"
+        android:text="@string/device"
         android:textColor="@color/primary_text_light"
-        android:textSize="@dimen/secondary_text_size"
-        android:text="@string/device" />
+        android:textSize="@dimen/secondary_text_size" />
 
     <View
         android:layout_width="1dp"
@@ -39,10 +39,10 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="2"
-        android:textColor="@color/primary_text_light"
-        android:textSize="@dimen/secondary_text_size"
         android:gravity="center"
-        android:text="@string/status" />
+        android:text="@string/status"
+        android:textColor="@color/primary_text_light"
+        android:textSize="@dimen/secondary_text_size" />
 
     <View
         android:layout_width="1dp"
@@ -55,9 +55,9 @@
         android:layout_height="wrap_content"
         android:layout_weight="2"
         android:gravity="center"
+        android:text="@string/size"
         android:textColor="@color/primary_text_light"
-        android:textSize="@dimen/secondary_text_size"
-        android:text="@string/size" />
+        android:textSize="@dimen/secondary_text_size" />
 
     <View
         android:layout_width="1dp"
@@ -66,22 +66,22 @@
 
     <Button
         android:id="@+id/button_pause"
+        style="?android:attr/buttonBarButtonStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:text="@string/pause"
         android:textColor="@color/primary_button_light"
-        android:textSize="@dimen/secondary_text_size"
-        style="?android:attr/buttonBarButtonStyle"
-        android:text="@string/pause" />
+        android:textSize="@dimen/secondary_text_size" />
 
     <Button
         android:id="@+id/button_remove"
+        style="?android:attr/buttonBarButtonStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:text="@string/remove"
         android:textColor="@color/primary_button_light"
-        android:textSize="@dimen/secondary_text_size"
-        style="?android:attr/buttonBarButtonStyle"
-        android:text="@string/remove" />
+        android:textSize="@dimen/secondary_text_size" />
 
 </LinearLayout>
