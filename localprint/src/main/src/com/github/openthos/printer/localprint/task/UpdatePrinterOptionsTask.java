@@ -23,8 +23,10 @@ public abstract class UpdatePrinterOptionsTask<Progress>
         list.add(getPrinter());
         list.add("-o");
         list.add(item.getMediaSizeName() + "=" + item.getMediaSizeCupsSelectedItem());
-        list.add("-o");
-        list.add(item.getColorModeName() + "=" + item.getColorModeCupsSelectedItem());
+        if (item.getColorModeName() != null) {
+            list.add("-o");
+            list.add(item.getColorModeName() + "=" + item.getColorModeCupsSelectedItem());
+        }
 
         return list.toArray(new String[0]);
     }
