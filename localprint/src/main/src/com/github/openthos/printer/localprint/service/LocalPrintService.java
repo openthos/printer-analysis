@@ -2,8 +2,11 @@ package com.github.openthos.printer.localprint.service;
 
 import android.app.AlertDialog;
 import android.app.Service;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.hardware.usb.UsbDevice;
+import android.hardware.usb.UsbManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -14,16 +17,21 @@ import android.widget.Toast;
 import com.android.systemui.statusbar.phone.PrinterJobStatus;
 import com.github.openthos.printer.localprint.APP;
 import com.github.openthos.printer.localprint.R;
+import com.github.openthos.printer.localprint.task.CommandTask;
+import com.github.openthos.printer.localprint.task.DetectNewPrinterTask;
 import com.github.openthos.printer.localprint.task.JobQueryTask;
 import com.github.openthos.printer.localprint.ui.ManagementActivity;
+import com.github.openthos.printer.localprint.util.LogUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 public class LocalPrintService extends Service {
 
+    private static final String TAG = "LocalPrintService";
     /**
      * Whether is refreshing jobs.
      */
@@ -38,9 +46,31 @@ public class LocalPrintService extends Service {
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+        LogUtils.d(TAG, "onDestroy()");
+    }
+
+    @Override
+    public void onTaskRemoved(Intent rootIntent) {
+        super.onTaskRemoved(rootIntent);
+        LogUtils.d(TAG, "onTaskRemoved()");
+        reStartService();
+    }
+
+    private void reStartService() {
+        CommandTask.killCups();
+    }
+
+    @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
+        if(intent == null){
+            return START_STICKY;
+        }
+
         int task = intent.getIntExtra(APP.TASK, APP.TASK_DEFAULT);
+        LogUtils.d(TAG, "APP.TASK ->" + task);
         switch (task) {
             case APP.TASK_DETECT_USB_PRINTER:
                 detectPrinter();
@@ -55,7 +85,7 @@ public class LocalPrintService extends Service {
                 break;
         }
 
-        return START_NOT_STICKY;
+        return START_STICKY;
     }
 
     /**
@@ -145,9 +175,41 @@ public class LocalPrintService extends Service {
         IS_REFRESHING_JOBS = true;
     }
 
-    // TODO: 2016/5/10 send task to check whether there has new printer pulgged in with Android API.
     private void detectPrinter() {
-        //TaskUtils.execute(new DetectPrinterTask(TAG));
+
+        UsbManager usbmanager = (UsbManager) this.getSystemService(Context.USB_SERVICE);
+        HashMap<String, UsbDevice> deviceList = usbmanager.getDeviceList();
+        LogUtils.d(TAG, "get device list  = " + deviceList.size());
+        Iterator<UsbDevice> deviceIterator = deviceList.values().iterator();
+
+        ArrayList<String> usbList = new ArrayList<>();
+
+        while (deviceIterator.hasNext()) {
+            UsbDevice device = deviceIterator.next();
+            LogUtils.d(TAG, "detect device -> " + device.toString());
+            for(int i=0; i < device.getInterfaceCount(); i++ ){
+                // InterfaceClass 7 代表打印机
+                if(device.getInterface(i).getInterfaceClass() == 7){
+                    usbList.add(device.getSerialNumber());
+                }
+            }
+        }
+
+        if(usbList.size() == 0){
+            return;
+        }
+
+        DetectNewPrinterTask<Void> task = new DetectNewPrinterTask<Void>() {
+            @Override
+            protected void onPostExecute(Boolean aBoolean) {
+                if(aBoolean){
+                    showAddPrinterDialog();
+                }
+            }
+        };
+
+        task.start(usbList.toArray(new String[0]));
+
     }
 
     private void showAddPrinterDialog() {

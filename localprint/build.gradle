@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.github.openthos.printer.localprint"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 22
         versionCode 23
         versionName "1.5"

@@ -21,8 +21,6 @@ import com.github.openthos.printer.localprint.task.InitTask;
  */
 public class WelcomeActivity extends Activity {
 
-    // TODO: First run detcting page can be changed to a dialog, can be written in BaseActivity
-
     private static final String TAG = "WelcomeActivity";
     private TextView mTextView;
     private Button mButtonCancel;

@@ -38,8 +38,6 @@ public class PrintTask<Progress> extends CommandTask<Map<String, String>, Progre
         String copies = map.get(LP_COPIES);
         String ranges = map.get(LP_RANGES);
 
-        // TODO: 2016/5/16 Printing parameters need to be improved C1
-
         List<String> list = new ArrayList<String>();
         list.add("sh");
         list.add("proot.sh");

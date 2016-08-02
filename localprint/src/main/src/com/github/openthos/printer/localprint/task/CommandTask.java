@@ -265,8 +265,6 @@ public abstract class CommandTask<Params, Progress, Result> extends BaseTask<Par
                 return true;
             }
 
-            //runCommand(new String[]{"sh", "proot.sh" ,"cupsd"});
-
             File file = new File(bindWorkPath());
             try {
                 APP.cupsdProcess = Runtime.getRuntime()
@@ -288,13 +286,21 @@ public abstract class CommandTask<Params, Progress, Result> extends BaseTask<Par
     }
 
     /**
-     * Shutdown cups
+     * Shutdown cups normally to avoid data loss.
      */
-    protected void killCups() {
-        // TODO: 2016/5/15 Shutdown CUPS A3
-        /*if (cupsdProcess != null) {
-            cupsdProcess.destroy();
-        }*/
+    public static void killCups() {
+
+        try {
+            Process proc = Runtime.getRuntime().exec(new String[]{"sh", "-c",
+                    "ps | grep cupsd 2>/dev/null | awk '{cmd=\"kill \"$2;system(cmd)}'"});
+            proc.waitFor();
+            LogUtils.d("CommandTask", "killCups");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
     }
 
 }
