@@ -1,13 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item
+        android:bottom="9px"
+        android:left="9px"
+        android:right="9px"
+        android:top="9px">
+        <shape android:shape="rectangle">
+            <corners android:radius="5px" />
+            <solid android:color="#12000000" />
+        </shape>
+    </item>
+    <item
+        android:bottom="8px"
+        android:left="8px"
+        android:right="8px"
+        android:top="8px">
+        <shape android:shape="rectangle">
+            <corners android:radius="5px" />
+            <solid android:color="#11000000" />
+        </shape>
+    </item>
+    <item
+        android:bottom="7px"
+        android:left="7px"
+        android:right="7px"
+        android:top="7px">
+        <shape android:shape="rectangle">
+            <corners android:radius="5px" />
+            <solid android:color="#10000000" />
+        </shape>
+    </item>
+    <item
+        android:bottom="6px"
+        android:left="6px"
+        android:right="6px"
+        android:top="6px">
+        <shape android:shape="rectangle">
+            <corners android:radius="5px" />
+            <solid android:color="#09000000" />
+        </shape>
+    </item>
+    <item
+        android:bottom="5px"
+        android:left="5px"
+        android:right="5px"
+        android:top="5px">
+        <shape android:shape="rectangle">
+            <corners android:radius="5px" />
+            <solid android:color="#07000000" />
+        </shape>
+    </item>
+    <item
         android:bottom="4px"
         android:left="4px"
         android:right="4px"
         android:top="4px">
         <shape android:shape="rectangle">
             <corners android:radius="5px" />
-            <solid android:color="#12000000" />
+            <solid android:color="#06000000" />
         </shape>
     </item>
     <item
@@ -17,7 +67,7 @@
         android:top="3px">
         <shape android:shape="rectangle">
             <corners android:radius="5px" />
-            <solid android:color="#09000000" />
+            <solid android:color="#05000000" />
         </shape>
     </item>
     <item
@@ -27,7 +77,7 @@
         android:top="2px">
         <shape android:shape="rectangle">
             <corners android:radius="5px" />
-            <solid android:color="#07000000" />
+            <solid android:color="#04000000" />
         </shape>
     </item>
     <item
@@ -37,7 +87,7 @@
         android:top="1px">
         <shape android:shape="rectangle">
             <corners android:radius="5px" />
-            <solid android:color="#05000000" />
+            <solid android:color="#03000000" />
         </shape>
     </item>
     <item>
@@ -48,10 +98,10 @@
     </item>
     <!-- layout foreground -->
     <item
-        android:bottom="5px"
-        android:left="5px"
-        android:right="5px"
-        android:top="5px">
+        android:bottom="10px"
+        android:left="10px"
+        android:right="10px"
+        android:top="10px">
         <!-- show rectangle area -->
         <shape android:shape="rectangle">
             <solid android:color="#FFFFFF" />

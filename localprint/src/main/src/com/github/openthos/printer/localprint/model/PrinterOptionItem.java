@@ -193,8 +193,6 @@ public class PrinterOptionItem {
      */
     public static String media2cups(PrintAttributes.MediaSize mediaSize) {
 
-        // TODO: 2016/7/7 Add more mediaSize.
-
         String result = "A4";
         switch (mediaSize.getId()) {
             case "NA_LETTER":

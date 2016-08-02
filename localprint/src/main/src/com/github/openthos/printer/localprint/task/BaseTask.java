@@ -2,6 +2,9 @@ package com.github.openthos.printer.localprint.task;
 
 import android.os.AsyncTask;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.ThreadPoolExecutor;
+
 /**
  * BaseTask
  * Created by bboxh on 2016/5/14.

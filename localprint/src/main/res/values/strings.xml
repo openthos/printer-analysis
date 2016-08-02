@@ -1,10 +1,7 @@
 <resources>
     <!-- TODO: Perfect English translation -->
     <string name="app_name">LocalPrintService</string>
-    <string name="print_manager">printer manager</string>
     <string name="action_system_print_service">system_print_service</string>
-    <string name="action_settings">Settings</string>
-    <string name="print_service_notification">print service notification</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="initializing_print_service">Initializing Print Service ...</string>
@@ -19,12 +16,10 @@
     <string name="local_printers">local printers</string>
     <string name="network_printers">network printers</string>
     <string name="add_a_local_printer">Add a new local printer</string>
-    <string name="the_printer_can_be_added_directly">the printer can be added directly</string>
     <string name="add_success">Add success</string>
     <string name="empty">empty</string>
     <string name="tuning">Tuning</string>
     <string name="delete">Delete</string>
-    <string name="the_printer_is_untested">the printer is untested</string>
     <string name="searching">Searching</string>
     <string name="search_finished">Search completed</string>
     <string name="select_brand">Plaease selsect a manufacturer</string>
@@ -33,11 +28,9 @@
     <string name="adding">Adding</string>
     <string name="set_name">Please set a name</string>
     <string name="test_page">test page</string>
-    <string name="printer_setting">Printer Setting</string>
     <string name="deleting">Deleting</string>
     <string name="deleted_successfully">Deleted successfully</string>
     <string name="delete_failed">Delete failed</string>
-    <string name="print_failed">Print failed</string>
     <string name="print_copy_file_failed">Copy the file failed</string>
     <string name="printing">Printing</string>
     <string name="start_printing">Start printing</string>
@@ -54,7 +47,7 @@
     <string name="color_mode">color mode</string>
     <string name="duplx_mode">duplx mode</string>
     <string name="update_failed">Update failed.</string>
-    <string name="action_print_job_manager">print job manager</string>
+    <string name="print_job_manager">print job manager</string>
     <string name="document_name">document name</string>
     <string name="device">device</string>
     <string name="status">status</string>
@@ -76,11 +69,9 @@
     <string name="waiting_for_printer">Waiting for printer to be ready.</string>
     <string name="unknown">unknown</string>
     <string name="resume">resume</string>
-    <string name="resumed">resumed</string>
     <string name="resume_error">resume error</string>
     <string name="print_info">print info</string>
     <string name="option">option</string>
-    <string name="hello_blank_fragment">hello_blank_fragment</string>
     <string name="share_printer">share printer</string>
     <string name="add_net_printers">add net printers</string>
     <string name="add_a_network_printer">add a network printer</string>
@@ -92,4 +83,6 @@
     <string name="name_error_with_space">Printer name cannot contain space</string>
     <string name="url_error_with_null">Printer url cannot be null</string>
     <string name="name_error_with_null">Printer name cannot be null</string>
+    <string name="recommanded">Recommanded</string>
+    <string name="no_matching_driver">No matching drivers found, please select manually.</string>
 </resources>

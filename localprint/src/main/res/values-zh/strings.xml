@@ -2,8 +2,6 @@
 <resources>
     <!-- TODO: Perfect Chinese translation -->
     <string name="app_name">本地打印服务</string>
-    <string name="print_manager">打印管理</string>
-    <string name="action_settings">设置</string>
     <string name="action_system_print_service">系统打印服务</string>
     <string name="add_a_local_printer">添加一个新的本地打印机</string>
     <string name="add_new_printers">扫描本地打印机</string>
@@ -12,7 +10,6 @@
     <string name="cancel">取消</string>
     <string name="delete">删除</string>
     <string name="empty">空</string>
-    <string name="hello_blank_fragment"></string>
     <string name="initialization_failure">打印服务初始化失败，请重试！</string>
     <string name="initialization_suceess">打印服务初始化成功。</string>
     <string name="initializing_print_service">正在初始化打印服务。。。。。。</string>
@@ -21,11 +18,8 @@
     <string name="new_printer__notification">检测到新打印机</string>
     <string name="no_need_for_initialization">不需要初始化</string>
     <string name="ok">确定</string>
-    <string name="print_service_notification">打印服务通知</string>
     <string name="ready_to_initialize">第一次运行需要初始化，请点击确定！</string>
     <string name="test_page">打印测试页</string>
-    <string name="the_printer_can_be_added_directly">该打印机可以直接添加</string>
-    <string name="the_printer_is_untested">该打印机未经测试！</string>
     <string name="tuning">微调</string>
     <string name="whether_add_new_printer">是否现在添加打印机？</string>
     <string name="adding">添加中</string>
@@ -42,8 +36,6 @@
     <string name="please_confirm_component">请确认数据包在 /system 目录并重试！</string>
     <string name="print_copy_file_failed">拷贝文件失败</string>
     <string name="print_error">打印出错</string>
-    <string name="print_failed">打印失败</string>
-    <string name="printer_setting">打印机设置</string>
     <string name="printing">打印中</string>
     <string name="query_error">查询出错</string>
     <string name="start_printing">开始打印</string>
@@ -56,7 +48,7 @@
     <string name="update_success">更新成功</string>
     <string name="updating">更新中</string>
     <string name="no_double_side">单面打印</string>
-    <string name="action_print_job_manager">打印任务管理器</string>
+    <string name="print_job_manager">打印任务管理器</string>
     <string name="device">设备</string>
     <string name="document_name">文档名</string>
     <string name="operation">操作</string>
@@ -73,7 +65,6 @@
     <string name="remove">移除</string>
     <string name="resume">恢复</string>
     <string name="resume_error">恢复出错</string>
-    <string name="resumed">已恢复</string>
     <string name="start_error">开始出错</string>
     <string name="started">已开始</string>
     <string name="unknown">未知</string>
@@ -93,4 +84,6 @@
     <string name="name_error_with_space">打印机名称不能带有空格</string>
     <string name="url_error_with_null">打印机url地址不能为空</string>
     <string name="name_error_with_null">打印机名称不能为空</string>
+    <string name="recommanded">推荐</string>
+    <string name="no_matching_driver">未找到合适的驱动，请手动选择。</string>
 </resources>

@@ -1,5 +1,6 @@
 package com.github.openthos.printer.localprint.task;
 
+import android.os.AsyncTask;
 import android.util.Log;
 
 import com.github.openthos.printer.localprint.APP;
@@ -13,6 +14,8 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Base command task template.
@@ -24,6 +27,8 @@ public abstract class CommandTask<Params, Progress, Result> extends BaseTask<Par
      * Use the lock when starting CUPS.
      */
     private static final Boolean IS_STARTING_CUPS = false;
+
+    private static ExecutorService threadPool = Executors.newCachedThreadPool();
 
     /**
      * The ERROR value can be shown to the user.
@@ -70,7 +75,6 @@ public abstract class CommandTask<Params, Progress, Result> extends BaseTask<Par
      * @return boolean
      */
     protected boolean beforeCommand() {
-
         return true;
     }
 
@@ -124,7 +128,6 @@ public abstract class CommandTask<Params, Progress, Result> extends BaseTask<Par
                         lock_in.setFinish(true);
                     }
 
-
                 }
             };
 
@@ -150,8 +153,8 @@ public abstract class CommandTask<Params, Progress, Result> extends BaseTask<Par
                 }
             };
 
-            new Thread(taskIn).start();
-            new Thread(taskError).start();
+            threadPool.execute(taskIn);
+            threadPool.execute(taskError);
 
             synchronized (lock_in) {
                 if (!lock_in.isFinish()) {
@@ -164,7 +167,6 @@ public abstract class CommandTask<Params, Progress, Result> extends BaseTask<Par
                     lock_error.wait();
                 }
             }
-
 
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
@@ -273,7 +275,6 @@ public abstract class CommandTask<Params, Progress, Result> extends BaseTask<Par
                 e.printStackTrace();
             }
 
-
         }
 
         try {
@@ -294,7 +295,6 @@ public abstract class CommandTask<Params, Progress, Result> extends BaseTask<Par
         /*if (cupsdProcess != null) {
             cupsdProcess.destroy();
         }*/
-
     }
 
 }

@@ -113,7 +113,7 @@ public class ManagementActivity extends BaseActivity {
         editTextName.setText(deviceItem.getPrinteritem().getNickName());
         TextView textViewTipBrand = new TextView(this);
         textViewTipBrand.setText(R.string.select_brand);
-        Spinner spinnerBrand = new Spinner(this);
+        final Spinner spinnerBrand = new Spinner(this);
         final List<String> brandList = new ArrayList<String>();
         final ArrayAdapter<String> brandAdapter = new ArrayAdapter<String>(this,
                                        android.R.layout.simple_spinner_dropdown_item, brandList);
@@ -239,6 +239,11 @@ public class ManagementActivity extends BaseActivity {
 
         new SearchModelsTask<Void, Void>() {
             @Override
+            protected String bindPrinter() {
+                return deviceItem.getPrinteritem().getNickName().replace("_", " ");
+            }
+
+            @Override
             protected void onPostExecute(ModelsItem modelsItem) {
 
                 if (modelsItem == null) {
@@ -247,10 +252,17 @@ public class ManagementActivity extends BaseActivity {
                                    + " " + ERROR, Toast.LENGTH_SHORT).show();
                     return;
                 }
-                buttonPositive.setEnabled(true);
+
                 brandList.addAll(modelsItem.getBrand());
                 models.putAll(modelsItem.getModels());
                 brandAdapter.notifyDataSetChanged();
+                buttonPositive.setEnabled(true);
+                if(brandList.contains(getString(R.string.recommanded))){
+                    spinnerBrand.setSelection(brandList.size() - 1);
+                }else{
+                    Toast.makeText(ManagementActivity.this, getString(R.string.no_matching_driver),
+                            Toast.LENGTH_SHORT).show();
+                }
             }
         }.start();
 
@@ -450,6 +462,11 @@ public class ManagementActivity extends BaseActivity {
 
         new SearchModelsTask<Void, Void>() {
             @Override
+            protected String bindPrinter() {
+                return null;
+            }
+
+            @Override
             protected void onPostExecute(ModelsItem modelsItem) {
                 if (modelsItem == null) {
                     Toast.makeText(ManagementActivity.this, R.string.query_error + " " + ERROR,
@@ -501,12 +518,6 @@ public class ManagementActivity extends BaseActivity {
 
         if (id == R.id.action_print_job) {
             Intent intent = new Intent(ManagementActivity.this, JobManagerActivity.class);
-            startActivity(intent);
-            return true;
-        }
-
-        if (id == R.id.action_settings) {
-            Intent intent = new Intent(ManagementActivity.this, SettingsActivity.class);
             startActivity(intent);
             return true;
         }
