@@ -197,7 +197,6 @@ public class PrinterOptionItem {
 
         String result = "A4";
         switch (mediaSize.getId()) {
-            //  if (mediaSize.equals(PrintAttributes.MediaSize.NA_LETTER.getId())) {
             case "NA_LETTER":
                 result = "Letter";
                 break;
@@ -207,18 +206,14 @@ public class PrinterOptionItem {
             case "ISO_A3":
                 result = "A3";
                 break;
-            //} else if (mediaSize.equals(PrintAttributes.MediaSize.ISO_A4)) {
             case "ISO_A4":
                 result = "A4";
-                //} else if (mediaSize.equals(PrintAttributes.MediaSize.ISO_A5)) {
             case "ISO_A5":
                 result = "A5";
                 break;
-            //} else if (mediaSize.equals(PrintAttributes.MediaSize.ISO_A6)) {
             case "ISO_A6":
                 result = "A6";
                 break;
-            //} else if (mediaSize.equals(PrintAttributes.MediaSize.ISO_B5)) {
             case "ISO_B5":
                 result = "B5";
                 break;
@@ -233,7 +228,6 @@ public class PrinterOptionItem {
                 break;
             case "ISO_C5":
                 result = "C5";
-            //} else if (mediaSize.equals(PrintAttributes.MediaSize.NA_MONARCH)) {
             case "NA_MONARCH":
                 result = "Executive";
                 break;
