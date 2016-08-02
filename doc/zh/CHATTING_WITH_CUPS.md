@@ -81,9 +81,42 @@ CUPS交流接口描述了CUPS程序与APP上层交互的方式。
 
 本表尽可能的收集能够相互对应的尺寸列表。
 
-|CUPS中的尺寸名|CUPS中的值|Android中的尺寸名|Android中的值
+|CUPS中的尺寸名|PPD文件中的值|Android中的尺寸名|Android中的值
 |---|---|---|---
-|A4||ISO_A4|210mm x 297mm (8.27" x 11.69")
+|A2||ISO_A2|420mm x 594mm (16.54" x 23.39")
+|A3|297x420mm|ISO_A3|297mm x 420mm (11.69" x 16.54")
+|A4|210x297mm|ISO_A4|210mm x 297mm (8.27" x 11.69")
+|A5|148x210mm|ISO_A5|148mm x 210mm (5.83" x 8.27")
+|A6|105x148mm|ISO_A6|105mm x 148mm (4.13" x 5.83")
+|B5|176x250mm|ISO_B5|176mm x 250mm (6.93" x 9.84")
+|B6||ISO_B6|125mm x 176mm (4.92" x 6.93")
+|B7||ISO_B7|88mm x 125mm (3.46" x 4.92")
+|C4||ISO_C4|229mm x 324mm (9.02" x 12.76")
+|C5||ISO_C5|162mm x 229mm (6.38" x 9.02")
+|Letter||NA_LETTER|8.5" x 11" (279mm x 216mm)
+|Executive||NA_MONARCH|7.25" x 10.5" (184mm x 267mm)
+|8k||ROC_8K|270mm x 390mm (10.629" x 15.3543")
+|16k||ROC_16K|195mm x 270mm (7.677" x 10.629")
+|Legal||NA_LEGAL|8.5" x 14" (216mm x 356mm)
+|Ledger||NA_LEDGER|17" x 11" (432mm × 279mm)
+|B||NA_TABLOID|11" x 17" (279mm × 432mm)
+|Card3x5||NA_INDEX_3X5|3" x 5" (76mm x 127mm)
+|Photo4x6||NA_INDEX_4X6|4" x 6" (102mm x 152mm)
+|Card5x8||NA_INDEX_5X8|5" x 8" (127mm x 203mm)
+|Hagaki||JPN_HAGAKI|100mm x 148mm (3.937" x 5.827")
+|Oufuku||JPN_OUFUKU|148mm x 200mm (5.827" x 7.874")
+|JB5||JIS_B5|182mm x 257mm (7.165" x 10.118")
+|JB7||JIS_B7|91mm x 128mm (3.583" x 5.049")
+|ExecutiveJIS||JIS_EXEC|216mm x 330mm (8.504" x 12.992")
+|EnvA2||JPN_CHOU2|111.1mm x 146mm (4.374" x 5.748")
+|EnvChou3||JPN_CHOU3|120mm x 235mm (4.724" x 9.252")
+|EnvChou4||JPN_CHOU4|90mm x 205mm (3.543" x 8.071")
+|EnvDL||PRC_5|110mm x 220mm (4.330" x 8.661")
+|Mutsugiri||NA_QUARTO|8" x 10" (203mm x 254mm)
+|EnvKaku2||JPN_KAKU2|240mm x 332mm (9.449" x 13.071")
+|Yougata4||JPN_YOU4|105mm x 235mm (4.134" x 9.252")
+
+
 
 # 打印状态记录表
 
