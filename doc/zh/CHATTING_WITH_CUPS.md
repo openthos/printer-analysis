@@ -83,40 +83,70 @@ CUPS交流接口描述了CUPS程序与APP上层交互的方式。
 
 |CUPS中的尺寸名|PPD文件中的值|Android中的尺寸名|Android中的值
 |---|---|---|---
-|A2||ISO_A2|420mm x 594mm (16.54" x 23.39")
+|A2|420x594mm|ISO_A2|420mm x 594mm (16.54" x 23.39")
 |A3|297x420mm|ISO_A3|297mm x 420mm (11.69" x 16.54")
 |A4|210x297mm|ISO_A4|210mm x 297mm (8.27" x 11.69")
 |A5|148x210mm|ISO_A5|148mm x 210mm (5.83" x 8.27")
 |A6|105x148mm|ISO_A6|105mm x 148mm (4.13" x 5.83")
 |B5|176x250mm|ISO_B5|176mm x 250mm (6.93" x 9.84")
-|B6||ISO_B6|125mm x 176mm (4.92" x 6.93")
-|B7||ISO_B7|88mm x 125mm (3.46" x 4.92")
-|C4||ISO_C4|229mm x 324mm (9.02" x 12.76")
-|C5||ISO_C5|162mm x 229mm (6.38" x 9.02")
-|Letter||NA_LETTER|8.5" x 11" (279mm x 216mm)
-|Executive||NA_MONARCH|7.25" x 10.5" (184mm x 267mm)
-|8k||ROC_8K|270mm x 390mm (10.629" x 15.3543")
-|16k||ROC_16K|195mm x 270mm (7.677" x 10.629")
-|Legal||NA_LEGAL|8.5" x 14" (216mm x 356mm)
-|Ledger||NA_LEDGER|17" x 11" (432mm × 279mm)
-|B||NA_TABLOID|11" x 17" (279mm × 432mm)
-|Card3x5||NA_INDEX_3X5|3" x 5" (76mm x 127mm)
-|Photo4x6||NA_INDEX_4X6|4" x 6" (102mm x 152mm)
-|Card5x8||NA_INDEX_5X8|5" x 8" (127mm x 203mm)
-|Hagaki||JPN_HAGAKI|100mm x 148mm (3.937" x 5.827")
-|Oufuku||JPN_OUFUKU|148mm x 200mm (5.827" x 7.874")
-|JB5||JIS_B5|182mm x 257mm (7.165" x 10.118")
-|JB7||JIS_B7|91mm x 128mm (3.583" x 5.049")
-|ExecutiveJIS||JIS_EXEC|216mm x 330mm (8.504" x 12.992")
-|EnvA2||JPN_CHOU2|111.1mm x 146mm (4.374" x 5.748")
-|EnvChou3||JPN_CHOU3|120mm x 235mm (4.724" x 9.252")
-|EnvChou4||JPN_CHOU4|90mm x 205mm (3.543" x 8.071")
-|EnvDL||PRC_5|110mm x 220mm (4.330" x 8.661")
-|Mutsugiri||NA_QUARTO|8" x 10" (203mm x 254mm)
-|EnvKaku2||JPN_KAKU2|240mm x 332mm (9.449" x 13.071")
-|Yougata4||JPN_YOU4|105mm x 235mm (4.134" x 9.252")
+|B6|125x176mm|ISO_B6|125mm x 176mm (4.92" x 6.93")
+|B7|88x125mm|ISO_B7|88mm x 125mm (3.46" x 4.92")
+|C4|229x324mm|ISO_C4|229mm x 324mm (9.02" x 12.76")
+|C5|162x229mm|ISO_C5|162mm x 229mm (6.38" x 9.02")
+|Letter|8.5x11in|NA_LETTER|8.5" x 11" (279mm x 216mm)
+|Executive|7.25x10.5in|NA_MONARCH|7.25" x 10.5" (184mm x 267mm)
+|8k|10.75x15.5in|ROC_8K|270mm x 390mm (10.629" x 15.3543")
+|16k|7.75x10.75in|ROC_16K|195mm x 270mm (7.677" x 10.629")
+|Legal|8.5x14in|NA_LEGAL|8.5" x 14" (216mm x 356mm)
+|Ledger|11x17in|NA_LEDGER|17" x 11" (432mm × 279mm)
+|B|11x17in|NA_TABLOID|11" x 17" (279mm × 432mm)
+|Card3x5|3x5in|NA_INDEX_3X5|3" x 5" (76mm x 127mm)
+|Photo4x6|4x6in|NA_INDEX_4X6|4" x 6" (102mm x 152mm)
+|Card5x8|5x8in|NA_INDEX_5X8|5" x 8" (127mm x 203mm)
+|Hagaki|100x148mm|JPN_HAGAKI|100mm x 148mm (3.937" x 5.827")
+|Oufuku|148x200mm|JPN_OUFUKU|148mm x 200mm (5.827" x 7.874")
+|JB5|182x257mm|JIS_B5|182mm x 257mm (7.165" x 10.118")
+|JB7|91x128mm|JIS_B7|91mm x 128mm (3.583" x 5.049")
+|ExecutiveJIS|8.5x12.986in|JIS_EXEC|216mm x 330mm (8.504" x 12.992")
+|EnvA2|4.37x5.75in|JPN_CHOU2|111.1mm x 146mm (4.374" x 5.748")
+|EnvChou3|120x235mm|JPN_CHOU3|120mm x 235mm (4.724" x 9.252")
+|EnvChou4|90x205mm|JPN_CHOU4|90mm x 205mm (3.543" x 8.071")
+|EnvDL|110x220mm|PRC_5|110mm x 220mm (4.330" x 8.661")
+|Mutsugiri|8x10in|NA_QUARTO|8" x 10" (203mm x 254mm)
+|EnvKaku2|240x332mm|JPN_KAKU2|240mm x 332mm (9.449" x 13.071")
+|Yougata4|105 x 235mm|JPN_YOU4|105mm x 235mm (4.134" x 9.252")
 
-
+## 未找到对应尺寸
+|CUPS中的尺寸名|PPD文件中的值|
+|---|---|
+|Photo5x7|5x7in|
+|FLSA|8.5x13in|
+|EnvC6|114x162mm|
+|EnvMonarch|3.875x7.5in|
+|Env9|Envelope #9|
+|Env10|4.12x9.5in|
+|EnvC5|162x229mm|
+|EnvB5|176x250mm|
+|SuperB|13x19in|
+|B4|257x364mm|
+|PhotoL|3.5x5in|
+|HV|101x180mm|
+|Cabinet|120x165mm|
+|8x10|8x10in|
+|Env6|3.63x6.5in|
+|EnvCard|4.4x6in|
+|L|89x127mm|
+|2L|127x178mm|
+|CDDVD80|80mm|
+|CDDVD120|120mm|
+|FanFoldGermanLegal|8.5 x 13|
+|Oficio|216 x 340 mm|
+|184x260mm|16K 184 x 260 mm|
+|7.75x10.75|7.75x10.75|
+|260x368mm|8K 260x368 mm|
+|10.75x15.5|8K 273x394 mm|
+|DoublePostcardRotated|Postcard Double Long Edge|
+|FanFoldGerman|8.5x12|
 
 # 打印状态记录表
 
