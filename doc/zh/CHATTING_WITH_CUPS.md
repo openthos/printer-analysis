@@ -63,7 +63,7 @@ CUPS交流接口描述了CUPS程序与APP上层交互的方式。
 
 ## 注意
 
-由于使用`Runtime.getRuntime().exec(cmd, null, file);`函数执行命令，一次只能执行一条命令，所以需要多条命令时，将命令放入一个脚本文件里执行。
+由于使用`Runtime.getRuntime().exec(cmd, null, file);`函数执行命令，以及proot工具包装程序，一次只能执行一条命令，所以需要多条命令时，将命令放入一个脚本文件里执行。
 
 # 颜色对应表
 
