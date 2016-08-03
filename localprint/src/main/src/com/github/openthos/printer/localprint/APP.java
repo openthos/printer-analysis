@@ -166,6 +166,8 @@ public class APP extends Application {
         SharedPreferences.Editor editer = sp.edit();
         editer.putString(APP.FIRST_RUN, APP.COMPONENT_PATH);
         editer.apply();
+
+        APP.sendRefreshJobsIntent();
     }
 
     public static void initFailed(Context context) {
