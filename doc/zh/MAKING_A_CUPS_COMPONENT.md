@@ -181,7 +181,11 @@ epson-inkjet-printer-201401w缺少库libjpeg62，下载编译好的 libjpeg62-62
 
 ...
 
-### 3.2.9 samba
+### 3.2.9 嘉华龙马打印机驱动
+
+...
+
+### 3.2.10 samba
 
 添加samba是为了能够与Windows进行网络打印，Linux与Windows上打印系统的实现各不相同，因此想要实现两者通信，samba是必须的。
 
