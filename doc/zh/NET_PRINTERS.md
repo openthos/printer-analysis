@@ -125,6 +125,6 @@ HP P1108、Pantum P2500W
 ### 2.3.2 **奔图 P2500W**
 此款打印机自身没有网线接口，但是自带WIFI打印功能，开启打印机后，按下WIFI按钮，看到WIFI标志的指示灯闪烁后，将PC连接至打印机发出的无线网上（名称为Pantum-AP-3DCF35），之后查看此网络的网关即可获得具体的ip地址，将此地址按照socket协议在Openthos中添加并选择正确品牌以及驱动即可。
 
-### 2.3.3 **HP Laserjet Pro 400 M401dn
+### 2.3.3 **HP Laserjet Pro 400 M401dn**
 将其用网线与交换机or路由器相连接，打开开关，自动开启网络打印功能，在屏幕上可以获取打印机当前网络打印的ipd地址，将此地址按照socket协议在Openthos中添加并选择正确品牌以及驱动（品牌：HP；驱动：```LaserJet Series PCL 4/5```or```LaserJet Series PCL 6```）即可。    
 经验：对于HP品牌的比较高端的一些一体机机型，建议使用PCL通用驱动，即上面所写的两种驱动之一。
