@@ -1,12 +1,12 @@
-# 这是什么
+# 1 这是什么
 
 CUPS数据包作为打印程序的组件（component），需要额外放在系统中，在打印程序第一次运行时会自动解压导入。它是打印程序的核心，打印功能靠它实现。
 
 数据包实际上是自己定制的一个CUPS运行环境，里面封装了CUPS及一些打印机驱动。这些程序能够在openthos系统中独立运行。
 
-# 原理
+# 2 原理
 
-## 依赖Linux内核
+## 2.1 依赖Linux内核
 
 Openthos系统基于Android x86改造而来,而Android系统是一种使用Linux内核的系统，这点和其他Linux类系统一样。在Linux类系统中CUPS[(Common UNIX Printing System，通用Unix打印系统)](http://www.cups.org/)是应用最广的打印解决方案。CUPS是开源的，可以编译安装在任何Linux类系统。Android使用Linux内核，所以有可能性把CUPS移植到Openthos系统中。
 
@@ -17,7 +17,7 @@ CUPS属于Linux用户态程序，从内核的角度来看，它的成功运行�
 
 所以，移植CUPS理论上是可行的，事实也如此。
 
-## 使用proot
+## 2.2 使用proot
 
 我们希望让CUPS程序运行在指定的目录里，不对系统产生其他影响。如果让CUPS直接运行在系统中，CUPS必然会用到一些root权限才能读写的目录，很不方便。所以很显然的想到了`chroot`这种改变根目录的技术。但是chroot是需要root权限的，于是我们找到了一个限制更少的工具：PRoot。
 
@@ -27,7 +27,7 @@ PRoot是一种chroot的用户态开源实现工具。（PRoot项目地址: https
 
 所以，我们使用PRoot就能够让CUPS运行在指定的目录里，不必弄脏系统。
 
-# 制作
+# 3 制作
 
 本节介绍制作一个包含CUPS的独立运行环境的步骤。
 
@@ -35,9 +35,9 @@ PRoot是一种chroot的用户态开源实现工具。（PRoot项目地址: https
 
 在这里尽可能的给出编译时所需的依赖，但肯定会有很多遗漏需要自行解决。
 
-## 基础环境
+## 3.1 基础环境
 
-### 加入proot
+### 3.1.1 加入proot
 
 先加入proot可执行文件。**注意：master分支的proot不支持自定义临时文件夹**，会使用 /tmp 目录，而在Android中这是不可用的。详见：[PRoot issue 94](https://github.com/proot-me/PRoot/issues/94)，所以可以使用 next 分支，该分支添加了`PROOT_TMP_DIR`参数可以指定临时目录。
 
@@ -57,7 +57,7 @@ export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin
 `pwd`/proot-x86-2 -w / -r `pwd` -b /dev -b /sys -b /proc "$@"
 ```
 
-### 加入bash 和 busybox
+### 3.1.2 加入bash 和 busybox
 
 由于CUPS等程序在运行过程中需要执行很多脚本以及依赖很多命令，所以需要加入脚本执行器和命令。
 
@@ -70,11 +70,11 @@ export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin
 3. 由于硬链接在打包的时候会重复占用空间，所有需要替换成软连接。我们编写了[buildcommand.sh](https://github.com/openthos/printer-analysis/blob/dev/shell/buildcommand.sh)脚本（在数据包根目录）用于自动化替换替换busybox生成的硬链接到软连接。
 4. 将静态编译（也可以动态编译，需要放入依赖文件）的bash放入 bin 目录，删除busybox创建的 sh 命令，创建sh软连接到bash。
 
-## 安装CUPS等程序
+## 3.2 安装CUPS等程序
 
 编译安装这些程序时，先动态编译，之后再使用脚本把依赖复制过来。这些程序的介绍请看最后 CUPS相关项目介绍 。
 
-## libusb-1.0.9
+### 3.2.1 libusb-1.0.9
 
 编译安装libusb到系统以替换其自带libusb是因为Archlinux自带的libusb可能加入了一些特性，导致cups无法在Android环境下成功读写usb端口。
 
@@ -84,7 +84,7 @@ make
 make install
 ```
 
-### cups-2.1.2
+### 3.2.2 cups-2.1.2
 
 参考命令:
 ```
@@ -104,7 +104,7 @@ make install                                      安装到当前系统
 
 由于Openthos中的tar命令问题，会导致解压后部分权限丢失。cups网页文件的权限必须是所有用户都有读权限的，所以我们编写了[chang_mode.sh](https://github.com/openthos/printer-analysis/blob/dev/shell/chang_mode.sh)脚本自动修复网页文件的权限。网页文件位于`/usr/share/cups`文件夹，连同cups文件夹都进行修复。
 
-### ghostscript-9.18
+### 3.2.3 ghostscript-9.18
 
 参考命令:
 ```
@@ -115,7 +115,7 @@ DESTDIR=/home/deep/component_10  make install
 make install
 ```
 
-### cups-filters-1.8.2
+### 3.2.4 cups-filters-1.8.2
 
 先到ghostscript的ijs目录，单独编译ijs，执行：
 ```
@@ -134,7 +134,7 @@ DESTDIR=/home/deep/component_10  make install
 make install
 ```
 
-## foo2zjs
+### 3.2.5 foo2zjs
 
 foo2zjs可以支持一些激光打印机，比如HP的。由于未能找到foo2zjs的版本号，所以请到官网下载最新版。
 
@@ -145,7 +145,7 @@ DESTDIR=/home/deep/component_10  make install
 make install
 ```
 
-## Pantum官方闭源驱动
+### 3.2.6 Pantum官方闭源驱动
 
 从官网搜集下载P和M两个系列的打印机Linux驱动：
 
@@ -160,7 +160,7 @@ Pantum的驱动是闭源的，会解压出 deb 文件，使用i386版本。
 
 注意：奔图的PPD文件有空格，需要全部去除，否则打印程序解析会出错，我们这里将空格替换为`_`。
 
-## Eposn官方开源驱动
+### 3.2.7 Eposn官方开源驱动
 
 由于最新的Epson驱动是以守护进程的形式运行，无法找到任何PPD文件。我们不希望额外的程序一直运行在后台，所以决定先使用其旧版驱动。
 
@@ -177,11 +177,11 @@ epson-inkjet-printer-201401w缺少库libjpeg62，下载编译好的 libjpeg62-62
 
 **注意：该程序是 Linux Standard Base (LSB) 程序，使用的是 /lib/ld-lsb.so.3 链接器**，因此执行`ln -s  /lib/ld-linux.so.2 /lib/ld-lsb.so.3`链接到 ld-linux.so 。
 
-## Hpcups && Hplip plugin
+### 3.2.8 Hpcups && Hplip plugin
 
 ...
 
-## samba
+### 3.2.9 samba
 
 添加samba是为了能够与Windows进行网络打印，Linux与Windows上打印系统的实现各不相同，因此想要实现两者通信，samba是必须的。
 
@@ -197,13 +197,13 @@ epson-inkjet-printer-201401w缺少库libjpeg62，下载编译好的 libjpeg62-62
 
 4、使用[cmdldcopy.sh](https://github.com/openthos/printer-analysis/blob/dev/shell/cmdldcopy.sh)脚本将```smbspool```执行所需要依赖的动态库进行拷贝，执行```./cmdldcopy.sh /usr/bin/smbspool ./componet_10/```
 
-## 复制依赖
+## 3.3 复制依赖
 
 如果所需的程序都加入了，最后需要补全程序缺少的依赖，因此我们编译了[share_lib2.sh](https://github.com/openthos/printer-analysis/blob/dev/shell/share_lib2.sh)脚本来递归遍历所有动态链接程序的依赖，包括so库文件的so库依赖。
 
 原理是依次调用`ldd`命令解析依赖并复制。
 
-## 打包
+## 3.4 打包
 
 ```
 tar -zvcf component_10.tar.gz component_10
@@ -211,9 +211,9 @@ tar -zvcf component_10.tar.gz component_10
 
 我们在开发中，通常会用数字命名数据包，以区分不同的版本，防止混淆。最后放入系统时再统一名称。
 
-# 其他
+# 4 其他
 
-## 调试
+## 4.1 调试
 
 为了便于调试数据包里程序的问题，除了cups的日志外，可使用strace程序记录系统调用。因此，我们还放入一个静态编译的strace在数据包中。
 
@@ -226,6 +226,6 @@ strace -f cupsd -f &> logPrint
 ```
 这样就能记录所有的系统调用到logPrint文件中，一定要加上`-f`参数追踪子进程的系统调用。
 
-## CUPS相关项目介绍
+## 4.2 CUPS相关项目介绍
 
 请查看：https://github.com/openthos/printer-analysis/blob/master/doc/RELATED_PROJECTS.md
