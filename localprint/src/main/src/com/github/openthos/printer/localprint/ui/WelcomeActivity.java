@@ -2,9 +2,6 @@ package com.github.openthos.printer.localprint.ui;
 
 
 import android.app.Activity;
-import android.content.ContextWrapper;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -80,25 +77,14 @@ public class WelcomeActivity extends Activity {
     }
 
     private void exit() {
-        Intent intent = new Intent(APP.BROADCAST_ALL_ACTIVITY);
-        intent.putExtra(APP.TASK, APP.TASK_INIT_FAIL);
-        sendBroadcast(intent);
+        APP.initFailed(this);
         finish();
     }
 
     private void start_init(boolean flag, String ERROR) {
         if (flag) {
 
-            Intent intent = new Intent(APP.BROADCAST_ALL_ACTIVITY);
-            intent.putExtra(APP.TASK, APP.TASK_INIT_FINISH);
-            sendBroadcast(intent);
-
-            APP.IS_FIRST_RUN = false;
-            SharedPreferences sp = WelcomeActivity.this.getSharedPreferences(APP.GLOBAL,
-                                                            ContextWrapper.MODE_PRIVATE);
-            SharedPreferences.Editor editer = sp.edit();
-            editer.putString(APP.FIRST_RUN, APP.COMPONENT_PATH);
-            editer.apply();
+            APP.initSucceed(this);
 
             mProgressBar.setVisibility(ProgressBar.INVISIBLE);
             mTextView.setText(R.string.initialization_suceess);

@@ -9,6 +9,8 @@ import android.os.Looper;
 
 import com.android.systemui.statusbar.phone.PrinterJobStatus;
 import com.github.openthos.printer.localprint.service.LocalPrintService;
+import com.github.openthos.printer.localprint.task.InitTask;
+import com.github.openthos.printer.localprint.ui.WelcomeActivity;
 import com.github.openthos.printer.localprint.util.LogUtils;
 
 import java.util.LinkedList;
@@ -51,6 +53,8 @@ public class APP extends Application {
     public static final int TASK_JOB_RESULT = 1011;
     public static final int TASK_REFRESH_JOBS = 1012;
     public static final int TASK_ADD_NEW_NET_PRINTER = 1013;
+    public static final int TASK_INIT = 1014;
+
     /**
      * The print job refresh interval (ms).
      */
@@ -73,6 +77,7 @@ public class APP extends Application {
     public static boolean IS_LOGD = true;
     public static boolean IS_LOGI = true;
     public static boolean IS_FIRST_RUN = true;
+    public static boolean IS_INITIALIZING = false;
     public static boolean IS_MANAGEMENT_ACTIVITY_ON_TOP = false;
 
     /**
@@ -110,7 +115,6 @@ public class APP extends Application {
 
         if (!first_run.equals(COMPONENT_PATH)) {
             IS_FIRST_RUN = true;
-            initData();
         } else {
             IS_FIRST_RUN = false;
         }
@@ -118,10 +122,6 @@ public class APP extends Application {
 
         //Refresh printer Jobs when start up ths app.
         sendRefreshJobsIntent();
-
-    }
-
-    private void initData() {
 
     }
 
@@ -155,4 +155,22 @@ public class APP extends Application {
         return context;
     }
 
+    public static void initSucceed(Context context) {
+        Intent intent = new Intent(APP.BROADCAST_ALL_ACTIVITY);
+        intent.putExtra(APP.TASK, APP.TASK_INIT_FINISH);
+        context.sendBroadcast(intent);
+
+        APP.IS_FIRST_RUN = false;
+        SharedPreferences sp = context.getSharedPreferences(APP.GLOBAL,
+                ContextWrapper.MODE_PRIVATE);
+        SharedPreferences.Editor editer = sp.edit();
+        editer.putString(APP.FIRST_RUN, APP.COMPONENT_PATH);
+        editer.apply();
+    }
+
+    public static void initFailed(Context context) {
+        Intent intent = new Intent(APP.BROADCAST_ALL_ACTIVITY);
+        intent.putExtra(APP.TASK, APP.TASK_INIT_FAIL);
+        context.sendBroadcast(intent);
+    }
 }

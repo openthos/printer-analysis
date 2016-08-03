@@ -33,16 +33,16 @@ public class UsbPrinterReceiver extends BroadcastReceiver {
 
             //Update UI when management activity is on the top,or handled by OpenthosPrintService
             if (APP.IS_MANAGEMENT_ACTIVITY_ON_TOP) {
-                Intent new_intent = new Intent(APP.getApplicatioContext(),
+                Intent newIntent = new Intent(APP.getApplicatioContext(),
                                                ManagementActivity.class);
-                new_intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                new_intent.putExtra(APP.TASK, APP.TASK_ADD_NEW_PRINTER);
-                APP.getApplicatioContext().startActivity(new_intent);
+                newIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                newIntent.putExtra(APP.TASK, APP.TASK_ADD_NEW_PRINTER);
+                APP.getApplicatioContext().startActivity(newIntent);
             } else {
-                Intent new_intent
+                Intent newIntent
                         = new Intent(APP.getApplicatioContext(), LocalPrintService.class);
-                new_intent.putExtra(APP.TASK, APP.TASK_DETECT_USB_PRINTER);
-                APP.getApplicatioContext().startService(new_intent);
+                newIntent.putExtra(APP.TASK, APP.TASK_DETECT_USB_PRINTER);
+                APP.getApplicatioContext().startService(newIntent);
             }
 
             //Send a message when there has jobs waiting for printer.
@@ -56,6 +56,10 @@ public class UsbPrinterReceiver extends BroadcastReceiver {
                 }, APP.JOB_REFRESH_WAITING_PRINTER_INTERVAL);
             }
 
+        } else if (action.equals(Intent.ACTION_BOOT_COMPLETED)){
+            Intent newIntent = new Intent(APP.getApplicatioContext(), LocalPrintService.class);
+            newIntent.putExtra(APP.TASK, APP.TASK_INIT);
+            APP.getApplicatioContext().startService(newIntent);
         }
 
     }

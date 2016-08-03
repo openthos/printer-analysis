@@ -50,7 +50,7 @@ public abstract class BaseActivity extends ActionBarActivity {
         }
 
         initialize();
-        if_first_run();
+        isFirstRun();
 
     }
 
@@ -64,11 +64,19 @@ public abstract class BaseActivity extends ActionBarActivity {
         LogUtils.d(TAG, "initialize()");
     }
 
-    private void if_first_run() {
+    private void isFirstRun() {
+
+        if(APP.IS_INITIALIZING){
+            Toast.makeText(this, getString(R.string.initializing_print_service),
+                           Toast.LENGTH_SHORT).show();
+            finish();
+        }
+
         if (APP.IS_FIRST_RUN) {
             Intent intent = new Intent(this, WelcomeActivity.class);
             startActivity(intent);
         }
+
     }
 
     @Override

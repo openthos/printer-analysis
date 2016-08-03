@@ -19,6 +19,7 @@ import com.github.openthos.printer.localprint.APP;
 import com.github.openthos.printer.localprint.R;
 import com.github.openthos.printer.localprint.task.CommandTask;
 import com.github.openthos.printer.localprint.task.DetectNewPrinterTask;
+import com.github.openthos.printer.localprint.task.InitTask;
 import com.github.openthos.printer.localprint.task.JobQueryTask;
 import com.github.openthos.printer.localprint.ui.ManagementActivity;
 import com.github.openthos.printer.localprint.util.LogUtils;
@@ -65,7 +66,7 @@ public class LocalPrintService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        if(intent == null){
+        if (intent == null) {
             return START_STICKY;
         }
 
@@ -81,11 +82,36 @@ public class LocalPrintService extends Service {
             case APP.TASK_REFRESH_JOBS:
                 refreshJobs();
                 break;
+            case APP.TASK_INIT:
+                bootCheck();
             default:
                 break;
         }
 
         return START_STICKY;
+    }
+
+    private void bootCheck() {
+
+        if (!APP.IS_FIRST_RUN) {
+            return;
+        }
+
+        APP.IS_INITIALIZING = true;
+
+        new InitTask<Void>() {
+            @Override
+            protected void onPostExecute(Boolean aBoolean) {
+                LogUtils.d(TAG, "init -> " + aBoolean);
+                APP.IS_INITIALIZING = false;
+                if (aBoolean) {
+                    APP.initSucceed(LocalPrintService.this);
+                } else {
+                    APP.initFailed(LocalPrintService.this);
+                }
+            }
+        }.start();
+
     }
 
     /**
