@@ -233,3 +233,18 @@ strace -f cupsd -f &> logPrint
 ## 4.2 CUPS相关项目介绍
 
 请查看：https://github.com/openthos/printer-analysis/blob/master/doc/RELATED_PROJECTS.md
+
+## 4.3 当时的开发环境
+
+在开发整个数据包时，使用的是ArchLinux虚拟机。为了保证数据包继续开发时的兼容性，请下载VMware 12和我们提供的镜像文件。
+当然也可以选择从头制作，则不需要一致的制作环境。
+
+镜像文件地址：
+
+* 地址1：
+百度云链接：http://pan.baidu.com/s/1nuX8spN 密码：l2xk
+
+* 地址2：
+实验室内网docker服务器中：/home/lh/hxp/archlinux 文件夹。
+
+使用说明请查看镜像文件地址中的 readme.txt 文件。
