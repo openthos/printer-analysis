@@ -294,6 +294,7 @@ public abstract class CommandTask<Params, Progress, Result> extends BaseTask<Par
             Process proc = Runtime.getRuntime().exec(new String[]{"sh", "-c",
                     "ps | grep cupsd 2>/dev/null | awk '{cmd=\"kill \"$2;system(cmd)}'"});
             proc.waitFor();
+            Thread.sleep(1);
             LogUtils.d("CommandTask", "killCups");
         } catch (IOException e) {
             e.printStackTrace();

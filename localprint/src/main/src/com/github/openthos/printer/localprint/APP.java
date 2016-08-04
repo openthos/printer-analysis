@@ -119,7 +119,6 @@ public class APP extends Application {
             IS_FIRST_RUN = false;
         }
 
-
         //Refresh printer Jobs when start up ths app.
         sendRefreshJobsIntent();
 
@@ -149,7 +148,6 @@ public class APP extends Application {
 
         return jobList;
     }
-
 
     public static Context getApplicatioContext() {
         return context;

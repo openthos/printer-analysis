@@ -257,9 +257,9 @@ public class ManagementActivity extends BaseActivity {
                 models.putAll(modelsItem.getModels());
                 brandAdapter.notifyDataSetChanged();
                 buttonPositive.setEnabled(true);
-                if(brandList.contains(getString(R.string.recommanded))){
+                if (brandList.contains(getString(R.string.recommanded))) {
                     spinnerBrand.setSelection(brandList.size() - 1);
-                }else{
+                } else {
                     Toast.makeText(ManagementActivity.this, getString(R.string.no_matching_driver),
                             Toast.LENGTH_SHORT).show();
                 }

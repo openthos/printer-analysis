@@ -66,7 +66,7 @@ public abstract class BaseActivity extends ActionBarActivity {
 
     private void isFirstRun() {
 
-        if(APP.IS_INITIALIZING){
+        if (APP.IS_INITIALIZING) {
             Toast.makeText(this, getString(R.string.initializing_print_service),
                            Toast.LENGTH_SHORT).show();
             finish();
@@ -76,7 +76,6 @@ public abstract class BaseActivity extends ActionBarActivity {
             Intent intent = new Intent(this, WelcomeActivity.class);
             startActivity(intent);
         }
-
     }
 
     @Override

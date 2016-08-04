@@ -56,7 +56,7 @@ public class UsbPrinterReceiver extends BroadcastReceiver {
                 }, APP.JOB_REFRESH_WAITING_PRINTER_INTERVAL);
             }
 
-        } else if (action.equals(Intent.ACTION_BOOT_COMPLETED)){
+        } else if (action.equals(Intent.ACTION_BOOT_COMPLETED)) {
             Intent newIntent = new Intent(APP.getApplicatioContext(), LocalPrintService.class);
             newIntent.putExtra(APP.TASK, APP.TASK_INIT);
             APP.getApplicatioContext().startService(newIntent);

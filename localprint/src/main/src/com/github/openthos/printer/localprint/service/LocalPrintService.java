@@ -213,22 +213,22 @@ public class LocalPrintService extends Service {
         while (deviceIterator.hasNext()) {
             UsbDevice device = deviceIterator.next();
             LogUtils.d(TAG, "detect device -> " + device.toString());
-            for(int i=0; i < device.getInterfaceCount(); i++ ){
-                // InterfaceClass 7 代表打印机
-                if(device.getInterface(i).getInterfaceClass() == 7){
+            for (int i=0; i < device.getInterfaceCount(); i++ ) {
+                // InterfaceClass 7
+                if (device.getInterface(i).getInterfaceClass() == 7) {
                     usbList.add(device.getSerialNumber());
                 }
             }
         }
 
-        if(usbList.size() == 0){
+        if (usbList.size() == 0) {
             return;
         }
 
         DetectNewPrinterTask<Void> task = new DetectNewPrinterTask<Void>() {
             @Override
             protected void onPostExecute(Boolean aBoolean) {
-                if(aBoolean){
+                if (aBoolean) {
                     showAddPrinterDialog();
                 }
             }

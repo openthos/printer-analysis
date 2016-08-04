@@ -14,7 +14,8 @@ import java.util.Map;
  * Search available printer models(drivers) B1
  * Created by bboxh on 2016/5/16.
  */
-public abstract class SearchModelsTask<Params, Progress> extends CommandTask<Params, Progress, ModelsItem> {
+public abstract class SearchModelsTask<Params, Progress> extends CommandTask<Params, Progress,
+                                                                             ModelsItem> {
     @Override
     protected String[] setCmd(Params[] params) {
         return new String[]{"sh", "proot.sh", "lpinfo", "-m"};
