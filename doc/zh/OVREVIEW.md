@@ -11,6 +11,9 @@
 
 本项目属于openthos项目的一部分，提供 [Openthos](https://github.com/openthos/openthos/wiki) 系统本地打印机以及网络打印机支持。
 
+##　当前开发人员 (20160801-20160831)
+曹永韧
+
 # 功能需求
 
 |完成|描述|
