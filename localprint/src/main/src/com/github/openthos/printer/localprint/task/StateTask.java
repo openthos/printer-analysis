@@ -86,15 +86,15 @@ public class StateTask<Progress> extends CommandTask<PrinterId, Progress, Printe
                             splitLine[i] = splitLine[i].replace("dpi", "");
                             if (splitLine[i].contains("x")) {
                                 String[] resolution = splitLine[i].split("x");
-                                r1 = new PrintAttributes.Resolution("R" + i
-                                        , resolution[0] + "x" + resolution[1]
-                                        , Integer.parseInt(resolution[0])
-                                        , Integer.parseInt(resolution[1]));
+                                r1 = new PrintAttributes.Resolution("R" + i,
+                                        resolution[0] + "x" + resolution[1],
+                                        Integer.parseInt(resolution[0]),
+                                        Integer.parseInt(resolution[1]));
                             }else{
-                                r1 = new PrintAttributes.Resolution("R"+i
-                                        , splitLine[i]+"x"+splitLine[i]
-                                        , Integer.parseInt(splitLine[i])
-                                        , Integer.parseInt(splitLine[i]));
+                                r1 = new PrintAttributes.Resolution("R"+i,
+                                        splitLine[i]+"x"+splitLine[i],
+                                        Integer.parseInt(splitLine[i]),
+                                        Integer.parseInt(splitLine[i]));
                             }
                             state.addResolution(r1, true);
                             continue;
@@ -105,22 +105,17 @@ public class StateTask<Progress> extends CommandTask<PrinterId, Progress, Printe
                     }
 
                     splitLine[i] = splitLine[i].replace("dpi", "");
-                    //String[] resolution = splitLine[i].split("x");
-                    //r1 = new PrintAttributes.Resolution("R" + i, resolution[0] + "x"
-                    //                                        + resolution[1],
-                    //                                    Integer.parseInt(resolution[0]),
-                    //                                    Integer.parseInt(resolution[1]));
                     if (splitLine[i].contains("x")) {
                         String[] resolution = splitLine[i].split("x");
-                        r1 = new PrintAttributes.Resolution("R" + i
-                                , resolution[0] + "x" + resolution[1]
-                                , Integer.parseInt(resolution[0])
-                                , Integer.parseInt(resolution[1]));
+                        r1 = new PrintAttributes.Resolution("R" + i,
+                                resolution[0] + "x" + resolution[1],
+                                Integer.parseInt(resolution[0]),
+                                Integer.parseInt(resolution[1]));
                     }else{
-                        r1 = new PrintAttributes.Resolution("R"+i
-                                , splitLine[i]+"x"+splitLine[i]
-                                , Integer.parseInt(splitLine[i])
-                                , Integer.parseInt(splitLine[i]));
+                        r1 = new PrintAttributes.Resolution("R"+i,
+                                splitLine[i]+"x"+splitLine[i],
+                                Integer.parseInt(splitLine[i]),
+                                Integer.parseInt(splitLine[i]));
                     }
                     state.addResolution(r1, false);
                 }
