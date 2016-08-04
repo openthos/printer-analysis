@@ -86,15 +86,15 @@ public class StateTask<Progress> extends CommandTask<PrinterId, Progress, Printe
                             splitLine[i] = splitLine[i].replace("dpi", "");
                             if (splitLine[i].contains("x")) {
                                 String[] resolution = splitLine[i].split("x");
-                                r1 = new PrintAttributes.Resolution("R" + i,
-                                        resolution[0] + "x" + resolution[1],
-                                        Integer.parseInt(resolution[0]),
-                                        Integer.parseInt(resolution[1]));
-                            }else{
-                                r1 = new PrintAttributes.Resolution("R"+i,
-                                        splitLine[i]+"x"+splitLine[i],
-                                        Integer.parseInt(splitLine[i]),
-                                        Integer.parseInt(splitLine[i]));
+                                r1 = new PrintAttributes
+                                        .Resolution("R" + i, resolution[0] + "x" + resolution[1],
+                                                    Integer.parseInt(resolution[0]),
+                                                    Integer.parseInt(resolution[1]));
+                            } else {
+                                r1 = new PrintAttributes
+                                        .Resolution("R" + i, splitLine[i] + "x" + splitLine[i],
+                                                    Integer.parseInt(splitLine[i]),
+                                                    Integer.parseInt(splitLine[i]));
                             }
                             state.addResolution(r1, true);
                             continue;
@@ -107,15 +107,15 @@ public class StateTask<Progress> extends CommandTask<PrinterId, Progress, Printe
                     splitLine[i] = splitLine[i].replace("dpi", "");
                     if (splitLine[i].contains("x")) {
                         String[] resolution = splitLine[i].split("x");
-                        r1 = new PrintAttributes.Resolution("R" + i,
-                                resolution[0] + "x" + resolution[1],
-                                Integer.parseInt(resolution[0]),
-                                Integer.parseInt(resolution[1]));
-                    }else{
-                        r1 = new PrintAttributes.Resolution("R"+i,
-                                splitLine[i]+"x"+splitLine[i],
-                                Integer.parseInt(splitLine[i]),
-                                Integer.parseInt(splitLine[i]));
+                        r1 = new PrintAttributes
+                                .Resolution("R" + i, resolution[0] + "x" + resolution[1],
+                                            Integer.parseInt(resolution[0]),
+                                            Integer.parseInt(resolution[1]));
+                    } else {
+                        r1 = new PrintAttributes
+                                 .Resolution("R" + i, splitLine[i] + "x" + splitLine[i],
+                                             Integer.parseInt(splitLine[i]),
+                                             Integer.parseInt(splitLine[i]));
                     }
                     state.addResolution(r1, false);
                 }
@@ -158,13 +158,13 @@ public class StateTask<Progress> extends CommandTask<PrinterId, Progress, Printe
             state.addResolution(new PrintAttributes.Resolution("R0", "600x600", 600, 600), true);
         }
         if (colorMode == -1) {
-            state.setColorModes(PrintAttributes.COLOR_MODE_MONOCHROME
-                    , PrintAttributes.COLOR_MODE_MONOCHROME);
+            state.setColorModes(PrintAttributes.COLOR_MODE_MONOCHROME,
+                                PrintAttributes.COLOR_MODE_MONOCHROME);
         }
 
         PrinterCapabilitiesInfo capabilities = state.build();
-        PrinterInfo.Builder builder = new PrinterInfo.Builder(mPrinterId,
-                                              mPrinterId.getLocalId(), PrinterInfo.STATUS_IDLE);
+        PrinterInfo.Builder builder = new PrinterInfo.Builder(mPrinterId, mPrinterId.getLocalId(),
+                                                              PrinterInfo.STATUS_IDLE);
         PrinterInfo printer = builder.setCapabilities(capabilities)
                 //.setDescription(item.getManufacturerName())
                 .build();
