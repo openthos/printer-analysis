@@ -206,6 +206,7 @@ public class PrinterOptionItem {
                 break;
             case "ISO_A4":
                 result = "A4";
+                break;
             case "ISO_A5":
                 result = "A5";
                 break;
@@ -226,6 +227,7 @@ public class PrinterOptionItem {
                 break;
             case "ISO_C5":
                 result = "C5";
+                break;
             case "NA_MONARCH":
                 result = "Executive";
                 break;

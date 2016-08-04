@@ -122,7 +122,7 @@ public class LocalPrintService extends Service {
         new JobQueryTask<Void, Void>(list) {
             @Override
             protected void onPostExecute(Boolean aBoolean) {
-                if (aBoolean) {
+                if (aBoolean != null && aBoolean) {
                     updateJobs(list);
                 } else {
                     Toast.makeText(LocalPrintService.this, getString(R.string.query_error)
