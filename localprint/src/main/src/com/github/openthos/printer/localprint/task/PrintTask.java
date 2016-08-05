@@ -12,7 +12,7 @@ import java.util.Map;
  * Print C1
  * Created by bboxh on 2016/5/16.
  */
-public class PrintTask<Progress> extends CommandTask<Map<String, String>, Progress, String> {
+public abstract class PrintTask<Progress> extends CommandTask<Map<String, String>, Progress, String> {
 
     public static final String LP_PRINTER = "printer";
     public static final String LP_FILE = "file";
@@ -125,6 +125,16 @@ public class PrintTask<Progress> extends CommandTask<Map<String, String>, Progre
 
         return flag;
     }
+
+    @Override
+    protected boolean beforeCommand() {
+
+        new ResumePrinterTask().start(bindPrinterName());
+
+        return true;
+    }
+
+    protected abstract String bindPrinterName();
 
     @Override
     protected String bindTAG() {

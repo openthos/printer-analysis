@@ -229,6 +229,11 @@ public class ConfigPrinterDialogFragment extends DialogFragment {
     private void testPage() {
         PrintTask<Void> task = new PrintTask<Void>() {
             @Override
+            protected String bindPrinterName() {
+                return mItem.getNickName();
+            }
+
+            @Override
             protected void onPostExecute(String jobId) {
                 if (jobId == null) {
                     Toast.makeText(getActivity(), getResources().getString(R.string.print_error)
