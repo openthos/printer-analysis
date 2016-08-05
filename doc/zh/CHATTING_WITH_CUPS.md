@@ -44,6 +44,8 @@ CUPS交流接口描述了CUPS程序与APP上层交互的方式。
 ||查询打印机设置|查询安卓打印直接相关的参数，[printerquery.sh](https://github.com/openthos/printer-analysis/blob/dev/shell/printerquery.sh)里的命令如下：lpoptions -p $1 && lpoptions -p $1 -l
 |B11|UpdatePrinterOptonsTask|sh proot.sh lpoptions -p printerName -o MediaSizeName=mediaSizeValue -o ColorModeName=colorModeValue
 ||修改打印机设置|
+|B12|ResumePrinterTask|sh proot.sh cupsenable PrinterName|
+||恢复打印机|打印机有时遇到问题会被自动暂停
 |C1|PrintTask|sh proot.sh lp -d printerName fileName -o media=mediaSize [-o Resolution=resolution] [-o landscape] -t label -n copies -P ranges [-o fit-o-page]|
 ||打印|中括号为可选参数
 |C2|JobQueryTask|sh proot.sh sh /jobquery.sh |
