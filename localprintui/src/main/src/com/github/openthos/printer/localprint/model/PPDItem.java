@@ -90,7 +90,7 @@ public class PPDItem implements Parcelable {
         this.name = in.readString();
     }
 
-    public static final Parcelable.Creator<PPDItem> CREATOR = new Parcelable.Creator<PPDItem>() {
+    public static final Creator<PPDItem> CREATOR = new Creator<PPDItem>() {
         @Override
         public PPDItem createFromParcel(Parcel source) {
             return new PPDItem(source);

@@ -1,6 +1,5 @@
 package com.github.openthos.printer.localprint.task;
 
-import android.os.AsyncTask;
 import android.util.Log;
 
 import com.github.openthos.printer.localprint.APP;

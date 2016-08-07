@@ -1,10 +1,6 @@
 package com.github.openthos.printer.localprint;
 
-import com.github.openthos.printer.localprint.task.CommandTask;
-
 import org.junit.Test;
-
-import java.util.List;
 
 import static org.junit.Assert.*;
 

@@ -3,7 +3,7 @@ package com.github.openthos.printer.localprint.task;
 import java.util.List;
 
 /**
- * C12
+ * B12
  * Created by bboxh on 2016/8/5.
  */
 public class ResumePrinterTask extends CommandTask<String, Void, Void> {

@@ -141,7 +141,7 @@ public class PrinterCupsOptionItem implements Parcelable {
         this.def2 = in.readInt();
     }
 
-    public static final Parcelable.Creator<PrinterCupsOptionItem> CREATOR = new Parcelable.Creator<PrinterCupsOptionItem>() {
+    public static final Creator<PrinterCupsOptionItem> CREATOR = new Creator<PrinterCupsOptionItem>() {
         @Override
         public PrinterCupsOptionItem createFromParcel(Parcel source) {
             return new PrinterCupsOptionItem(source);

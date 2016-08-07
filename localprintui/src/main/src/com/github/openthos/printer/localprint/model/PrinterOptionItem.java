@@ -489,7 +489,7 @@ public class PrinterOptionItem implements Parcelable {
         this.mSharePrinter = in.readByte() != 0;
     }
 
-    public static final Parcelable.Creator<PrinterOptionItem> CREATOR = new Parcelable.Creator<PrinterOptionItem>() {
+    public static final Creator<PrinterOptionItem> CREATOR = new Creator<PrinterOptionItem>() {
         @Override
         public PrinterOptionItem createFromParcel(Parcel source) {
             return new PrinterOptionItem(source);

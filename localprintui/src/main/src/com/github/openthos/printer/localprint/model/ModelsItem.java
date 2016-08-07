@@ -75,7 +75,7 @@ public class ModelsItem implements Parcelable {
         }
     }
 
-    public static final Parcelable.Creator<ModelsItem> CREATOR = new Parcelable.Creator<ModelsItem>() {
+    public static final Creator<ModelsItem> CREATOR = new Creator<ModelsItem>() {
         @Override
         public ModelsItem createFromParcel(Parcel source) {
             return new ModelsItem(source);

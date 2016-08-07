@@ -17,7 +17,7 @@ import android.widget.Toast;
 import com.github.openthos.printer.localprint.APP;
 import com.github.openthos.printer.localprint.R;
 import com.github.openthos.printer.localprint.model.PrinterCupsOptionItem;
-import com.github.openthos.printer.localprint.task.QueryPrinterCupsOptoinsTask;
+import com.github.openthos.printer.localprint.task.QueryPrinterCupsOptionsTask;
 import com.github.openthos.printer.localprint.task.UpdatePrinterCupsOptionsTask;
 
 import java.util.List;
@@ -62,7 +62,7 @@ public class AdvancedPrintOptionActivity extends BaseActivity {
             }
         });
 
-        QueryPrinterCupsOptoinsTask<Void> task = new QueryPrinterCupsOptoinsTask<Void>() {
+        QueryPrinterCupsOptionsTask<Void> task = new QueryPrinterCupsOptionsTask<Void>() {
 
             @Override
             protected void onPostExecute(List<PrinterCupsOptionItem> printerOptionItems) {

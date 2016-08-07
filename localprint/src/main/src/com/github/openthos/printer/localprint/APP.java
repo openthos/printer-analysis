@@ -9,8 +9,6 @@ import android.os.Looper;
 
 import com.android.systemui.statusbar.phone.PrinterJobStatus;
 import com.github.openthos.printer.localprint.service.LocalPrintService;
-import com.github.openthos.printer.localprint.task.InitTask;
-import com.github.openthos.printer.localprint.ui.WelcomeActivity;
 import com.github.openthos.printer.localprint.util.LogUtils;
 
 import java.util.LinkedList;
@@ -91,7 +89,7 @@ public class APP extends Application {
      */
     public static Process cupsdProcess;
 
-    private static List<PrinterJobStatus> jobList = new LinkedList<PrinterJobStatus>();
+    private static List<PrinterJobStatus> jobList = new LinkedList<>();
     private static Context context;
 
     @Override

@@ -1,14 +1,10 @@
 package com.github.openthos.printer.localprint.service;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.print.PageRange;
 import android.printservice.PrintJob;
 import android.printservice.PrintService;
 import android.printservice.PrinterDiscoverySession;
-import android.util.Log;
-import android.view.WindowManager;
 
 import com.github.openthos.printer.localprint.APP;
 import com.github.openthos.printer.localprint.R;
@@ -16,7 +12,6 @@ import com.android.systemui.statusbar.phone.PrinterJobStatus;
 import com.github.openthos.printer.localprint.model.PrinterOptionItem;
 import com.github.openthos.printer.localprint.task.JobCancelTask;
 import com.github.openthos.printer.localprint.task.PrintTask;
-import com.github.openthos.printer.localprint.ui.ManagementActivity;
 import com.github.openthos.printer.localprint.util.FileUtils;
 import com.github.openthos.printer.localprint.util.LogUtils;
 

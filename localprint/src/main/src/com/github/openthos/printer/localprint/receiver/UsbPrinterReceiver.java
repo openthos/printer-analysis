@@ -8,7 +8,6 @@ import android.os.Handler;
 
 import com.github.openthos.printer.localprint.APP;
 import com.github.openthos.printer.localprint.service.LocalPrintService;
-import com.github.openthos.printer.localprint.service.OpenthosPrintService;
 import com.github.openthos.printer.localprint.ui.ManagementActivity;
 import com.github.openthos.printer.localprint.util.LogUtils;
 

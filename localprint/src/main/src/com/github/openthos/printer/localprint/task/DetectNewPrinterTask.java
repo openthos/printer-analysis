@@ -3,7 +3,7 @@ package com.github.openthos.printer.localprint.task;
 import java.util.List;
 
 /**
- * Delete a printer B4
+ * Delete a printer B8
  * Created by bboxh on 2016/5/16.
  */
 public class DetectNewPrinterTask<Progress> extends CommandTask<String, Progress, Boolean> {

@@ -9,7 +9,7 @@ import java.util.List;
  * Query a printer's advanced options in CUPS B9
  * Created by bboxh on 2016/5/27.
  */
-public class QueryPrinterCupsOptoinsTask<Progress>
+public class QueryPrinterCupsOptionsTask<Progress>
         extends CommandTask<String, Progress, List<PrinterCupsOptionItem>> {
     @Override
     protected String[] setCmd(String... params) {
@@ -81,6 +81,6 @@ public class QueryPrinterCupsOptoinsTask<Progress>
 
     @Override
     protected String bindTAG() {
-        return "QueryPrinterCupsOptoinsTask";
+        return "QueryPrinterCupsOptionsTask";
     }
 }

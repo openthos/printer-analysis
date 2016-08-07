@@ -15,7 +15,6 @@ import com.github.openthos.printer.localprint.model.PrinterItem;
 import com.github.openthos.printer.localprint.task.ListAddedTask;
 import com.github.openthos.printer.localprint.task.SearchPrintersTask;
 import com.github.openthos.printer.localprint.ui.ManagementActivity;
-import com.github.openthos.printer.localprint.util.LogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -217,7 +216,7 @@ public class ManagementAdapter extends BaseAdapter {
         }
 
         list.add(new ManagementListItem.Builder(ManagementListItem.TYPE_ADDED_ENDLINE).get());
-        mListItem.add(new ManagementListItem
+        list.add(new ManagementListItem
                 .Builder(ManagementListItem.TYPE_LOCAL_PRINTER_WORDS).get());
 
         if (IS_DECTECTING) {
@@ -248,7 +247,7 @@ public class ManagementAdapter extends BaseAdapter {
 
         new ListAddedTask<Void, Void>() {
             @Override
-            protected void onPostExecute(List<PrinterItem> printerItems) {
+                protected void onPostExecute(List<PrinterItem> printerItems) {
 
                 mAddedList.clear();
                 mAddedList.addAll(printerItems);
