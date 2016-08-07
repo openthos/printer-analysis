@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.github.openthos.printer.localprint.ui.JobManagerActivity">
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="top"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:text="@string/document_name"
+            android:textColor="@color/primary_text_dark"
+            android:textSize="@dimen/secondary_text_size" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:text="@string/device"
+            android:textColor="@color/primary_text_dark"
+            android:textSize="@dimen/secondary_text_size" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:text="@string/status"
+            android:textColor="@color/primary_text_dark"
+            android:textSize="@dimen/secondary_text_size" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:text="@string/size"
+            android:textColor="@color/primary_text_dark"
+            android:textSize="@dimen/secondary_text_size" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:text="@string/operation"
+            android:textColor="@color/primary_text_dark"
+            android:textSize="@dimen/secondary_text_size" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/view2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_above="@+id/listview_job"
+        android:background="@color/divider_light" />
+
+    <ListView
+        android:id="@+id/listview_job"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/relativeLayout"
+        android:layout_below="@+id/linearLayout" />
+
+    <View
+        android:id="@+id/view3"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/listview_job"
+        android:background="@color/divider_light" />
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/view3"
+        android:layout_alignLeft="@+id/listview_job"
+        android:layout_below="@+id/linearLayout"
+        android:background="@color/divider_light" />
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/view3"
+        android:layout_alignRight="@+id/listview_job"
+        android:layout_alignTop="@+id/view2"
+        android:background="@color/divider_light" />
+
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:id="@+id/button_pause_all"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pause_all"
+            android:textColor="@color/primary_button_light"
+            android:textSize="@dimen/secondary_text_size" />
+
+        <Button
+            android:id="@+id/button_start_all"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/button_pause_all"
+            android:layout_toRightOf="@+id/button_pause_all"
+            android:text="@string/start_all"
+            android:textColor="@color/primary_button_light"
+            android:textSize="@dimen/secondary_text_size" />
+
+        <Button
+            android:id="@+id/button_cancel_all"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/button_start_all"
+            android:layout_toRightOf="@+id/button_start_all"
+            android:text="@string/cancel_all"
+            android:textColor="@color/primary_button_light"
+            android:textSize="@dimen/secondary_text_size" />
+
+        <Button
+            android:id="@+id/button_ok"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:text="@string/ok"
+            android:textColor="@color/primary_button_light"
+            android:textSize="@dimen/secondary_text_size" />
+
+    </RelativeLayout>
+
+</RelativeLayout>
