@@ -35,6 +35,14 @@
 
 操作方法等具体情况详见：[NET_PRINTERS.md](https://github.com/openthos/printer-analysis/blob/master/doc/zh/NET_PRINTERS.md)
 
+## 与 Setting 结合相关
+
+目前已制作出服务与界面分离版本原型（实现所有功能，但未深入测试），两者通过AIDL进行通信，已基本调试通过。
+
+代码位于 dev-app-cs 分支，服务和界面分别为 localprint 和 localprintui 模块。
+
+由于 Setting 还在制作中，所以制作成两个APP，方便后续简单移植界面部分即可放入 Setting 。
+
 # 存在问题
 
 | 简述 | 类别 | 备注
