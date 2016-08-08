@@ -161,7 +161,10 @@ public class LocalPrintService extends Service {
                 if (aBoolean != null && aBoolean) {
                     updateJobs(list);
                     try {
-                        APP.iAppCallBack.setJobList(list);
+                        if(APP.iAppCallBack != null){
+                            APP.iAppCallBack.setJobList(list);
+                        }
+
                     } catch (RemoteException e) {
                         e.printStackTrace();
                     }
