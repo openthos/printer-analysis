@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.github.openthos.printer.localprint.aidl.IInitTaskCallBack;
 import com.github.openthos.printer.localprintui.APP;
 import com.github.openthos.printer.localprintui.R;
+import com.github.openthos.printer.localprintui.util.LogUtils;
 
 /**
  * Welcome page is responsible for initializing.
@@ -41,6 +42,7 @@ public class WelcomeActivity extends Activity {
         initUI();
 
         if (APP.getIRemoteService() == null) {
+            LogUtils.d(TAG, "init connect_service_error");
             Toast.makeText(this, R.string.connect_service_error, Toast.LENGTH_SHORT).show();
             finish();
         } else if (!APP.IS_FIRST_RUN) {

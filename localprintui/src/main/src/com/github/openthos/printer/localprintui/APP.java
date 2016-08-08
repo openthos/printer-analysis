@@ -11,17 +11,30 @@ import android.os.RemoteException;
 import android.widget.Toast;
 
 import com.android.systemui.statusbar.phone.PrinterJobStatus;
+import com.github.openthos.printer.localprint.aidl.IAddPrinterTaskCallBack;
 import com.github.openthos.printer.localprint.aidl.IAppCallBack;
+import com.github.openthos.printer.localprint.aidl.IDeletePrinterTaskCallBack;
 import com.github.openthos.printer.localprint.aidl.IInitTaskCallBack;
+import com.github.openthos.printer.localprint.aidl.IJobCancelAllTaskCallBack;
+import com.github.openthos.printer.localprint.aidl.IJobCancelTaskCallBack;
+import com.github.openthos.printer.localprint.aidl.IJobPauseAllTaskCallBack;
+import com.github.openthos.printer.localprint.aidl.IJobPauseTaskCallBack;
+import com.github.openthos.printer.localprint.aidl.IJobResumeAllTaskCallBack;
+import com.github.openthos.printer.localprint.aidl.IJobResumeTaskCallBack;
+import com.github.openthos.printer.localprint.aidl.IListAddedTaskCallBack;
+import com.github.openthos.printer.localprint.aidl.IPrintTaskCallBack;
+import com.github.openthos.printer.localprint.aidl.IQueryPrinterCupsOptionsTaskCallBack;
+import com.github.openthos.printer.localprint.aidl.IQueryPrinterOptionsTaskCallBack;
+import com.github.openthos.printer.localprint.aidl.ISearchModelsTaskCallBack;
+import com.github.openthos.printer.localprint.aidl.ISearchPrintersTaskCallBack;
 import com.github.openthos.printer.localprint.aidl.ITaskAidlInterface;
+import com.github.openthos.printer.localprint.aidl.IUpdatePrinterCupsOptionsTaskCallBack;
+import com.github.openthos.printer.localprint.aidl.IUpdatePrinterOptionsTaskCallBack;
 import com.github.openthos.printer.localprintui.util.LogUtils;
 
 import java.util.LinkedList;
 import java.util.List;
 
-/**
- * Created by bboxh on 2016/8/5.
- */
 public class APP extends Application {
 
     private static final String TAG = "APP";
@@ -65,35 +78,23 @@ public class APP extends Application {
     public static final String LP_FILE = "file";
 
     /**
-     * The print job refresh interval (ms).
-     */
-    public static final long JOB_REFRESH_INTERVAL = 4000;
-
-    /**
-     * Print job refresh interval cause by some printers plugged in.
-     * The scanning time in cups is 5s , so the value cannot less than 5s
-     * Unit: ms.
-     */
-    public static final long JOB_REFRESH_WAITING_PRINTER_INTERVAL = 5100;
-
-    /**
      * The port of cups is used for send commands or browse the web page.
      * The port value must be same with the cups configuration file.
      */
     public static int CUPS_PORT = 6310;
 
+    public static final long FIRTST_CONNECT_SERVICE_DELAY_TIME = 1000;
+
     public static boolean IS_LOGE = true;
     public static boolean IS_LOGD = true;
     public static boolean IS_LOGI = true;
+
+    /**
+     * Need sync with server app.
+     */
     public static boolean IS_FIRST_RUN = false;
     public static boolean IS_INITIALIZING = false;
     public static boolean IS_MANAGEMENT_ACTIVITY_ON_TOP = false;
-
-    /**
-     * Whether there has jobs waiting for printers becoming available.
-     */
-    public static boolean IS_JOB_WAITING_FOR_PRINTER = false;
-    public static boolean STATUS_READY = false;
 
     private static APP mAPP;
 
@@ -140,9 +141,15 @@ public class APP extends Application {
                         mJobList.addAll(jobList);
                     }
 
+                    @Override
+                    public boolean IS_MANAGEMENT_ACTIVITY_ON_TOP() throws RemoteException {
+                        return IS_MANAGEMENT_ACTIVITY_ON_TOP;
+                    }
+
                 });
             } catch (RemoteException e) {
                 e.printStackTrace();
+                LogUtils.d(TAG, "IAppCallBack connect_service_error");
                 Toast.makeText(mAPP, R.string.connect_service_error, Toast.LENGTH_SHORT).show();
             }
 
@@ -179,7 +186,41 @@ public class APP extends Application {
 
     private static void exec(Object callBack) throws RemoteException {
         if (callBack instanceof IInitTaskCallBack) {
-            mIRemoteService.InitTask((IInitTaskCallBack) callBack);
+            mIRemoteService.IInitTaskCallBack((IInitTaskCallBack) callBack);
+        } else if (callBack instanceof IAddPrinterTaskCallBack) {
+            mIRemoteService.IAddPrinterTaskCallBack((IAddPrinterTaskCallBack) callBack);
+        } else if (callBack instanceof IDeletePrinterTaskCallBack) {
+            mIRemoteService.IDeletePrinterTaskCallBack((IDeletePrinterTaskCallBack) callBack);
+        } else if (callBack instanceof IJobCancelAllTaskCallBack) {
+            mIRemoteService.IJobCancelAllTaskCallBack((IJobCancelAllTaskCallBack) callBack);
+        } else if (callBack instanceof IJobCancelTaskCallBack) {
+            mIRemoteService.IJobCancelTaskCallBack((IJobCancelTaskCallBack) callBack);
+        } else if (callBack instanceof IJobPauseAllTaskCallBack) {
+            mIRemoteService.IJobPauseAllTaskCallBack((IJobPauseAllTaskCallBack) callBack);
+        } else if (callBack instanceof IJobPauseTaskCallBack) {
+            mIRemoteService.IJobPauseTaskCallBack((IJobPauseTaskCallBack) callBack);
+        } else if (callBack instanceof IJobResumeAllTaskCallBack) {
+            mIRemoteService.IJobResumeAllTaskCallBack((IJobResumeAllTaskCallBack) callBack);
+        } else if (callBack instanceof IJobResumeTaskCallBack) {
+            mIRemoteService.IJobResumeTaskCallBack((IJobResumeTaskCallBack) callBack);
+        } else if (callBack instanceof IListAddedTaskCallBack) {
+            mIRemoteService.IListAddedTaskCallBack((IListAddedTaskCallBack) callBack);
+        } else if (callBack instanceof IPrintTaskCallBack) {
+            mIRemoteService.IPrintTaskCallBack((IPrintTaskCallBack) callBack);
+        } else if (callBack instanceof IQueryPrinterCupsOptionsTaskCallBack) {
+            mIRemoteService.IQueryPrinterCupsOptionsTaskCallBack((IQueryPrinterCupsOptionsTaskCallBack) callBack);
+        } else if (callBack instanceof IQueryPrinterOptionsTaskCallBack) {
+            mIRemoteService.IQueryPrinterOptionsTaskCallBack((IQueryPrinterOptionsTaskCallBack) callBack);
+        } else if (callBack instanceof ISearchModelsTaskCallBack) {
+            mIRemoteService.ISearchModelsTaskCallBack((ISearchModelsTaskCallBack) callBack);
+        } else if (callBack instanceof ISearchPrintersTaskCallBack) {
+            mIRemoteService.ISearchPrintersTaskCallBack((ISearchPrintersTaskCallBack) callBack);
+        } else if (callBack instanceof IUpdatePrinterCupsOptionsTaskCallBack) {
+            mIRemoteService.IUpdatePrinterCupsOptionsTaskCallBack((IUpdatePrinterCupsOptionsTaskCallBack) callBack);
+        } else if (callBack instanceof IUpdatePrinterOptionsTaskCallBack) {
+            mIRemoteService.IUpdatePrinterOptionsTaskCallBack((IUpdatePrinterOptionsTaskCallBack) callBack);
+        } else if (callBack instanceof IAppCallBack) {
+            mIRemoteService.IAppCallBack((IAppCallBack) callBack);
         }
     }
 

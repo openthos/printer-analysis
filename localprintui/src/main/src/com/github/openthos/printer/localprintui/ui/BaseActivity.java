@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.widget.Toast;
 
@@ -24,7 +25,7 @@ public abstract class BaseActivity extends ActionBarActivity {
         public void onReceive(Context context, Intent intent) {
 
             int task = intent.getIntExtra(APP.TASK, APP.TASK_DEFAULT);
-
+            LogUtils.d(TAG, "intent -> task=" + task);
             switch (task) {
                 case APP.TASK_INIT_FINISH:
                     break;
@@ -51,7 +52,12 @@ public abstract class BaseActivity extends ActionBarActivity {
         }
 
         initialize();
-        isFirstRun();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                isFirstRun();
+            }
+        }, APP.FIRTST_CONNECT_SERVICE_DELAY_TIME);
 
     }
 
@@ -67,6 +73,7 @@ public abstract class BaseActivity extends ActionBarActivity {
     private void isFirstRun() {
 
         if(APP.getIRemoteService() == null){
+            LogUtils.d(TAG, "isFirstRun connect_service_error");
             Toast.makeText(this, R.string.connect_service_error, Toast.LENGTH_SHORT).show();
         }
 

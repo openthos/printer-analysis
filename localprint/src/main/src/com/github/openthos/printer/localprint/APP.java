@@ -6,8 +6,10 @@ import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Looper;
+import android.os.RemoteException;
 
 import com.android.systemui.statusbar.phone.PrinterJobStatus;
+import com.github.openthos.printer.localprint.aidl.IAppCallBack;
 import com.github.openthos.printer.localprint.service.LocalPrintService;
 import com.github.openthos.printer.localprint.util.LogUtils;
 
@@ -74,6 +76,7 @@ public class APP extends Application {
     public static boolean IS_LOGE = true;
     public static boolean IS_LOGD = true;
     public static boolean IS_LOGI = true;
+
     public static boolean IS_FIRST_RUN = true;
     public static boolean IS_INITIALIZING = false;
     public static boolean IS_MANAGEMENT_ACTIVITY_ON_TOP = false;
@@ -91,6 +94,7 @@ public class APP extends Application {
 
     private static List<PrinterJobStatus> jobList = new LinkedList<>();
     private static Context context;
+    public static IAppCallBack iAppCallBack;
 
     @Override
     public void onCreate() {
@@ -138,12 +142,6 @@ public class APP extends Application {
      * @return Job List
      */
     public static List<PrinterJobStatus> getJobList() {
-
-        //Judge current execution whether in the main thread
-        if (Looper.getMainLooper() != Looper.myLooper()) {
-            throw new RuntimeException("Forbid invoking JobList not in the main thread. ");
-        }
-
         return jobList;
     }
 
@@ -167,8 +165,21 @@ public class APP extends Application {
     }
 
     public static void initFailed(Context context) {
+        Thread.dumpStack();
         Intent intent = new Intent(APP.BROADCAST_ALL_ACTIVITY);
         intent.putExtra(APP.TASK, APP.TASK_INIT_FAIL);
         context.sendBroadcast(intent);
     }
+
+    public static boolean IS_MANAGEMENT_ACTIVITY_ON_TOP() {
+        if(iAppCallBack != null){
+            try {
+                return iAppCallBack.IS_MANAGEMENT_ACTIVITY_ON_TOP();
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
+    }
+
 }

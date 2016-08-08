@@ -2,6 +2,7 @@ package com.github.openthos.printer.localprintui.ui.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.os.RemoteException;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.github.openthos.printer.localprintui.APP;
 import com.github.openthos.printer.localprintui.R;
 import com.github.openthos.printer.localprint.model.PrinterItem;
 import com.github.openthos.printer.localprintui.ui.ManagementActivity;
+import com.github.openthos.printer.localprintui.util.LogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -248,15 +250,21 @@ public class ManagementAdapter extends BaseAdapter {
 
         boolean flag = false;
         try {
+            final Handler handler = new Handler();
             flag = APP.remoteExec(new IListAddedTaskCallBack.Stub() {
 
                 @Override
-                public void onPostExecute(List printerItems) throws RemoteException {
-                    mAddedList.clear();
-                    mAddedList.addAll(printerItems);
+                public void onPostExecute(final List printerItems) throws RemoteException {
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            mAddedList.clear();
+                            mAddedList.addAll(printerItems);
 
-                    IS_DECTECTING_ADDED = false;
-                    showList();
+                            IS_DECTECTING_ADDED = false;
+                            showList();
+                        }
+                    });
                 }
             });
         } catch (RemoteException e) {
@@ -264,6 +272,7 @@ public class ManagementAdapter extends BaseAdapter {
         }
         if (!flag) {
             IS_DECTECTING_ADDED = false;
+            LogUtils.d(TAG, "IListAddedTaskCallBack connect_service_error");
             Toast.makeText(mContext, R.string.connect_service_error, Toast.LENGTH_SHORT).show();
         }
 
@@ -280,16 +289,22 @@ public class ManagementAdapter extends BaseAdapter {
 
         boolean flag = false;
         try {
+            final Handler handler = new Handler();
             flag = APP.remoteExec(new ISearchPrintersTaskCallBack.Stub() {
 
                 @Override
-                public void onPostExecute(List printerItems) throws RemoteException {
-                    mDetectedList.clear();
-                    mDetectedList.addAll(printerItems);
+                public void onPostExecute(final List printerItems) throws RemoteException {
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            mDetectedList.clear();
+                            mDetectedList.addAll(printerItems);
 
-                    IS_DECTECTING = false;
-                    showList();
-                    Toast.makeText(mContext, R.string.search_finished, Toast.LENGTH_SHORT).show();
+                            IS_DECTECTING = false;
+                            showList();
+                            Toast.makeText(mContext, R.string.search_finished, Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
             });
         } catch (RemoteException e) {
@@ -298,6 +313,7 @@ public class ManagementAdapter extends BaseAdapter {
         if (flag) {
             IS_DECTECTING = true;
         } else {
+            LogUtils.d(TAG, "ISearchPrintersTaskCallBack connect_service_error");
             Toast.makeText(mContext, R.string.connect_service_error, Toast.LENGTH_SHORT).show();
         }
 

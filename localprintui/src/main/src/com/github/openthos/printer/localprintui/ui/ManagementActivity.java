@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.RemoteException;
 import android.provider.Settings;
 import android.view.Menu;
@@ -63,7 +64,12 @@ public class ManagementActivity extends BaseActivity {
         setContentView(R.layout.activity_management);
         mListview = (ListView) findViewById(R.id.listView);
         mAdapter = new ManagementAdapter(this, mListItem);
-        mAdapter.initList();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mAdapter.initList();
+            }
+        }, APP.FIRTST_CONNECT_SERVICE_DELAY_TIME);
         mListview.setAdapter(mAdapter);
         mListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -217,20 +223,26 @@ public class ManagementActivity extends BaseActivity {
 
                 boolean flag = false;
                 try {
+                    final Handler handler = new Handler();
                     flag = APP.remoteExec(new IAddPrinterTaskCallBack.Stub() {
 
                         @Override
-                        public void onPostExecute(boolean aBoolean) throws RemoteException {
-                            if (aBoolean) {
-                                Toast.makeText(ManagementActivity.this,
-                                        R.string.add_success, Toast.LENGTH_SHORT).show();
-                                mAdapter.refreshAddedPrinters();
-                                dialog.dismiss();
-                            } else {
-                                Toast.makeText(ManagementActivity.this,
-                                        R.string.add_fail, Toast.LENGTH_SHORT).show();
-                            }
-                            PRESSED = false;
+                        public void onPostExecute(final boolean aBoolean) throws RemoteException {
+                            handler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (aBoolean) {
+                                        Toast.makeText(ManagementActivity.this,
+                                                R.string.add_success, Toast.LENGTH_SHORT).show();
+                                        mAdapter.refreshAddedPrinters();
+                                        dialog.dismiss();
+                                    } else {
+                                        Toast.makeText(ManagementActivity.this,
+                                                R.string.add_fail, Toast.LENGTH_SHORT).show();
+                                    }
+                                    PRESSED = false;
+                                }
+                            });
                         }
 
                         @Override
@@ -243,6 +255,7 @@ public class ManagementActivity extends BaseActivity {
                 }
                 if (!flag) {
                     PRESSED = false;
+                    LogUtils.d(TAG, "IAddPrinterTaskCallBack connect_service_error");
                     Toast.makeText(ManagementActivity.this,
                             R.string.connect_service_error, Toast.LENGTH_SHORT).show();
                 }
@@ -253,6 +266,7 @@ public class ManagementActivity extends BaseActivity {
 
         boolean flag = false;
         try {
+            final Handler handler = new Handler();
             flag = APP.remoteExec(new ISearchModelsTaskCallBack.Stub() {
                 @Override
                 public String bindPrinter() throws RemoteException {
@@ -260,30 +274,36 @@ public class ManagementActivity extends BaseActivity {
                 }
 
                 @Override
-                public void onPostExecute(ModelsItem modelsItem, String ERROR) throws RemoteException {
-                    if (modelsItem == null) {
-                        Toast.makeText(ManagementActivity.this,
-                                getResources().getString(R.string.query_error)
-                                        + " " + ERROR, Toast.LENGTH_SHORT).show();
-                        return;
-                    }
+                public void onPostExecute(final ModelsItem modelsItem, final String ERROR) throws RemoteException {
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (modelsItem == null) {
+                                Toast.makeText(ManagementActivity.this,
+                                        getResources().getString(R.string.query_error)
+                                                + " " + ERROR, Toast.LENGTH_SHORT).show();
+                                return;
+                            }
 
-                    brandList.addAll(modelsItem.getBrand());
-                    models.putAll(modelsItem.getModels());
-                    brandAdapter.notifyDataSetChanged();
-                    buttonPositive.setEnabled(true);
-                    if (brandList.contains(getString(R.string.recommanded))) {
-                        spinnerBrand.setSelection(brandList.size() - 1);
-                    } else {
-                        Toast.makeText(ManagementActivity.this, getString(R.string.no_matching_driver),
-                                Toast.LENGTH_SHORT).show();
-                    }
+                            brandList.addAll(modelsItem.getBrand());
+                            models.putAll(modelsItem.getModels());
+                            brandAdapter.notifyDataSetChanged();
+                            buttonPositive.setEnabled(true);
+                            if (brandList.contains(getString(R.string.recommanded))) {
+                                spinnerBrand.setSelection(brandList.size() - 1);
+                            } else {
+                                Toast.makeText(ManagementActivity.this, getString(R.string.no_matching_driver),
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
                 }
             });
         } catch (RemoteException e) {
             e.printStackTrace();
         }
         if (!flag) {
+            LogUtils.d(TAG, "ISearchModelsTaskCallBack connect_service_error");
             Toast.makeText(ManagementActivity.this,
                     R.string.connect_service_error, Toast.LENGTH_SHORT).show();
         }
@@ -465,19 +485,25 @@ public class ManagementActivity extends BaseActivity {
 
                 boolean flag = false;
                 try {
+                    final Handler handler = new Handler();
                     flag = APP.remoteExec(new IAddPrinterTaskCallBack.Stub() {
                         @Override
-                        public void onPostExecute(boolean aBoolean) throws RemoteException {
-                            if (aBoolean) {
-                                Toast.makeText(ManagementActivity.this, R.string.add_success,
-                                        Toast.LENGTH_SHORT).show();
-                                mAdapter.refreshAddedPrinters();
-                                dialog.dismiss();
-                            } else {
-                                Toast.makeText(ManagementActivity.this, R.string.add_fail,
-                                        Toast.LENGTH_SHORT).show();
-                            }
-                            CLICKED = false;
+                        public void onPostExecute(final boolean aBoolean) throws RemoteException {
+                            handler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (aBoolean) {
+                                        Toast.makeText(ManagementActivity.this, R.string.add_success,
+                                                Toast.LENGTH_SHORT).show();
+                                        mAdapter.refreshAddedPrinters();
+                                        dialog.dismiss();
+                                    } else {
+                                        Toast.makeText(ManagementActivity.this, R.string.add_fail,
+                                                Toast.LENGTH_SHORT).show();
+                                    }
+                                    CLICKED = false;
+                                }
+                            });
                         }
 
                         @Override
@@ -490,6 +516,7 @@ public class ManagementActivity extends BaseActivity {
                 }
                 if (!flag) {
                     CLICKED = false;
+                    LogUtils.d(TAG, "IAddPrinterTaskCallBack connect_service_error");
                     Toast.makeText(ManagementActivity.this,
                             R.string.connect_service_error, Toast.LENGTH_SHORT).show();
                 }
@@ -499,6 +526,7 @@ public class ManagementActivity extends BaseActivity {
 
         boolean flag = false;
         try {
+            final Handler handler = new Handler();
             flag = APP.remoteExec(new ISearchModelsTaskCallBack.Stub() {
                 @Override
                 public String bindPrinter() throws RemoteException {
@@ -506,22 +534,28 @@ public class ManagementActivity extends BaseActivity {
                 }
 
                 @Override
-                public void onPostExecute(ModelsItem modelsItem, String ERROR) throws RemoteException {
-                    if (modelsItem == null) {
-                        Toast.makeText(ManagementActivity.this, R.string.query_error + " " + ERROR,
-                                Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                    buttonPositive.setEnabled(true);
-                    brandList.addAll(modelsItem.getBrand());
-                    models.putAll(modelsItem.getModels());
-                    brandAdapter.notifyDataSetChanged();
+                public void onPostExecute(final ModelsItem modelsItem, final String ERROR) throws RemoteException {
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (modelsItem == null) {
+                                Toast.makeText(ManagementActivity.this, R.string.query_error + " " + ERROR,
+                                        Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                            buttonPositive.setEnabled(true);
+                            brandList.addAll(modelsItem.getBrand());
+                            models.putAll(modelsItem.getModels());
+                            brandAdapter.notifyDataSetChanged();
+                        }
+                    });
                 }
             });
         } catch (RemoteException e) {
             e.printStackTrace();
         }
         if (!flag) {
+            LogUtils.d(TAG, "ISearchModelsTaskCallBack connect_service_error");
             Toast.makeText(ManagementActivity.this,
                     R.string.connect_service_error, Toast.LENGTH_SHORT).show();
         }

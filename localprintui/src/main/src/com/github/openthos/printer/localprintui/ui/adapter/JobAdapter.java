@@ -1,6 +1,7 @@
 package com.github.openthos.printer.localprintui.ui.adapter;
 
 import android.content.Context;
+import android.os.Handler;
 import android.os.RemoteException;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import com.github.openthos.printer.localprint.aidl.IJobResumeTaskCallBack;
 import com.github.openthos.printer.localprint.aidl.IJobCancelTaskCallBack;
 import com.github.openthos.printer.localprintui.APP;
 import com.github.openthos.printer.localprintui.R;
+import com.github.openthos.printer.localprintui.util.LogUtils;
 
 import java.util.List;
 
@@ -24,6 +26,7 @@ import java.util.List;
  * Created by bboxh on 2016/6/5.
  */
 public class JobAdapter extends BaseAdapter {
+    private static final String TAG = "JobAdapter";
     private final Context mContext;
     private final List<PrinterJobStatus> mList;
 
@@ -132,18 +135,24 @@ public class JobAdapter extends BaseAdapter {
     private void resumeJob(final PrinterJobStatus jobItem, final View v) {
         boolean flag = false;
         try {
+            final Handler handler = new Handler();
             flag = APP.remoteExec(new IJobResumeTaskCallBack.Stub() {
 
                 @Override
-                public void onPostExecute(boolean aBoolean) throws RemoteException {
-                    if (aBoolean) {
-                        //Toast.makeText(mContext, R.string.resumed, Toast.LENGTH_SHORT).show();
-                        jobItem.setStatus(PrinterJobStatus.STATUS_READY);
-                        Button button = (Button) v;
-                        button.setText(R.string.pause);
-                    } else {
-                        Toast.makeText(mContext, R.string.resume_error, Toast.LENGTH_SHORT).show();
-                    }
+                public void onPostExecute(final boolean aBoolean) throws RemoteException {
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (aBoolean) {
+                                //Toast.makeText(mContext, R.string.resumed, Toast.LENGTH_SHORT).show();
+                                jobItem.setStatus(PrinterJobStatus.STATUS_READY);
+                                Button button = (Button) v;
+                                button.setText(R.string.pause);
+                            } else {
+                                Toast.makeText(mContext, R.string.resume_error, Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
                 }
 
                 @Override
@@ -155,6 +164,7 @@ public class JobAdapter extends BaseAdapter {
             e.printStackTrace();
         }
         if (!flag) {
+            LogUtils.d(TAG, "IJobResumeTaskCallBack connect_service_error");
             Toast.makeText(mContext, R.string.connect_service_error, Toast.LENGTH_SHORT).show();
         }
     }
@@ -162,15 +172,21 @@ public class JobAdapter extends BaseAdapter {
     private void removeJob(final PrinterJobStatus jobItem) {
         boolean flag = false;
         try {
+            final Handler handler = new Handler();
             flag = APP.remoteExec(new IJobCancelTaskCallBack.Stub() {
 
                 @Override
-                public void onPostExecute(boolean aBoolean) throws RemoteException {
-                    if (aBoolean) {
-                        //Toast.makeText(mContext, R.string.canceled, Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(mContext, R.string.cancel_error, Toast.LENGTH_SHORT).show();
-                    }
+                public void onPostExecute(final boolean aBoolean) throws RemoteException {
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (aBoolean) {
+                                //Toast.makeText(mContext, R.string.canceled, Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(mContext, R.string.cancel_error, Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
                 }
 
                 @Override
@@ -182,6 +198,7 @@ public class JobAdapter extends BaseAdapter {
             e.printStackTrace();
         }
         if (!flag) {
+            LogUtils.d(TAG, "IJobCancelTaskCallBack connect_service_error");
             Toast.makeText(mContext, R.string.connect_service_error, Toast.LENGTH_SHORT).show();
         }
     }
@@ -189,18 +206,24 @@ public class JobAdapter extends BaseAdapter {
     private void pauseJob(final PrinterJobStatus jobItem, final View v) {
         boolean flag = false;
         try {
+            final Handler handler = new Handler();
             flag = APP.remoteExec(new IJobPauseTaskCallBack.Stub() {
 
                 @Override
-                public void onPostExecute(boolean aBoolean) throws RemoteException {
-                    if (aBoolean) {
-                        //Toast.makeText(mContext, R.string.paused, Toast.LENGTH_SHORT).show();
-                        jobItem.setStatus(PrinterJobStatus.STATUS_HOLDING);
-                        Button button = (Button) v;
-                        button.setText(R.string.resume);
-                    } else {
-                        Toast.makeText(mContext, R.string.pause_error, Toast.LENGTH_SHORT).show();
-                    }
+                public void onPostExecute(final boolean aBoolean) throws RemoteException {
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (aBoolean) {
+                                //Toast.makeText(mContext, R.string.paused, Toast.LENGTH_SHORT).show();
+                                jobItem.setStatus(PrinterJobStatus.STATUS_HOLDING);
+                                Button button = (Button) v;
+                                button.setText(R.string.resume);
+                            } else {
+                                Toast.makeText(mContext, R.string.pause_error, Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
                 }
 
                 @Override
@@ -213,6 +236,7 @@ public class JobAdapter extends BaseAdapter {
             e.printStackTrace();
         }
         if (!flag) {
+            LogUtils.d(TAG, "IJobPauseTaskCallBack connect_service_error");
             Toast.makeText(mContext, R.string.connect_service_error, Toast.LENGTH_SHORT).show();
         }
     }

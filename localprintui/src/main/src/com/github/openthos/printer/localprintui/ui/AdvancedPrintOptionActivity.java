@@ -2,6 +2,7 @@ package com.github.openthos.printer.localprintui.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.RemoteException;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -20,6 +21,7 @@ import com.github.openthos.printer.localprint.aidl.IUpdatePrinterCupsOptionsTask
 import com.github.openthos.printer.localprintui.APP;
 import com.github.openthos.printer.localprintui.R;
 import com.github.openthos.printer.localprint.model.PrinterCupsOptionItem;
+import com.github.openthos.printer.localprintui.util.LogUtils;
 
 import java.util.List;
 
@@ -65,20 +67,26 @@ public class AdvancedPrintOptionActivity extends BaseActivity {
 
         boolean flag = false;
         try {
+            final Handler handler = new Handler();
             flag = APP.remoteExec(new IQueryPrinterCupsOptionsTaskCallBack.Stub() {
 
                 @Override
-                public void onPostExecute(List printerOptionItems, String ERROR)
+                public void onPostExecute(final List printerOptionItems, final String ERROR)
                         throws RemoteException {
-                    if (printerOptionItems == null) {
-                        Toast.makeText(AdvancedPrintOptionActivity.this,
-                                getResources().getString(R.string.query_error) + " " + ERROR,
-                                Toast.LENGTH_SHORT).show();
-                        return;
-                    }
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (printerOptionItems == null) {
+                                Toast.makeText(AdvancedPrintOptionActivity.this,
+                                        getResources().getString(R.string.query_error) + " " + ERROR,
+                                        Toast.LENGTH_SHORT).show();
+                                return;
+                            }
 
-                    AdvancedPrintOptionActivity.this.mPrinterOptionItems = printerOptionItems;
-                    addItems();
+                            AdvancedPrintOptionActivity.this.mPrinterOptionItems = printerOptionItems;
+                            addItems();
+                        }
+                    });
                 }
 
                 @Override
@@ -90,6 +98,7 @@ public class AdvancedPrintOptionActivity extends BaseActivity {
             e.printStackTrace();
         }
         if (!flag) {
+            LogUtils.d(TAG, "IQueryPrinterCupsOptionsTaskCallBack connect_service_error");
             Toast.makeText(this, R.string.connect_service_error, Toast.LENGTH_SHORT).show();
         }
 
@@ -101,6 +110,7 @@ public class AdvancedPrintOptionActivity extends BaseActivity {
 
         boolean flag = false;
         try {
+            final Handler handler = new Handler();
             flag = APP.remoteExec(new IUpdatePrinterCupsOptionsTaskCallBack.Stub() {
 
                 @Override
@@ -110,15 +120,20 @@ public class AdvancedPrintOptionActivity extends BaseActivity {
 
                 @Override
                 public void onPostExecute(boolean flag) throws RemoteException {
-                    Toast.makeText(AdvancedPrintOptionActivity.this,
-                            R.string.update_success, Toast.LENGTH_SHORT).show();
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(AdvancedPrintOptionActivity.this,
+                                    R.string.update_success, Toast.LENGTH_SHORT).show();
 
-                    Intent intent = new Intent(AdvancedPrintOptionActivity.this,
-                            ManagementActivity.class);
-                    intent.putExtra(APP.TASK, APP.TASK_REFRESH_ADDED_PRINTERS);
-                    AdvancedPrintOptionActivity.this.startActivity(intent);
+                            Intent intent = new Intent(AdvancedPrintOptionActivity.this,
+                                    ManagementActivity.class);
+                            intent.putExtra(APP.TASK, APP.TASK_REFRESH_ADDED_PRINTERS);
+                            AdvancedPrintOptionActivity.this.startActivity(intent);
 
-                    finish();
+                            finish();
+                        }
+                    });
                 }
 
                 @Override
@@ -130,6 +145,7 @@ public class AdvancedPrintOptionActivity extends BaseActivity {
             e.printStackTrace();
         }
         if (!flag) {
+            LogUtils.d(TAG, "IUpdatePrinterCupsOptionsTaskCallBack connect_service_error");
             Toast.makeText(this, R.string.connect_service_error, Toast.LENGTH_SHORT).show();
         }
     }

@@ -4,6 +4,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.print.PrintAttributes;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -467,7 +469,7 @@ public class PrinterOptionItem implements Parcelable {
         dest.writeString(this.mediaSizeName);
         dest.writeInt(this.mediaSizeSelected);
         dest.writeStringList(this.mediaSizeCupsList);
-        dest.writeList(this.mediaSizeList);
+        writeMyList(dest, this.mediaSizeList);
         dest.writeString(this.colorModeName);
         dest.writeInt(this.colorModeSelected);
         dest.writeStringList(this.colorModeCupsList);
@@ -475,18 +477,54 @@ public class PrinterOptionItem implements Parcelable {
         dest.writeByte(this.mSharePrinter ? (byte) 1 : (byte) 0);
     }
 
+    public final void writeMyList(Parcel dest, List val) {
+        if (val == null) {
+            dest.writeInt(-1);
+            return;
+        }
+        int N = val.size();
+        int i=0;
+        dest.writeInt(N);
+        while (i < N) {
+            PrintAttributes.MediaSize mediaSize = (PrintAttributes.MediaSize) val.get(i);
+            try {
+                Method method = mediaSize.getClass().getDeclaredMethod("writeToParcel", Parcel.class);
+                method.setAccessible(true);
+                method.invoke(mediaSize, dest);
+            } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
+                e.printStackTrace();
+            }
+            i++;
+        }
+    }
+
     protected PrinterOptionItem(Parcel in) {
         this.mediaSizeName = in.readString();
         this.mediaSizeSelected = in.readInt();
         this.mediaSizeCupsList = in.createStringArrayList();
         this.mediaSizeList = new ArrayList<PrintAttributes.MediaSize>();
-        in.readList(this.mediaSizeList, PrintAttributes.MediaSize.class.getClassLoader());
+        readMyList(in, this.mediaSizeList, PrintAttributes.MediaSize.class.getClassLoader());
         this.colorModeName = in.readString();
         this.colorModeSelected = in.readInt();
         this.colorModeCupsList = in.createStringArrayList();
         this.colorModeList = new ArrayList<Integer>();
         in.readList(this.colorModeList, Integer.class.getClassLoader());
         this.mSharePrinter = in.readByte() != 0;
+    }
+
+    private void readMyList(Parcel in, List outVal, ClassLoader loader) {
+        int N = in.readInt();
+        while (N > 0) {
+            try {
+                Method method = PrintAttributes.MediaSize.class.getDeclaredMethod("createFromParcel", Parcel.class);
+                method.setAccessible(true);
+                Object mediaSize = method.invoke(null, in);
+                outVal.add(mediaSize);
+            } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
+                e.printStackTrace();
+            }
+            N--;
+        }
     }
 
     public static final Parcelable.Creator<PrinterOptionItem> CREATOR = new Parcelable.Creator<PrinterOptionItem>() {

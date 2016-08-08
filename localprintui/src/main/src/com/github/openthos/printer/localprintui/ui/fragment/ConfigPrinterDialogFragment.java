@@ -5,6 +5,7 @@ import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.RemoteException;
 import android.print.PrintAttributes;
 import android.support.annotation.Nullable;
@@ -31,6 +32,7 @@ import com.github.openthos.printer.localprint.model.PrinterItem;
 import com.github.openthos.printer.localprint.model.PrinterOptionItem;
 import com.github.openthos.printer.localprintui.ui.AdvancedPrintOptionActivity;
 import com.github.openthos.printer.localprintui.ui.ManagementActivity;
+import com.github.openthos.printer.localprintui.util.LogUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -38,6 +40,7 @@ import java.util.Map;
 public class ConfigPrinterDialogFragment extends DialogFragment {
 
     public static final String ITEM = "item";
+    private static final String TAG = "ConfigPrinterDialogFragment";
 
     private boolean IS_UPDATING = false;
     private boolean IS_DELETEING = false;
@@ -122,93 +125,101 @@ public class ConfigPrinterDialogFragment extends DialogFragment {
 
         boolean flag = false;
         try {
+            final Handler handler = new Handler();
             flag = APP.remoteExec(new IQueryPrinterOptionsTaskCallBack.Stub() {
 
                 @Override
-                public void onPostExecute(PrinterOptionItem printerOptionItem) throws RemoteException {
-                    mOptionItem = printerOptionItem;
+                public void onPostExecute(final PrinterOptionItem printerOptionItem) throws RemoteException {
 
-                    mCheckboxSharePrinter.setChecked(mOptionItem.ismSharePrinter());
-                    mCheckboxSharePrinter.setClickable(false);
-
-                    mMediaSizeAdapter = new ArrayAdapter<String>(getActivity()
-                            , android.R.layout.simple_spinner_dropdown_item
-                            , mOptionItem.getMediaSizeCupsList()) {
-
+                    handler.post(new Runnable() {
                         @Override
-                        public String getItem(int position) {
-                            return mOptionItem.getMediaSizeList().get(position).getId();
+                        public void run() {
+                            mOptionItem = printerOptionItem;
+
+                            mCheckboxSharePrinter.setChecked(mOptionItem.ismSharePrinter());
+                            mCheckboxSharePrinter.setClickable(false);
+
+                            mMediaSizeAdapter = new ArrayAdapter<String>(getActivity()
+                                    , android.R.layout.simple_spinner_dropdown_item
+                                    , mOptionItem.getMediaSizeCupsList()) {
+
+                                @Override
+                                public String getItem(int position) {
+                                    return mOptionItem.getMediaSizeList().get(position).getId();
+                                }
+                            };
+
+                            mSpinnerColorAdapter = new ArrayAdapter<String>(getActivity()
+                                    , android.R.layout.simple_spinner_dropdown_item
+                                    , mOptionItem.getColorModeCupsList()) {
+                                @Override
+                                public String getItem(int position) {
+                                    String colorMode = getResources().getString(R.string.black_white);
+                                    if (mOptionItem.getColorModeList().get(position)
+                                            == PrintAttributes.COLOR_MODE_COLOR) {
+                                        colorMode = getResources().getString(R.string.color);
+                                    }
+                                    return colorMode;
+                                }
+                            };
+
+                            mSpinnerDuplexAdapter = new ArrayAdapter<>(getActivity(),
+                                    android.R.layout.simple_spinner_dropdown_item,
+                                    new String[]{getString(R.string.no_double_side)});
+
+                            mSpinnerMediaSize.setAdapter(mMediaSizeAdapter);
+                            mSpinnerColorMode.setAdapter(mSpinnerColorAdapter);
+                            mSpinnerDuplexMode.setAdapter(mSpinnerDuplexAdapter);
+
+                            mSpinnerMediaSize.setOnItemSelectedListener(
+                                    new AdapterView.OnItemSelectedListener() {
+                                        @Override
+                                        public void onItemSelected(AdapterView<?> adapterView,
+                                                                   View view, int i, long l) {
+                                            mOptionItem.setMediaSizeSelected(i);
+                                        }
+
+                                        @Override
+                                        public void onNothingSelected(AdapterView<?> adapterView) {
+
+                                        }
+                                    });
+
+                            mSpinnerColorMode.setOnItemSelectedListener(
+                                    new AdapterView.OnItemSelectedListener() {
+                                        @Override
+                                        public void onItemSelected(AdapterView<?> adapterView,
+                                                                   View view, int i, long l) {
+                                            mOptionItem.setColorModeSelected(i);
+                                        }
+
+                                        @Override
+                                        public void onNothingSelected(AdapterView<?> adapterView) {
+
+                                        }
+                                    });
+
+                            mSpinnerDuplexMode.setOnItemSelectedListener(
+                                    new AdapterView.OnItemSelectedListener() {
+                                        @Override
+                                        public void onItemSelected(AdapterView<?> adapterView,
+                                                                   View view, int i, long l) {
+
+                                        }
+
+                                        @Override
+                                        public void onNothingSelected(AdapterView<?> adapterView) {
+
+                                        }
+                                    });
+
+                            mSpinnerMediaSize.setSelection(mOptionItem.getMediaSizeSelected());
+                            mSpinnerColorMode.setSelection(mOptionItem.getColorModeSelected());
+
+                            mButtonOk.setEnabled(true);
                         }
-                    };
+                    });
 
-                    mSpinnerColorAdapter = new ArrayAdapter<String>(getActivity()
-                            , android.R.layout.simple_spinner_dropdown_item
-                            , mOptionItem.getColorModeCupsList()) {
-                        @Override
-                        public String getItem(int position) {
-                            String colorMode = getResources().getString(R.string.black_white);
-                            if (mOptionItem.getColorModeList().get(position)
-                                    == PrintAttributes.COLOR_MODE_COLOR) {
-                                colorMode = getResources().getString(R.string.color);
-                            }
-                            return colorMode;
-                        }
-                    };
-
-                    mSpinnerDuplexAdapter = new ArrayAdapter<>(getActivity(),
-                            android.R.layout.simple_spinner_dropdown_item,
-                            new String[]{getString(R.string.no_double_side)});
-
-                    mSpinnerMediaSize.setAdapter(mMediaSizeAdapter);
-                    mSpinnerColorMode.setAdapter(mSpinnerColorAdapter);
-                    mSpinnerDuplexMode.setAdapter(mSpinnerDuplexAdapter);
-
-                    mSpinnerMediaSize.setOnItemSelectedListener(
-                            new AdapterView.OnItemSelectedListener() {
-                                @Override
-                                public void onItemSelected(AdapterView<?> adapterView,
-                                                           View view, int i, long l) {
-                                    mOptionItem.setMediaSizeSelected(i);
-                                }
-
-                                @Override
-                                public void onNothingSelected(AdapterView<?> adapterView) {
-
-                                }
-                            });
-
-                    mSpinnerColorMode.setOnItemSelectedListener(
-                            new AdapterView.OnItemSelectedListener() {
-                                @Override
-                                public void onItemSelected(AdapterView<?> adapterView,
-                                                           View view, int i, long l) {
-                                    mOptionItem.setColorModeSelected(i);
-                                }
-
-                                @Override
-                                public void onNothingSelected(AdapterView<?> adapterView) {
-
-                                }
-                            });
-
-                    mSpinnerDuplexMode.setOnItemSelectedListener(
-                            new AdapterView.OnItemSelectedListener() {
-                                @Override
-                                public void onItemSelected(AdapterView<?> adapterView,
-                                                           View view, int i, long l) {
-
-                                }
-
-                                @Override
-                                public void onNothingSelected(AdapterView<?> adapterView) {
-
-                                }
-                            });
-
-                    mSpinnerMediaSize.setSelection(mOptionItem.getMediaSizeSelected());
-                    mSpinnerColorMode.setSelection(mOptionItem.getColorModeSelected());
-
-                    mButtonOk.setEnabled(true);
                 }
 
                 @Override
@@ -220,6 +231,7 @@ public class ConfigPrinterDialogFragment extends DialogFragment {
             e.printStackTrace();
         }
         if (!flag) {
+            LogUtils.d(TAG, "IQueryPrinterOptionsTaskCallBack connect_service_error");
             Toast.makeText(getActivity(),
                     R.string.connect_service_error, Toast.LENGTH_SHORT).show();
         }
@@ -251,6 +263,7 @@ public class ConfigPrinterDialogFragment extends DialogFragment {
 
         boolean flag = false;
         try {
+            final Handler handler = new Handler();
             flag = APP.remoteExec(new IPrintTaskCallBack.Stub() {
 
                 @Override
@@ -259,13 +272,18 @@ public class ConfigPrinterDialogFragment extends DialogFragment {
                 }
 
                 @Override
-                public void onPostExecute(String jobId, String ERROR) throws RemoteException {
-                    if (jobId == null) {
-                        Toast.makeText(getActivity(), getResources().getString(R.string.print_error)
-                                + " " + ERROR, Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(getActivity(), R.string.printing, Toast.LENGTH_SHORT).show();
-                    }
+                public void onPostExecute(final String jobId, final String ERROR) throws RemoteException {
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (jobId == null) {
+                                Toast.makeText(getActivity(), getResources().getString(R.string.print_error)
+                                        + " " + ERROR, Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(getActivity(), R.string.printing, Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
                 }
 
                 @Override
@@ -277,6 +295,7 @@ public class ConfigPrinterDialogFragment extends DialogFragment {
             e.printStackTrace();
         }
         if (!flag) {
+            LogUtils.d(TAG, "IPrintTaskCallBack connect_service_error");
             Toast.makeText(getActivity(),
                     R.string.connect_service_error, Toast.LENGTH_SHORT).show();
         }
@@ -308,19 +327,25 @@ public class ConfigPrinterDialogFragment extends DialogFragment {
 
                         boolean flag = false;
                         try {
+                            final Handler handler = new Handler();
                             flag = APP.remoteExec(new IDeletePrinterTaskCallBack.Stub() {
 
                                 @Override
-                                public void onPostExecute(boolean aBoolean) throws RemoteException {
-                                    if (aBoolean) {
-                                        Toast.makeText(getActivity(), R.string.deleted_successfully
-                                                , Toast.LENGTH_SHORT).show();
-                                    } else {
-                                        Toast.makeText(getActivity(), R.string.delete_failed
-                                                , Toast.LENGTH_SHORT).show();
-                                    }
-                                    IS_DELETEING = false;
-                                    dismiss();
+                                public void onPostExecute(final boolean aBoolean) throws RemoteException {
+                                    handler.post(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            if (aBoolean) {
+                                                Toast.makeText(getActivity(), R.string.deleted_successfully
+                                                        , Toast.LENGTH_SHORT).show();
+                                            } else {
+                                                Toast.makeText(getActivity(), R.string.delete_failed
+                                                        , Toast.LENGTH_SHORT).show();
+                                            }
+                                            IS_DELETEING = false;
+                                            dismiss();
+                                        }
+                                    });
                                 }
 
                                 @Override
@@ -332,6 +357,7 @@ public class ConfigPrinterDialogFragment extends DialogFragment {
                             e.printStackTrace();
                         }
                         if (!flag) {
+                            LogUtils.d(TAG, "IDeletePrinterTaskCallBack connect_service_error");
                             Toast.makeText(getActivity(),
                                     R.string.connect_service_error, Toast.LENGTH_SHORT).show();
                         }else{
@@ -354,36 +380,44 @@ public class ConfigPrinterDialogFragment extends DialogFragment {
 
         boolean flag = false;
         try {
+            final Handler handler = new Handler();
             flag = APP.remoteExec(new IUpdatePrinterOptionsTaskCallBack.Stub() {
 
                 @Override
-                public void onPostExecute(boolean aBoolean, String ERROR) throws RemoteException {
-                    IS_UPDATING = false;
+                public void onPostExecute(final boolean aBoolean, final String ERROR) throws RemoteException {
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            IS_UPDATING = false;
 
-                    if (aBoolean) {
-                        Toast.makeText(getActivity(), R.string.update_success,
-                                Toast.LENGTH_SHORT).show();
-                        dismiss();
-                    } else {
-                        Toast.makeText(getActivity(), getString(R.string.update_failed) + " "
-                                + ERROR, Toast.LENGTH_SHORT).show();
-                    }
+                            if (aBoolean) {
+                                Toast.makeText(getActivity(), R.string.update_success,
+                                        Toast.LENGTH_SHORT).show();
+                                dismiss();
+                            } else {
+                                Toast.makeText(getActivity(), getString(R.string.update_failed) + " "
+                                        + ERROR, Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+
                 }
 
                 @Override
                 public String getPrinter() throws RemoteException {
-                    return null;
+                    return mItem.getNickName();
                 }
 
                 @Override
                 public PrinterOptionItem bindStart() throws RemoteException {
-                    return null;
+                    return mOptionItem;
                 }
             });
         } catch (RemoteException e) {
             e.printStackTrace();
         }
         if (!flag) {
+            LogUtils.d(TAG, "IUpdatePrinterOptionsTaskCallBack connect_service_error");
             Toast.makeText(getActivity(),
                     R.string.connect_service_error, Toast.LENGTH_SHORT).show();
         }else{

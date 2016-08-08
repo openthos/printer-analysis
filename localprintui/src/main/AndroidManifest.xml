@@ -10,13 +10,33 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".ui.WelcomeActivity"
-            android:launchMode="singleInstance"
-            android:theme="@style/AppTheme.DialogWhenLarge">
+            android:name=".ui.ManagementActivity"
+            android:exported="true"
+            android:launchMode="singleInstance">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.AdvancedPrintOptionActivity"
+            android:exported="true"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ui.WelcomeActivity"
+            android:launchMode="singleInstance"
+            android:theme="@style/AppTheme.DialogWhenLarge" />
+
+        <activity
+            android:name=".ui.JobManagerActivity"
+            android:exported="true"
+            android:label="@string/print_job_manager"
+            android:launchMode="singleInstance">
+            <intent-filter>
+                <action android:name="com.github.openthos.printer.localprint.jobmanager" />
+
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
 

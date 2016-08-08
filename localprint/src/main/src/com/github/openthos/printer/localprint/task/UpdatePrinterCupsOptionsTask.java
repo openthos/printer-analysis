@@ -55,7 +55,7 @@ public abstract class UpdatePrinterCupsOptionsTask<Progress>
                 }
             }
         }
-        return null;
+        return true;
     }
 
 

@@ -8,7 +8,6 @@ import android.os.Handler;
 
 import com.github.openthos.printer.localprint.APP;
 import com.github.openthos.printer.localprint.service.LocalPrintService;
-import com.github.openthos.printer.localprint.ui.ManagementActivity;
 import com.github.openthos.printer.localprint.util.LogUtils;
 
 /**
@@ -31,9 +30,8 @@ public class UsbPrinterReceiver extends BroadcastReceiver {
                 || action.equals(UsbManager.ACTION_USB_DEVICE_DETACHED)) {
 
             //Update UI when management activity is on the top,or handled by OpenthosPrintService
-            if (APP.IS_MANAGEMENT_ACTIVITY_ON_TOP) {
-                Intent newIntent = new Intent(APP.getApplicatioContext(),
-                                               ManagementActivity.class);
+            if (APP.IS_MANAGEMENT_ACTIVITY_ON_TOP()) {
+                Intent newIntent = new Intent("com.github.openthos.printer.localprint.jobmanager");
                 newIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 newIntent.putExtra(APP.TASK, APP.TASK_ADD_NEW_PRINTER);
                 APP.getApplicatioContext().startActivity(newIntent);
