@@ -229,6 +229,11 @@ public class ConfigPrinterDialogFragment extends DialogFragment {
     private void testPage() {
         PrintTask<Void> task = new PrintTask<Void>() {
             @Override
+            protected String bindFileName() {
+                return null;
+            }
+
+            @Override
             protected String bindPrinterName() {
                 return mItem.getNickName();
             }

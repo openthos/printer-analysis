@@ -37,7 +37,7 @@ public class APP extends Application {
     /**
      * The cups executable file folder name && The name of cups data packet.
      */
-    public static final String COMPONENT_PATH = "/component_26";
+    public static final String COMPONENT_PATH = "/component_27";
 
     /**
      * The data packet position.
