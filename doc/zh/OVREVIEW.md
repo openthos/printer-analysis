@@ -35,7 +35,7 @@
 
 操作方法等具体情况详见：[NET_PRINTERS.md](https://github.com/openthos/printer-analysis/blob/master/doc/zh/NET_PRINTERS.md)
 
-## 与 Setting 结合相关
+## 与 Setting 结合相关（分离服务与界面）
 
 目前已制作出服务与界面分离版本原型（实现所有功能，但未深入测试），两者通过AIDL进行通信，已基本调试通过。
 
