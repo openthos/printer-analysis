@@ -46,6 +46,8 @@ CUPS交流接口描述了CUPS程序与APP上层交互的方式。
 ||修改打印机设置|
 |B12|ResumePrinterTask|sh proot.sh cupsenable PrinterName|
 ||恢复打印机|打印机有时遇到问题会被自动暂停
+|B13|RepairPdfTask|sh proot.sh gs -o repairedFileName -sDEVICE=pdfwrite fileName|
+||修复损坏的PDF文件|WPS新建文档进行打印时，WPS转换出的PDF文件就存在这个问题
 |C1|PrintTask|sh proot.sh lp -d printerName fileName -o media=mediaSize [-o Resolution=resolution] [-o landscape] -t label -n copies -P ranges [-o fit-o-page]|
 ||打印|中括号为可选参数
 |C2|JobQueryTask|sh proot.sh sh /jobquery.sh |
