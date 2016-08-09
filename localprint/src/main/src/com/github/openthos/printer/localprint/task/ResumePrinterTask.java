@@ -16,9 +16,9 @@ public class ResumePrinterTask extends CommandTask<String, Void, Void> {
     protected Void handleCommand(List<String> stdOut, List<String> stdErr) {
 
         for (String line : stdErr) {
-            if (line.startsWith("WARNING"))
+            if (line.startsWith("WARNING")) {
                 continue;
-            else if (line.contains("Bad file descriptor")
+            } else if (line.contains("Bad file descriptor")
                     || line.contains("server-error-service-unavailable")) {
                 if (startCups()) {
                     runCommandAgain();

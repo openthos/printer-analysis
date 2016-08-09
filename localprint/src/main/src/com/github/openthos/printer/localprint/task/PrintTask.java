@@ -14,7 +14,8 @@ import java.util.Map;
  * Print C1
  * Created by bboxh on 2016/5/16.
  */
-public abstract class PrintTask<Progress> extends CommandTask<Map<String, String>, Progress, String> {
+public abstract class PrintTask<Progress> extends CommandTask<Map<String, String>,
+                                                              Progress, String> {
 
     public static final String LP_PRINTER = "printer";
     public static final String LP_FILE = "file";
@@ -135,7 +136,7 @@ public abstract class PrintTask<Progress> extends CommandTask<Map<String, String
 
         final CommandTask.Lock lock = new CommandTask.Lock();
         if (bindFileName() != null) {
-            new RepairPdfTask(){
+            new RepairPdfTask() {
                 @Override
                 protected void onPostExecute(Void aVoid) {
                     synchronized (lock) {
@@ -144,7 +145,7 @@ public abstract class PrintTask<Progress> extends CommandTask<Map<String, String
                     }
                 }
             }.start(bindFileName());
-            if (!lock.isFinish()){
+            if (!lock.isFinish()) {
                 try {
                     synchronized (lock) {
                         lock.wait();
@@ -155,7 +156,7 @@ public abstract class PrintTask<Progress> extends CommandTask<Map<String, String
             }
 
             String oldName = FileUtils.getDocuFilePath(bindFileName().substring(1));
-            oldName = oldName.substring(0,oldName.length()-9);
+            oldName = oldName.substring(0, oldName.length()-9);
             new File(oldName).delete();
             String newName = oldName + "1";
             new File(newName).renameTo(new File(oldName));

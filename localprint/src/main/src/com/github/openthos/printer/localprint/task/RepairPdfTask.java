@@ -9,7 +9,8 @@ public class RepairPdfTask extends CommandTask <String, Void, Void> {
     @Override
     protected String[] setCmd(String... params) {
         String fileName = params[0];
-        return new String[]{"sh","proot.sh","gs","-o",fileName + "1","-sDEVICE=pdfwrite",fileName};
+        return new String[]{"sh", "proot.sh", "gs", "-o", fileName + "1",
+                            "-sDEVICE=pdfwrite", fileName};
     }
 
     @Override
