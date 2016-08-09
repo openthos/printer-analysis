@@ -21,6 +21,12 @@
 
 程序第一运行时需要导入一个数据包，数据包需要提前存放在系统中`/system/component_printer.tar.gz`。
 
+目前已开发到第27版数据包 component_printer_27.tar.gz ，可在如下地址获取：
+
+1. https://github.com/openthos/printer-analysis/tree/dev
+2. 百度云链接：http://pan.baidu.com/s/1nuX8spN 密码：l2xk
+3. 实验室内网docker服务器中：/home/lh/hxp/archlinux 文件夹。
+
 # 2 编译
 
 ## 2.1 在Android源码中编译
