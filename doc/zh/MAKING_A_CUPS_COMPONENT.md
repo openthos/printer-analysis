@@ -145,6 +145,17 @@ DESTDIR=/home/deep/component_10  make install
 make install
 ```
 
+#### 3.2.5.1 pdftops
+在foo2zjs安装完成后，其中Foomatic/foo2oak以及Foomatic/foo2xqx等类型的PPD文件中需要使用到```pdftops```，但是在```usr/lib/cups/filter```目录下并没有存在，于是需要将其添加才能使得这些类型的驱动成功执行。    
+
+
+32位Ubuntu14.04系统的```/usr/lib/cups/filter/```目录下可以找到此文件，执行
+```
+ldd pdftops
+```
+后可以查看其需要依赖的动态库，对比后发现缺少```libpoppler.so.44```以及```libpng12.so.0```两个动态库，于是将这两个动态库以及```pdftops```拷贝至数据包中，```pdftops```放入```usr/lib/cups/filter/```目录下，而动态库放入```usr/lib/```目录下。
+
+
 ### 3.2.6 Pantum官方闭源驱动
 
 从官网搜集下载P和M两个系列的打印机Linux驱动：
