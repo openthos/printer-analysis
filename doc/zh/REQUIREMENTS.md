@@ -37,3 +37,6 @@
 √ | 存在打印任务不及时更新 | https://dev.openthos.org/zentao/zentao/bug-view-195.html
 √ | 打印机调整配置页面点击确定后打印服务崩溃 | https://dev.openthos.org/zentao/zentao/bug-view-197.html
 √ | 缺少部分纸张大小参数MediaSize对应项 | https://dev.openthos.org/zentao/zentao/bug-view-198.html
+√ | 已删除的打印机，仍显示在打印处理服务-所有打印机列表中。需更新。 | https://dev.openthos.org/zentao/zentao/bug-view-227.html
+√ | HP pro400网络打印：点打印，弹出“打印处理服务”已停止。无法打印。 | https://dev.openthos.org/zentao/zentao/bug-view-228.html
+ | 已添加设备 -名称有误，点进去后显示名称和打印测试页是正确的。 | https://dev.openthos.org/zentao/zentao/bug-view-229.html
