@@ -179,7 +179,39 @@ epson-inkjet-printer-201401w缺少库libjpeg62，下载编译好的 libjpeg62-62
 
 ### 3.2.8 Hpcups && Hplip plugin
 
-...
+#### 编译安装 hpcups
+
+解压官网下载的 hplip-3.16.2
+
+make distclean
+./configure --disable-qt4 --disable-gui-build --disable-doc-build --disable-fax-build --disable-dbus-build --disable-network-build --disable-scan-build --enable-cups-ppd-install
+make
+DESTDIR=/home/deep/component_10 make install
+
+值得一提的是加上 --enable-hpcups-only-build 参数，就会只留下hpcups驱动，没有python等脚本写的专有功能。但是也就不能用hplip plugin了。之后可以手动添加配置文件hplip.conf（不建议），也可以去掉该参数编译自动会生成改文件。
+
+#### 解压安装 hplip plugin
+
+hplip plugin 是hp的闭源驱动部分，对于很多激光打印机都需要该部分才能够打印。
+从 http://www.openprinting.org/download/printdriver/auxfiles/HP/plugins/?C=M;O=A 下载 hplip-3.16.2-plugin.run
+
+解压run文件 ``sh *.run --noexec --target 文件夹``
+
+根据文件 plugin.spec 里的指示位置，将so文件和ppd复制到数据包里的相应位置。
+
+文件夹 prnt 在 ubuntu 中放到 /usr/share/ 文件夹，但是我们需要存放在 /usr/local/share/ 目录。
+
+#### 编写地址转换脚本
+
+对于使用 hplip plugin 的打印机，必须要使用 hp 前端过滤器，不能直接使用 usb ，否则会提示 this module is designed to work with hp printers only 。
+
+在ubuntu中，系统会自动转换地址为 hp 开头，从而使用 hp 前端过滤器。因此我们编写地址转换脚本，进行动态转换。
+
+使用 hpcups 驱动的打印机，会调用 /usr/lib/cups/filter/hpc​ups 后端过滤器，因此我们编写脚本替换hpcups，执行转换操作之后再调用真正的 hpcups 。
+
+在数据包的 /usr/lib/cups/filter/ 文件夹，重命名 hpcups 为 hpcups1 ，创建 hpcups 脚本文件，文件内容详见：[dev 分支 /shell/hpcups](https://github.com/openthos/printer-analysis/blob/dev/shell/hpcups)。
+
+hpcups脚本的功能就是检测地址是否为 usb 开头，如果是则转换为 hp 开头。 hp 开头的地址结构为``hp:/usb/PRINTER_NAME?serial=DEVICE_URI``。之后再调用 hpcups1 。
 
 ### 3.2.9 嘉华龙马打印机驱动
 
