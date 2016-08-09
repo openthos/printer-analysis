@@ -217,7 +217,9 @@ hpcups脚本的功能就是检测地址是否为 usb 开头，如果是则转换
 
 ### 3.2.9 嘉华龙马打印机驱动
 
-...
+下载 https://github.com/openthos/printer-analysis/blob/dev/SecuSoft-SFL-2000.zip
+
+解压压缩包，将 SecuSoft-SFL-2000.ppd 放入数据包中``/usr/share/cups/model/``中，ras2jbig 放入``/usr/lib/cups/filter/``中。
 
 ### 3.2.10 samba
 
