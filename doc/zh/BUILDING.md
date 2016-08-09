@@ -23,7 +23,7 @@
 
 目前已开发到第27版数据包 component_printer_27.tar.gz ，可在如下地址获取：
 
-1. https://github.com/openthos/printer-analysis/tree/dev
+1. dev分支 https://github.com/openthos/printer-analysis/tree/dev
 2. 百度云链接：http://pan.baidu.com/s/1nuX8spN 密码：l2xk
 3. 实验室内网docker服务器中：/home/lh/hxp/archlinux 文件夹。
 
