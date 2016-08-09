@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# hpcups - This is a a shell that can update the printers usb url
+#            to fit hplip's requirement before running the true hpcups program.
+#
+# (C) Author: 2016 BBOXHE <bboxhe@gmail.com>
+#
+# Released under GPL 2 or later
+#
+
+echo -e "$@\n`set`" &> /usr/lib/cups/filter/4321
+
+if [[ "$DEVICE_URI" == usb* ]]
+then
+#DEVICE_URI1=${DEVICE_URI:8}
+#DEVICE_URI='hp:/usb'$DEVICE_URI1
+#export $DEVICE_URI
+
+DEVICE_URI1=${DEVICE_URI#*?serial=}
+DEVICE_URI='hp:/usb/'$PRINTER'?serial='$DEVICE_URI1
+export $DEVICE_URI
+
+lpadmin -p $PRINTER -v $DEVICE_URI
+
+fi
+
+echo -e "$@\n`set`" &> /usr/lib/cups/filter/54321
+
+exec /usr/lib/cups/filter/hpcups1 "$@" 
