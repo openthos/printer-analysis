@@ -3,7 +3,9 @@ package com.github.openthos.printer.localprint.task;
 import android.util.Log;
 
 import com.github.openthos.printer.localprint.APP;
+import com.github.openthos.printer.localprint.util.FileUtils;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -130,9 +132,37 @@ public abstract class PrintTask<Progress> extends CommandTask<Map<String, String
     protected boolean beforeCommand() {
 
         new ResumePrinterTask().start(bindPrinterName());
+        final CommandTask.Lock lock = new CommandTask.Lock();
+        if (bindFileName() != null) {
+            new RepairPdfTask() {
+                @Override
+                protected void onPostExecute(Void aVoid) {
+                    synchronized (lock) {
+                        lock.setFinish(true);
+                        lock.notify();
+                    }
+                }
+            }.start(bindFileName());
+            if (!lock.isFinish()) {
+                try {
+                    synchronized (lock) {
+                        lock.wait();
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
 
+            String oldName = FileUtils.getDocuFilePath(bindFileName().substring(1));
+            oldName = oldName.substring(0, oldName.length() - 9);
+            new File(oldName).delete();
+            String newName = oldName + "1";
+            new File(newName).renameTo(new File(oldName));
+        }
         return true;
     }
+
+    protected abstract String bindFileName();
 
     protected abstract String bindPrinterName();
 

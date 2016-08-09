@@ -116,9 +116,7 @@ public class ManagementAdapter extends BaseAdapter {
                     button_add_printers.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Intent intent = new Intent(mContext, ManagementActivity.class);
-                            intent.putExtra(APP.TASK, APP.TASK_ADD_NEW_PRINTER);
-                            mContext.startActivity(intent);
+                            ManagementAdapter.this.startDetecting();
                         }
                     });
                     Button button_add_net_printers = (Button) convertView.findViewById(

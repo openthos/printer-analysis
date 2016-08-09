@@ -31,7 +31,7 @@ public class UsbPrinterReceiver extends BroadcastReceiver {
 
             //Update UI when management activity is on the top,or handled by OpenthosPrintService
             if (APP.IS_MANAGEMENT_ACTIVITY_ON_TOP()) {
-                Intent newIntent = new Intent("com.github.openthos.printer.localprint.jobmanager");
+                Intent newIntent = new Intent("com.github.openthos.printer.localprint.Management");
                 newIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 newIntent.putExtra(APP.TASK, APP.TASK_ADD_NEW_PRINTER);
                 APP.getApplicatioContext().startActivity(newIntent);

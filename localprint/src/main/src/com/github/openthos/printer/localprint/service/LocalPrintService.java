@@ -293,7 +293,7 @@ public class LocalPrintService extends Service {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Intent intent
-                                = new Intent("com.github.openthos.printer.localprint.jobmanager");
+                                = new Intent("com.github.openthos.printer.localprint.Management");
                         //Context is not in the activity stack need the flag
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         intent.putExtra(APP.TASK, APP.TASK_ADD_NEW_PRINTER);
@@ -472,6 +472,11 @@ public class LocalPrintService extends Service {
         @Override
         public void IPrintTaskCallBack(final IPrintTaskCallBack callBack) throws RemoteException {
             PrintTask<Void> task = new PrintTask<Void>() {
+                @Override
+                protected String bindFileName() {
+                    return null;
+                }
+
                 @Override
                 protected String bindPrinterName() {
                     try {

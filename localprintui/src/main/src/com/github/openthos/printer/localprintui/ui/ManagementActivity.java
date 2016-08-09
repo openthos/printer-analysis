@@ -564,7 +564,12 @@ public class ManagementActivity extends BaseActivity {
 
     private void detectPrinters() {
 
-        mAdapter.startDetecting();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mAdapter.startDetecting();
+            }
+        }, APP.FIRTST_CONNECT_SERVICE_DELAY_TIME);
 
     }
 
